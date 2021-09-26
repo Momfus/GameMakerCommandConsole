@@ -18,6 +18,7 @@ A developer consola command to test projects made with Game Maker Studio 2.3. In
 - main: Is where the releases are going to be done.
 - develop: Here comes all the fix and features (is target to be stable but not for release)
 - feature/feature-name: Is where all the features and functions are developed independently of each other.
+- refactoring/feature-name: Code that need to clean or refactoring.
 - hotfix/hotfix-name: the more urgent code that have to be fix.
 
 ## Requirements.
