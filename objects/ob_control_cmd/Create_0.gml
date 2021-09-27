@@ -1,5 +1,7 @@
 /// @desc Attributes
 
+#macro CMD_CURRENT_VERSION "0.1.0"
+
 // States
 enum e_cmdState {
 
@@ -9,6 +11,11 @@ enum e_cmdState {
 }
 
 __currentState = e_cmdState.closed;
+__currentState_beginStep = undefined;
+__currentState_step = undefined;
+
+
+
 
 // Keys
 #region Inputs Arrays (here you can add or remove keys to show and hide cmd)
@@ -34,3 +41,8 @@ __currentState = e_cmdState.closed;
 
 #endregion
 
+
+// Declare methods
+event_user(0); // Begin Step States
+
+show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
