@@ -15,7 +15,8 @@ __currentState_beginStep = undefined;
 __currentState_step = undefined;
 
 
-
+// Text Attributes
+__cmdText = "";
 
 // Keys
 #region Inputs Arrays (here you can add or remove keys to show and hide cmd)
@@ -44,5 +45,6 @@ __currentState_step = undefined;
 
 // Declare methods
 event_user(0); // Begin Step States
+event_user(1); // Declare keyboard cmd functions
 
 show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
