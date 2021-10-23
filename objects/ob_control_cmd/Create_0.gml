@@ -46,10 +46,6 @@ __cmdCursorPosition = 0; // Where the text is focus
 	__heightHistory = 150;
 	__heightCmdInput = 40;
 	
-	
-	draw_set_font(ft_arial_12);
-	__widthCharacter = string_width("A");
-	
 	// Position
 	__xx = 0;
 	__yy = 0;
