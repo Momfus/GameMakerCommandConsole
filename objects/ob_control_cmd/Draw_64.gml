@@ -31,12 +31,13 @@ if ( __currentState == e_cmdState.opened ) {
 		draw_text(__paddingInner, __posTextY, ">");
 		
 		// Cursor
-		var l_cursorX = __posTextStartX +  l_cmdTextInputLenght;
-		draw_text(l_cursorX, __posTextY, "|");
+		if( __cmdCursorVisible ) {
+			var l_cursorX = __posTextStartX +  l_cmdTextInputLenght;
+			draw_text(l_cursorX, __posTextY, "|");	
+		}
 		
 		// Text
 		draw_set_color(c_white);
-		
 		draw_text(__posTextStartX, __posTextY, __cmdText);
 		
 	

@@ -59,6 +59,11 @@ __cmdCursorPosition = 0; // Where the text is focus
 	
 	__posTextY = __posCmdInputY1 + floor( (__posCmdInputY2 - __posCmdInputY1) * 0.5);
 	__posTextStartX = __xx + __paddingInner + 12;
+	
+	// Cursor flash
+	__cmdCursorFlashTime = 20;
+	__cmdCursorVisible = true;
+	alarm[0] = __cmdCursorFlashTime;
 
 #endregion
 
