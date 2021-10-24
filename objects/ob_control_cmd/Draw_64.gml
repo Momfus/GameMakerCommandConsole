@@ -1,6 +1,8 @@
 /// @desc Draw console
 
 if ( __currentState == e_cmdState.opened ) {
+	
+	draw_set_font(ft_arial_12);
 
 	#region Background
 	
@@ -21,7 +23,7 @@ if ( __currentState == e_cmdState.opened ) {
 	
 	#region Main text cmd input
 	
-		var l_cmdTextInputLenght = string_width(__cmdText);
+
 	
 		draw_set_color(c_orange);
 		draw_set_halign(fa_left);
@@ -32,7 +34,14 @@ if ( __currentState == e_cmdState.opened ) {
 		
 		// Cursor
 		if( __cmdCursorVisible ) {
-			var l_cursorX = __posTextStartX +  l_cmdTextInputLenght;
+			var l_cmdTextInputLenght = string_width("a");
+			
+			var l_cursorX = __posTextStartX;
+			
+			if (__cmdCursorPosition != 0) {
+			    l_cursorX = __posTextStartX +  l_cmdTextInputLenght * __cmdCursorPosition;
+			}
+	
 			draw_text(l_cursorX, __posTextY, "|");	
 		}
 		

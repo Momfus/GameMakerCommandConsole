@@ -28,6 +28,14 @@ __cmdCursorPosition = 0; // Where the text is focus
 	
 	__cmdInputOpenLength = array_length(__cmdInputOpenKeyArray);
 	__cmdInputCloseLength = array_length(__cmdInputCloseKeyArray);
+	
+	#region Special Keys Inputs
+	
+		__cmdKeyPressedShowHide = false;
+		__cmdKeyMoveCursorLeft = false;
+		__cmdKeyMoveCursorRight = false;
+	
+	#endregion
 
 #endregion
 
@@ -67,5 +75,8 @@ __cmdCursorPosition = 0; // Where the text is focus
 // Declare methods
 event_user(0); // Begin Step States
 event_user(1); // Declare keyboard cmd functions
+
+// Set states
+__currentState_beginStep = StateBeginStep_closed;
 
 show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");

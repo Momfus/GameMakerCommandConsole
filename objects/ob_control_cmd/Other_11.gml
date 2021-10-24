@@ -6,12 +6,27 @@ function fn_controlCMD_inputKeyboardUser() {
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
 	    
+		var __cmdTextLength = string_length(__cmdText);
 		// Check special keyboard commands before
-		if ( keyboard_check(vk_enter) ) {
+		if ( __cmdKeyReleasedCommitInput ) {
 		
 			#region Commit CMD
 			
 			
+			#endregion	
+			
+		} else if(__cmdKeyMoveCursorLeft) {
+			
+			#region Move cursor to the left
+				__cmdCursorPosition--;
+				__cmdCursorPosition = clamp(__cmdCursorPosition, 0, __cmdTextLength);
+			#endregion	
+			
+		} else if(__cmdKeyMoveCursorRight) {
+			
+			#region Move cursor to the rigth
+				__cmdCursorPosition++;
+				__cmdCursorPosition = clamp(__cmdCursorPosition, 0, __cmdTextLength);
 			#endregion	
 			
 		} else {
@@ -44,5 +59,21 @@ function fn_controlCMD_checkKeyboardKey() {
 		keyboard_key >= 186 ||
 		keyboard_key == 32
 	)
+	
+}
+
+
+
+// @function fn_controlCMD_checkSpecilKeyInput();
+// @desc Check for the special keys when the CMD is open (there many of keys that are not used when is close)
+function fn_controlCMD_checkSpecilKeyInput() {
+	
+	__cmdKeyPressedShowHide = fn_inputArrayCheckPressed( __cmdInputCloseKeyArray, __cmdInputCloseLength );
+	
+	__cmdKeyReleasedCommitInput = keyboard_check_released(vk_enter);
+	
+	__cmdKeyMoveCursorLeft = keyboard_check(vk_left);
+	__cmdKeyMoveCursorRight = keyboard_check(vk_right);
+	
 	
 }
