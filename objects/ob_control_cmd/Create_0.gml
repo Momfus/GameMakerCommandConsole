@@ -15,6 +15,9 @@ __currentState_beginStep = undefined;
 __currentState_step = undefined;
 
 
+// Text Attributes
+__cmdText = "";
+__cmdCursorPosition = 0; // Where the text is focus
 
 
 // Keys
@@ -30,19 +33,39 @@ __currentState_step = undefined;
 
 #region Visual Settings
 
+	
 	// Visual
-	__alpha = 0.65;
+	__alphaHistory = 0.4;
+	__alphaCmdInput = __alphaHistory + 0.4;
 
+	// Padding
+	__paddingInner = 10;
+	
+	// Height and Width
+	__width = display_get_gui_width();
+	__heightHistory = 150;
+	__heightCmdInput = 40;
+	
 	// Position
 	__xx = 0;
 	__yy = 0;
-	__width = display_get_gui_width();
-	__height = 200;
+	
+	__posCmdInputY1 = __heightHistory;
+	__posCmdInputY2 = __posCmdInputY1 + __heightCmdInput;
+	
+	__posTextY = __posCmdInputY1 + floor( (__posCmdInputY2 - __posCmdInputY1) * 0.5);
+	__posTextStartX = __xx + __paddingInner + 12;
+	
+	// Cursor flash
+	__cmdCursorFlashTime = 20;
+	__cmdCursorVisible = true;
+	alarm[0] = __cmdCursorFlashTime;
 
 #endregion
 
 
 // Declare methods
 event_user(0); // Begin Step States
+event_user(1); // Declare keyboard cmd functions
 
 show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
