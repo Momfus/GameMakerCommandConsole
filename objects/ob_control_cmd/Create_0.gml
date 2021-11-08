@@ -12,11 +12,19 @@ enum e_cmdState {
 
 __currentState = e_cmdState.closed;
 __currentState_beginStep = undefined;
-__currentState_step = undefined;
-
 
 // Text Attributes
-__cmdText = "";
+enum e_cmdTextInput {
+
+	leftSide,
+	rightSide,
+	
+}
+
+__cmdText[e_cmdTextInput.leftSide] = "";
+__cmdText[e_cmdTextInput.rightSide] = "";
+
+
 __cmdCursorPosition = 0; // Where the text is focus
 
 
@@ -28,14 +36,6 @@ __cmdCursorPosition = 0; // Where the text is focus
 	
 	__cmdInputOpenLength = array_length(__cmdInputOpenKeyArray);
 	__cmdInputCloseLength = array_length(__cmdInputCloseKeyArray);
-	
-	#region Special Keys Inputs
-	
-		__cmdKeyPressedShowHide = false;
-		__cmdKeyMoveCursorLeft = false;
-		__cmdKeyMoveCursorRight = false;
-	
-	#endregion
 
 #endregion
 
