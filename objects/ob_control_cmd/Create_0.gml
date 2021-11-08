@@ -12,11 +12,19 @@ enum e_cmdState {
 
 __currentState = e_cmdState.closed;
 __currentState_beginStep = undefined;
-__currentState_step = undefined;
-
 
 // Text Attributes
-__cmdText = "";
+enum e_cmdTextInput {
+
+	leftSide,
+	rightSide,
+	
+}
+
+__cmdText[e_cmdTextInput.leftSide] = "";
+__cmdText[e_cmdTextInput.rightSide] = "";
+
+
 __cmdCursorPosition = 0; // Where the text is focus
 
 
@@ -67,5 +75,8 @@ __cmdCursorPosition = 0; // Where the text is focus
 // Declare methods
 event_user(0); // Begin Step States
 event_user(1); // Declare keyboard cmd functions
+
+// Set states
+__currentState_beginStep = StateBeginStep_closed;
 
 show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");

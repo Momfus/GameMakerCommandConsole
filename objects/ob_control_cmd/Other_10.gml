@@ -24,9 +24,9 @@ function StateBeginStep_opened() {
 	if ( __currentState == e_cmdState.opened ) {
   
 		// Check first if the user want to close the cmd panel
-		var l_closeCmd = fn_inputArrayCheckPressed( __cmdInputCloseKeyArray, __cmdInputCloseLength );
+		fn_controlCMD_checkSpecilKeyInput();
 
-		if (l_closeCmd) {
+		if (__cmdKeyPressedShowHide) {
 	    
 			show_debug_message("Close cmd");
 			__currentState = e_cmdState.closed;
@@ -40,5 +40,3 @@ function StateBeginStep_opened() {
    
 	}	
 }
-
-__currentState_beginStep = StateBeginStep_closed;
