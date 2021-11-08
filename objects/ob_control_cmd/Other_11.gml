@@ -31,13 +31,10 @@ function fn_controlCMD_inputKeyboardUser() {
 			#region Normal Keyboard inputs
 			
 				if ( fn_controlCMD_checkKeyboardKey() ) {
-					//show_debug_message("CMD >>> Char: " + string(keyboard_lastchar) + "     >>> Key: " + string(keyboard_lastkey) );
 					
 					__cmdText[e_cmdTextInput.leftSide] = string_insert(keyboard_lastchar, __cmdText[e_cmdTextInput.leftSide], __cmdCursorPosition + 1);
 					__cmdCursorPosition++;
 					
-					show_debug_message("L: " + __cmdText[e_cmdTextInput.leftSide])
-					show_debug_message("R: " + __cmdText[e_cmdTextInput.rightSide])
 				}
 				
 			#endregion
