@@ -27,6 +27,18 @@ __cmdText[e_cmdTextInput.rightSide] = "";
 
 __cmdCursorPosition = 0; // Where the text is focus
 
+#region History input
+
+	__cmdHistoryCountMax = 10;
+	
+	// FIFO list to check history cmd inputs
+	__cmdHistoryTextQueue = ds_queue_create();
+	for( var i = 0; i < __cmdHistoryCountMax; i++ ) {
+		ds_queue_enqueue(__cmdHistoryTextQueue, "Test " + string(i));	
+	}
+	
+	
+#endregion 
 
 // Keys
 #region Inputs Arrays (here you can add or remove keys to show and hide cmd)
@@ -38,6 +50,8 @@ __cmdCursorPosition = 0; // Where the text is focus
 	__cmdInputCloseLength = array_length(__cmdInputCloseKeyArray);
 
 #endregion
+
+
 
 #region Visual Settings
 

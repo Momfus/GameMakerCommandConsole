@@ -5,10 +5,10 @@
 function fn_controlCMD_inputKeyboardUser() {
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
-	    
-		// Check special keyboard commands before
-		if ( __cmdKeyReleasedCommitInput ) {
 		
+		// Check special keyboard commands before
+		if ( __cmdKeyPressedCommitInput ) {
+			
 			fn_controlCMD_commitInput();
 			
 		} else if(__cmdKeyMoveCursorLeft) {
@@ -69,7 +69,7 @@ function fn_controlCMD_checkSpecilKeyInput() {
 	
 	__cmdKeyPressedShowHide = fn_inputArrayCheckPressed( __cmdInputCloseKeyArray, __cmdInputCloseLength );
 	
-	__cmdKeyReleasedCommitInput = keyboard_check_released(vk_enter);
+	__cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
 	
 	__cmdKeyMoveCursorLeft = keyboard_check(vk_left);
 	__cmdKeyMoveCursorRight = keyboard_check(vk_right);
@@ -119,6 +119,9 @@ function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 // @desc Check for the input to commit
 function fn_controlCMD_commitInput() {
 
-	show_debug_message("test");
+	show_debug_message("Commit Test > " + string(ds_queue_size(__cmdHistoryTextQueue)));
+	// Send commit message to check
+	// Save history commands
+	// Clean old message input
 
 }
