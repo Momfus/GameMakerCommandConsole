@@ -5,10 +5,10 @@
 function fn_controlCMD_inputKeyboardUser() {
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
-	    
-		// Check special keyboard commands before
-		if ( __cmdKeyReleasedCommitInput ) {
 		
+		// Check special keyboard commands before
+		if ( __cmdKeyPressedCommitInput ) {
+			
 			fn_controlCMD_commitInput();
 			
 		} else if(__cmdKeyMoveCursorLeft) {
@@ -69,7 +69,7 @@ function fn_controlCMD_checkSpecilKeyInput() {
 	
 	__cmdKeyPressedShowHide = fn_inputArrayCheckPressed( __cmdInputCloseKeyArray, __cmdInputCloseLength );
 	
-	__cmdKeyReleasedCommitInput = keyboard_check_released(vk_enter);
+	__cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
 	
 	__cmdKeyMoveCursorLeft = keyboard_check(vk_left);
 	__cmdKeyMoveCursorRight = keyboard_check(vk_right);
@@ -119,6 +119,29 @@ function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 // @desc Check for the input to commit
 function fn_controlCMD_commitInput() {
 
-	show_debug_message("test");
+	var l_commitInput = __cmdText[e_cmdTextInput.leftSide] + __cmdText[e_cmdTextInput.rightSide];
+
+	if( l_commitInput == "" || l_commitInput == noone || l_commitInput == undefined ) {
+		exit;
+	}
+	
+	
+	// Send commit message to check
+	#region Refresh logs arrays
+	
+		// History Message log - Remove the old value and insert the new value
+		array_pop(__cmdLogArrayMsg);
+		array_insert(__cmdLogArrayMsg, 0, l_commitInput);
+	
+		// Input log - Remove the old value and insert the new value
+		array_pop(__cmdLogArrayInput);
+		array_insert(__cmdLogArrayInput, 0, l_commitInput);
+	
+	#endregion
+	
+	// Clean old message input
+	__cmdText[e_cmdTextInput.leftSide] = "";
+	__cmdText[e_cmdTextInput.rightSide] = "";
+	__cmdCursorPosition = 0;
 
 }
