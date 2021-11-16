@@ -5,13 +5,11 @@
 function StateBeginStep_closed() {
 	  
 	#region Check if the user want to open cmd
-		var l_openCmd = fn_inputArrayCheckPressed( __cmdInputOpenKeyArray, __cmdInputOpenLength );
-		if (l_openCmd) {
-	    
+		fn_controlCMD_checkSpecilKeyInput();
+		if (__cmdKeyPressedShowHide) {
 			show_debug_message("Open cmd");
 			__currentState = e_cmdState.opened;
 			__currentState_beginStep = StateBeginStep_opened;
-		
 		}
 	#endregion
 	
