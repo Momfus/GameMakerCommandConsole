@@ -1,7 +1,7 @@
 /// @desc Methods - Keyboard
 
-// @function fn_controlCMD_inputKeyboardUser();
-// @desc Check all the inputs from keyboard that user is writing in the CMD
+/// @function fn_controlCMD_inputKeyboardUser();
+/// @desc Check all the inputs from keyboard that user is writing in the CMD
 function fn_controlCMD_inputKeyboardUser() {
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
@@ -9,15 +9,23 @@ function fn_controlCMD_inputKeyboardUser() {
 		// Check special keyboard commands before
 		if ( __cmdKeyPressedCommitInput ) {
 			
-			fn_controlCMD_commitInput();
+			fn_controlCMD_commitInput( __cmdText[e_cmdTextInput.leftSide] + __cmdText[e_cmdTextInput.rightSide] );
 			
-		} else if(__cmdKeyMoveCursorLeft) {
+		} else if(__cmdKeyMoveArrowKeyLeft) {
 			
 			fn_controlCMD_cursorMoveLeft(false);
 			
-		} else if(__cmdKeyMoveCursorRight) {
+		} else if(__cmdKeyMoveArrowKeyRight) {
 			
 			fn_controlCMD_cursorMoveRigth(false);
+			
+		} else if( __cmdKeyMoveArrowKeyUp ) {
+			
+			fn_controlCMD_cursorMoveUpInputLog();
+			
+		} else if( __cmdKeyMoveArrowKeyDown ) {
+			
+			fn_controlCMD_cursorMoveDownInputLog();
 			
 		} else if(__cmdKeyBackspace) {
 			
@@ -50,8 +58,8 @@ function fn_controlCMD_inputKeyboardUser() {
 
 //-------------------------------------------------
 
-// @function fn_controlCMD_checkKeyboardKey()
-// @desc Check for the normal keyboard inputs
+/// @function fn_controlCMD_checkKeyboardKey()
+/// @desc Check for the normal keyboard inputs
 function fn_controlCMD_checkKeyboardKey() {
 	
 	return (
@@ -63,16 +71,18 @@ function fn_controlCMD_checkKeyboardKey() {
 	
 }
 
-// @function fn_controlCMD_checkSpecilKeyInput()
-// @desc Check for the special keys when the CMD is open (there many of keys that are not used when is close)
+/// @function fn_controlCMD_checkSpecilKeyInput()
+/// @desc Check for the special keys when the CMD is open (there many of keys that are not used when is close)
 function fn_controlCMD_checkSpecilKeyInput() {
 	
-	__cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( __cmdInputCloseKeyArray, __cmdInputCloseLength );
+	__cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( __cmdInputOpenCloseKeyArray, __cmdInputOpenCloseLength );
 	
 	__cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
 	
-	__cmdKeyMoveCursorLeft = keyboard_check(vk_left);
-	__cmdKeyMoveCursorRight = keyboard_check(vk_right);
+	__cmdKeyMoveArrowKeyLeft = keyboard_check(vk_left);
+	__cmdKeyMoveArrowKeyRight = keyboard_check(vk_right);
+	__cmdKeyMoveArrowKeyUp = keyboard_check(vk_up);
+	__cmdKeyMoveArrowKeyDown = keyboard_check(vk_down);
 	
 	__cmdKeyBackspace = keyboard_check(vk_backspace);
 	__cmdKeyDelete = keyboard_check(vk_delete);
@@ -80,8 +90,9 @@ function fn_controlCMD_checkSpecilKeyInput() {
 	
 }
 
-// @function fn_controlCMD_cursorMoveLeft()
-// @desc Move the cursor to the left in the input string
+/// @function fn_controlCMD_cursorMoveLeft( deleeChar )
+/// @param deleteChar: boolean
+/// @desc Move the cursor to the left in the input string
 function fn_controlCMD_cursorMoveLeft(p_deleteChar) {
 	
 	if (__cmdCursorPosition == 0) { exit; }
@@ -96,8 +107,9 @@ function fn_controlCMD_cursorMoveLeft(p_deleteChar) {
 	
 }
 
-// @function fn_controlCMD_cursorMoveRigth()
-// @desc Move the cursor to the right in the input string
+/// @function fn_controlCMD_cursorMoveRigth( deleteChar )
+/// @param deleteChar: boolean
+/// @desc Move the cursor to the right in the input string
 function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 	
 	if ( __cmdText[e_cmdTextInput.rightSide] == "") { exit; }
@@ -114,26 +126,18 @@ function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 				
 }
 
-
-// @function fn_controlCMD_commitInput()
-// @desc Check for the input to commit
-function fn_controlCMD_commitInput() {
-
-	var l_commitInput = __cmdText[e_cmdTextInput.leftSide] + __cmdText[e_cmdTextInput.rightSide];
-
-	if( l_commitInput == "" || l_commitInput == noone || l_commitInput == undefined ) {
-		exit;
-	}
+/// @function fn_controlCMD_cursorMoveUpInputLog()
+/// @desc Move the cursor to a more older input log
+function fn_controlCMD_cursorMoveUpInputLog() {
 	
-	// Refresh logs arrays
-	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_commitInput);
-	fn_cmdArrayPushFIFO(__cmdLogArrayInput, l_commitInput);
-	// Send commit message to check
-
+	show_debug_message("Test Up");
 	
-	// Clean old message input
-	__cmdText[e_cmdTextInput.leftSide] = "";
-	__cmdText[e_cmdTextInput.rightSide] = "";
-	__cmdCursorPosition = 0;
+}
 
+/// @function fn_controlCMD_cursorMoveDownInputLog()
+/// @desc Move the cursor to a more newer input log
+function fn_controlCMD_cursorMoveDownInputLog() {
+	
+	show_debug_message("Test Down");
+	
 }

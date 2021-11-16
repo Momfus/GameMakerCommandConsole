@@ -1,7 +1,7 @@
 /// @desc Methods - Begin Step
 
-// @function StateBeginStep_closed();
-// @desc Set the begin state when the cmd is closed
+/// @function StateBeginStep_closed();
+/// @desc Set the begin state when the cmd is closed
 function StateBeginStep_closed() {
 	  
 	#region Check if the user want to open cmd
@@ -15,8 +15,8 @@ function StateBeginStep_closed() {
 	
 }
 
-// @function StateBeginStep_opened();
-// @desc Set the begin state when the cmd is opened
+/// @function StateBeginStep_opened();
+/// @desc Set the begin state when the cmd is opened
 function StateBeginStep_opened() {
 	
 	if ( __currentState == e_cmdState.opened ) {

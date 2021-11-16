@@ -37,18 +37,10 @@ __cmdCursorPosition = 0; // Where the text is focus
 	
 #endregion 
 
-// Keys
-#region Inputs Arrays (here you can add or remove keys to show and hide cmd)
+// Keys - Inputs Arrays (here you can add or remove keys to show and hide cmd)
 
-	__cmdInputOpenKeyArray = [220, 112]; // [º, F1] keycode
-	__cmdInputCloseKeyArray = [220, 112, 27] // [º, F1, Esc] 
-	
-	__cmdInputOpenLength = array_length(__cmdInputOpenKeyArray);
-	__cmdInputCloseLength = array_length(__cmdInputCloseKeyArray);
-
-#endregion
-
-
+__cmdInputOpenCloseKeyArray = [220, 112, 27] // [º, F1, Esc] 
+__cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 
 #region Visual Settings
 
@@ -86,6 +78,7 @@ __cmdCursorPosition = 0; // Where the text is focus
 // Declare methods
 event_user(0); // Begin Step States
 event_user(1); // Declare keyboard cmd functions
+event_user(2); // Commit cmd functions
 
 // Set states
 __currentState_beginStep = StateBeginStep_closed;
