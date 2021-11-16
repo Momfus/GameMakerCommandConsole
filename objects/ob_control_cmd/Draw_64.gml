@@ -3,13 +3,14 @@
 if ( __currentState == e_cmdState.opened ) {
 	
 	draw_set_font(ft_arial_12);
-
+	draw_set_halign(fa_left);
+	
 	#region Background
 	
-		// History background
+		// Log background
 		draw_set_color(c_black);
-		draw_set_alpha(__alphaHistory);
-		draw_rectangle(__xx, __yy, __width, __heightHistory, false)
+		draw_set_alpha(__alphaLog);
+		draw_rectangle(__xx, __yy, __width, __heightLog, false)
 	
 		// CMD Input background
 		draw_set_alpha(__alphaCmdInput)
@@ -19,12 +20,21 @@ if ( __currentState == e_cmdState.opened ) {
 	
 	#endregion
 	
+	#region Log text cmd
+	
+		draw_set_color(c_white);
+		draw_set_valign(fa_bottom);
+		
+		for( var i = 0; i < __cmdLogCountMax; i++ ) {
+			draw_text(__posTextStartX, __heightLog - (i * 20), __cmdLogArrayMsg[i]);
+		}
+	
+	#endregion
 	
 	
 	#region Main text cmd input
 
 		draw_set_color(c_orange);
-		draw_set_halign(fa_left);
 		draw_set_valign(fa_middle);
 		
 		// Arrow indicator

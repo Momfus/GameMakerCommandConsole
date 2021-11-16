@@ -27,16 +27,13 @@ __cmdText[e_cmdTextInput.rightSide] = "";
 
 __cmdCursorPosition = 0; // Where the text is focus
 
-#region History input
+#region Log input
 
-	__cmdHistoryCountMax = 10;
+	__cmdLogCountMax = 10;
 	
-	// FIFO list to check history cmd inputs
-	__cmdHistoryTextQueue = ds_queue_create();
-	for( var i = 0; i < __cmdHistoryCountMax; i++ ) {
-		ds_queue_enqueue(__cmdHistoryTextQueue, "Test " + string(i));	
-	}
-	
+	// FIFO list to check Log cmd inputs
+	__cmdLogArrayInput = array_create(__cmdLogCountMax, "");
+	__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
 	
 #endregion 
 
@@ -57,22 +54,22 @@ __cmdCursorPosition = 0; // Where the text is focus
 
 	
 	// Visual
-	__alphaHistory = 0.4;
-	__alphaCmdInput = __alphaHistory + 0.4;
+	__alphaLog = 0.4;
+	__alphaCmdInput = __alphaLog + 0.4;
 
 	// Padding
 	__paddingInner = 10;
 	
 	// Height and Width
 	__width = display_get_gui_width();
-	__heightHistory = 150;
+	__heightLog = 150;
 	__heightCmdInput = 40;
 	
 	// Position
 	__xx = 0;
 	__yy = 0;
 	
-	__posCmdInputY1 = __heightHistory;
+	__posCmdInputY1 = __heightLog;
 	__posCmdInputY2 = __posCmdInputY1 + __heightCmdInput;
 	
 	__posTextY = __posCmdInputY1 + floor( (__posCmdInputY2 - __posCmdInputY1) * 0.5);
