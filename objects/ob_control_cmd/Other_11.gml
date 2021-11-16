@@ -67,7 +67,7 @@ function fn_controlCMD_checkKeyboardKey() {
 // @desc Check for the special keys when the CMD is open (there many of keys that are not used when is close)
 function fn_controlCMD_checkSpecilKeyInput() {
 	
-	__cmdKeyPressedShowHide = fn_inputArrayCheckPressed( __cmdInputCloseKeyArray, __cmdInputCloseLength );
+	__cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( __cmdInputCloseKeyArray, __cmdInputCloseLength );
 	
 	__cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
 	
@@ -125,19 +125,11 @@ function fn_controlCMD_commitInput() {
 		exit;
 	}
 	
-	
+	// Refresh logs arrays
+	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_commitInput);
+	fn_cmdArrayPushFIFO(__cmdLogArrayInput, l_commitInput);
 	// Send commit message to check
-	#region Refresh logs arrays
-	
-		// History Message log - Remove the old value and insert the new value
-		array_pop(__cmdLogArrayMsg);
-		array_insert(__cmdLogArrayMsg, 0, l_commitInput);
-	
-		// Input log - Remove the old value and insert the new value
-		array_pop(__cmdLogArrayInput);
-		array_insert(__cmdLogArrayInput, 0, l_commitInput);
-	
-	#endregion
+
 	
 	// Clean old message input
 	__cmdText[e_cmdTextInput.leftSide] = "";

@@ -29,7 +29,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "CommandConsole",
-    "path": "folders/Objects/CommandConsole.yy",
+    "path": "folders/gm2-consoleCommand/Objects/CommandConsole.yy",
   },
   "resourceVersion": "1.0",
   "name": "ob_control_cmd",

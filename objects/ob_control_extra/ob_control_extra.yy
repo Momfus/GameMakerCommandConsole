@@ -25,7 +25,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Extra",
-    "path": "folders/Objects/Extra.yy",
+    "path": "folders/gm2-consoleCommand/Objects/Extra.yy",
   },
   "resourceVersion": "1.0",
   "name": "ob_control_extra",
