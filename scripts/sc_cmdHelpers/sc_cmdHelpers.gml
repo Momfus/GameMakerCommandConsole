@@ -30,3 +30,23 @@ function fn_cmdInputArrayCheckPressed(p_arrayToCheck, p_arrayLength){
 	return false;
 
 }
+
+/// @function fn_wrapValue( valueToWrap, newElement )
+/// @param valueToWrap: int
+/// @param min: int
+/// @param max: int
+/// @return newValue: int
+/// @desc Return a value wrapper between [min, max]
+function fn_wrapValue(p_valueToWrap, p_min, p_max) {
+	
+	// Forst to be int values (with real numbers sometimes have wrong returns)
+	p_valueToWrap = floor(p_valueToWrap);
+	p_min = floor(p_min);
+	p_max = floor(p_max);
+	
+	var l_range = p_max - p_min + 1, // "+1" is used because the "max" bound is inclusive
+		l_newValue = ( ( (p_valueToWrap - p_min) mod l_range ) + l_range) mod l_range + p_min;
+
+	
+	return l_newValue;
+}

@@ -130,7 +130,9 @@ function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 /// @desc Move the cursor to a more older input log
 function fn_controlCMD_cursorMoveUpInputLog() {
 	
-	show_debug_message("Test Up");
+	__cmdLogPositionAux = clamp( __cmdLogPositionAux + 1, -1, __cmdLogCountMax - 1 )
+	show_debug_message("Test Up: " + string(__cmdLogPositionAux) );
+	
 	
 }
 
@@ -138,6 +140,7 @@ function fn_controlCMD_cursorMoveUpInputLog() {
 /// @desc Move the cursor to a more newer input log
 function fn_controlCMD_cursorMoveDownInputLog() {
 	
-	show_debug_message("Test Down");
+	__cmdLogPositionAux = clamp( __cmdLogPositionAux - 1, -1, __cmdLogCountMax - 1 )
+	show_debug_message("Test Down: " + string(__cmdLogPositionAux) );
 	
 }
