@@ -21,11 +21,11 @@ function fn_controlCMD_inputKeyboardUser() {
 			
 		} else if( __cmdKeyMoveArrowKeyUp ) {
 			
-			fn_controlCMD_cursorMoveUpInputLog();
+			fn_controlCMD_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			
 		} else if( __cmdKeyMoveArrowKeyDown ) {
 			
-			fn_controlCMD_cursorMoveDownInputLog();
+			fn_controlCMD_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			
 		} else if(__cmdKeyBackspace) {
 			
@@ -126,21 +126,46 @@ function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 				
 }
 
-/// @function fn_controlCMD_cursorMoveUpInputLog()
+/// @function fn_controlCMD_cursorMovInputLog( historyDirection )
+/// @param historyDirection: boolean	Previo: +1; Posterior: -º
 /// @desc Move the cursor to a more older input log
-function fn_controlCMD_cursorMoveUpInputLog() {
+function fn_controlCMD_cursorMoveInputLog( p_historyDirection ) {
 	
-	__cmdLogPositionAux = clamp( __cmdLogPositionAux + 1, -1, __cmdLogCountMax - 1 )
-	show_debug_message("Test Up: " + string(__cmdLogPositionAux) );
+	var l_logPositionAux = __cmdLogHistoryPosition,
+		l_inputArrayNoEmptySize = fn_cmdGetArrayStringSizeNoEmpty(__cmdLogArrayInput);
 	
+	l_logPositionAux = fn_wrapValue(l_logPositionAux + p_historyDirection, -1, l_inputArrayNoEmptySize - 1);
 	
-}
+	if( l_logPositionAux == -1 ) {
+		
+		#region Current input / Input that the user was typing
+			
+			__cmdText[e_cmdTextInput.leftSide] = "";
+			__cmdText[e_cmdTextInput.rightSide] = "";
+			__cmdCursorPosition = 0;
+		
+			show_debug_message("EMPTY"); // TEST
+			
+		#endregion
+		
+	} else {
+	
+		#region Check for input text history
+		
+			var l_inputTextHistory = __cmdLogArrayInput[l_logPositionAux];
+		
+			if( l_inputTextHistory == undefined || l_inputTextHistory == "" || l_inputTextHistory == noone ) {
+				exit;
+			} else {
+				show_debug_message(l_inputTextHistory);	 // TEST
+			}
+		
+		#endregion
+		
+	}
 
-/// @function fn_controlCMD_cursorMoveDownInputLog()
-/// @desc Move the cursor to a more newer input log
-function fn_controlCMD_cursorMoveDownInputLog() {
+	__cmdLogHistoryPosition = l_logPositionAux;
 	
-	__cmdLogPositionAux = clamp( __cmdLogPositionAux - 1, -1, __cmdLogCountMax - 1 )
-	show_debug_message("Test Down: " + string(__cmdLogPositionAux) );
+	
 	
 }

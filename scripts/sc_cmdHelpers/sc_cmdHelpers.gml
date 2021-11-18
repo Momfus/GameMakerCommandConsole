@@ -12,6 +12,27 @@ function fn_cmdArrayPushFIFO(p_array, p_elementToInsert){
 
 }
 
+/// @function fn_cmdGetArrayStringSizeNoEmpty( array )
+/// @param array: [string]
+/// @return arraSize: int
+/// @desc Check for a string array size, this check to their values until there is an empty string (o no valid) value. Using this for long arrays is not recommended
+function fn_cmdGetArrayStringSizeNoEmpty(p_array){
+	
+	var l_arrayRealSize = array_length(p_array),
+		l_elementArrayTemp = undefined;
+		
+	for( var i = 0; i < l_arrayRealSize; i++ ) {
+		
+		l_elementArrayTemp = p_array[i];
+		if(l_elementArrayTemp == "" || l_elementArrayTemp == undefined || l_elementArrayTemp == noone ) {
+			break;
+		}
+	
+	}
+	
+	return ( ( i - 1 ) >= 0 ? i : 0); // (i - 1 ) is needed to know if the first element is already empty. 
+}
+
 /// @function fn_cmdInputArrayCheckPressed( arrayToCheck, arrayLength )
 /// @param arrayToCheck: [keyCode]
 /// @param arrayLength: int
@@ -50,3 +71,4 @@ function fn_wrapValue(p_valueToWrap, p_min, p_max) {
 	
 	return l_newValue;
 }
+
