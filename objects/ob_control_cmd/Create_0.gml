@@ -32,6 +32,8 @@ __cmdCursorPosition = 0; // Where the text is focus
 	__cmdLogCountMax = 10;
 	__cmdLogHistoryPosition = -1; // Used to quick access the input log text with the arrow keys (up and down)
 	
+	__cmdLogLastText = ""; // Used to save the old value when user check log input text
+	
 	// FIFO list to check Log cmd inputs
 	__cmdLogArrayInput = array_create(__cmdLogCountMax, "");
 	__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");

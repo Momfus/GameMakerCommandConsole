@@ -43,6 +43,11 @@ function fn_controlCMD_inputKeyboardUser() {
 					__cmdText[e_cmdTextInput.leftSide] = string_insert(keyboard_lastchar, __cmdText[e_cmdTextInput.leftSide], __cmdCursorPosition + 1);
 					__cmdCursorPosition++;
 					
+					// Reset log input history
+					if( __cmdLogHistoryPosition != -1 ) {
+						__cmdLogHistoryPosition	= -1;
+					}
+					
 				}
 				
 			#endregion
@@ -131,40 +136,45 @@ function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 /// @desc Move the cursor to a more older input log
 function fn_controlCMD_cursorMoveInputLog( p_historyDirection ) {
 	
-	var l_logPositionAux = __cmdLogHistoryPosition,
+	// Check for the current input text
+	if (__cmdLogHistoryPosition == -1 ) {
+	    __cmdLogLastText = __cmdText[e_cmdTextInput.leftSide] + __cmdText[e_cmdTextInput.rightSide];
+	}
+	
+	var l_logPositionNewValue = __cmdLogHistoryPosition,
 		l_inputArrayNoEmptySize = fn_cmdGetArrayStringSizeNoEmpty(__cmdLogArrayInput);
 	
-	l_logPositionAux = fn_wrapValue(l_logPositionAux + p_historyDirection, -1, l_inputArrayNoEmptySize - 1);
+	l_logPositionNewValue = fn_wrapValue(l_logPositionNewValue + p_historyDirection, -1, l_inputArrayNoEmptySize - 1);
 	
-	if( l_logPositionAux == -1 ) {
+	if( l_logPositionNewValue == -1 ) {
 		
 		#region Current input / Input that the user was typing
 			
-			__cmdText[e_cmdTextInput.leftSide] = "";
+			__cmdText[e_cmdTextInput.leftSide] = __cmdLogLastText;
 			__cmdText[e_cmdTextInput.rightSide] = "";
-			__cmdCursorPosition = 0;
+			__cmdCursorPosition = string_length(__cmdLogLastText);
 		
-			show_debug_message("EMPTY"); // TEST
-			
 		#endregion
 		
 	} else {
 	
 		#region Check for input text history
 		
-			var l_inputTextHistory = __cmdLogArrayInput[l_logPositionAux];
+			var l_inputTextHistory = __cmdLogArrayInput[l_logPositionNewValue];
 		
 			if( l_inputTextHistory == undefined || l_inputTextHistory == "" || l_inputTextHistory == noone ) {
 				exit;
 			} else {
-				show_debug_message(l_inputTextHistory);	 // TEST
+				__cmdText[e_cmdTextInput.leftSide] = l_inputTextHistory;
+				__cmdText[e_cmdTextInput.rightSide] = "";
+				__cmdCursorPosition = string_length(l_inputTextHistory);
 			}
 		
 		#endregion
 		
 	}
 
-	__cmdLogHistoryPosition = l_logPositionAux;
+	__cmdLogHistoryPosition = l_logPositionNewValue;
 	
 	
 	
