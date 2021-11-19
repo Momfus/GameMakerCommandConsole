@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"sc_cmdHelpers","path":"scripts/sc_cmdHelpers/sc_cmdHelpers.yy",},"order":1,},
     {"id":{"name":"ft_arial_12","path":"fonts/ft_arial_12/ft_arial_12.yy",},"order":0,},
     {"id":{"name":"sc_cmdInputControl","path":"scripts/sc_cmdInputControl/sc_cmdInputControl.yy",},"order":0,},
     {"id":{"name":"ob_control_cmd","path":"objects/ob_control_cmd/ob_control_cmd.yy",},"order":0,},
@@ -31,14 +32,15 @@
   ],
   "Folders": [
     {"folderPath":"folders/Sprites.yy","order":1,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Sprites/Scripts.yy","order":1,"resourceVersion":"1.0","name":"Scripts","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Fonts.yy","order":7,"resourceVersion":"1.0","name":"Fonts","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Objects.yy","order":9,"resourceVersion":"1.0","name":"Objects","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/gm2-consoleCommand/Scripts.yy","order":2,"resourceVersion":"1.0","name":"Scripts","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/gm2-consoleCommand/Fonts.yy","order":1,"resourceVersion":"1.0","name":"Fonts","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/gm2-consoleCommand/Objects.yy","order":0,"resourceVersion":"1.0","name":"Objects","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Rooms.yy","order":10,"resourceVersion":"1.0","name":"Rooms","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Sprites/Extra.yy","order":0,"resourceVersion":"1.0","name":"Extra","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Objects/Extra.yy","order":1,"resourceVersion":"1.0","name":"Extra","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Fonts/Extra.yy","order":1,"resourceVersion":"1.0","name":"Extra","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Objects/CommandConsole.yy","order":2,"resourceVersion":"1.0","name":"CommandConsole","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/gm2-consoleCommand/Objects/Extra.yy","order":1,"resourceVersion":"1.0","name":"Extra","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/gm2-consoleCommand/Fonts/Extra.yy","order":1,"resourceVersion":"1.0","name":"Extra","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/gm2-consoleCommand/Objects/CommandConsole.yy","order":2,"resourceVersion":"1.0","name":"CommandConsole","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/gm2-consoleCommand.yy","order":11,"resourceVersion":"1.0","name":"gm2-consoleCommand","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},

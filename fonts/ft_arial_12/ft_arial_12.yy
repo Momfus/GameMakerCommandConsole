@@ -299,7 +299,7 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "Extra",
-    "path": "folders/Fonts/Extra.yy",
+    "path": "folders/gm2-consoleCommand/Fonts/Extra.yy",
   },
   "resourceVersion": "1.0",
   "name": "ft_arial_12",

@@ -6,7 +6,7 @@
     "path": "folders/gm2-consoleCommand/Scripts.yy",
   },
   "resourceVersion": "1.0",
-  "name": "sc_cmdInputControl",
+  "name": "sc_cmdHelpers",
   "tags": [],
   "resourceType": "GMScript",
 }
