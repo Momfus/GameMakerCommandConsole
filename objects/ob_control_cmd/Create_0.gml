@@ -27,6 +27,35 @@ __cmdText[e_cmdTextInput.rightSide] = "";
 
 __cmdCursorPosition = 0; // Where the text is focus
 
+#region Command types and checkers
+
+	enum e_command {
+	
+		cmd,
+		game,
+		help,
+		version,
+		scr,
+		destroy,
+		create
+
+	}
+
+	__cmdCommand[e_command.cmd] = "cmd";
+	__cmdCommand[e_command.game] = "game";
+	__cmdCommand[e_command.help] = "help";
+	__cmdCommand[e_command.version] = "version";
+	__cmdCommand[e_command.scr] = "scr";
+	__cmdCommand[e_command.destroy] = "destroy";
+	__cmdCommand[e_command.create] = "create";
+
+	__cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
+
+	__cmdTextInputDelimiter = " "; // TODO: check for a delimiter array (each element with i++ position inside)
+
+#endregion
+
+
 #region Log input
 
 	__cmdLogCountMax = 10;
