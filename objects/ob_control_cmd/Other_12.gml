@@ -10,12 +10,21 @@ function fn_controlCMD_commitInput(p_commitInput) {
 		exit;
 	}
 	
-	// Refresh logs arrays
-	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, p_commitInput);
-	fn_cmdArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
+		
+	// Separate the input in an array command to check (ignore the spaces) and check if is valid
+	__cmdTextPartArray = fn_stringSplit(p_commitInput, " ", true);
 	
-	// Send commit message to check
-	fn_controlCMD_getInputTextParts(p_commitInput);
+	if( array_length(__cmdTextPartArray) == undefined ) { 
+		
+		var l_tempTextError = "[ERROR] Empty command sent";
+		fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_tempTextError);
+		
+	} else {
+	
+		fn_cmdArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
+		fn_controlCMD_parseCommand();
+	
+	}
 	
 	// Clean old message input
 	__cmdText[e_cmdTextInput.leftSide] = "";
@@ -23,21 +32,28 @@ function fn_controlCMD_commitInput(p_commitInput) {
 	__cmdCursorPosition = 0;
 	
 	// Reset the text part array
-	//__cmdTextPartArray = undefined;
-	//__cmdTextPartArray[0] = "";
+	__cmdTextPartArray = undefined;
+	__cmdTextPartArray[0] = "";
 
 }
 
-/// @function fn_controlCMD_getInputTextParts(stringToGetParts)
-/// @param stringToGetParts
-/// @return textPart: [string]
-/// @desc Split the input text in a string array (each word is a element) to check wich command the user want to execute
-function fn_controlCMD_getInputTextParts(p_stringToGetParts) {
+/// @function fn_controlCMD_parseCommand()
+/// @return void
+/// @desc Check the command type added and resolve the input
+function fn_controlCMD_parseCommand() {
 	
-	__cmdTextPartArray = fn_stringSplit(p_stringToGetParts, " ", true);
-	
+	// @TODO: Delete this that is just for test before submit a new version
+	var l_tempJoinText = "";
 	for( var i = 0; i < array_length(__cmdTextPartArray); i++) {
 		show_debug_message(__cmdTextPartArray[i])
+		l_tempJoinText += __cmdTextPartArray[i] + " ";
 	}
 	
+	// @TODO: Delete this after add the correct check and validator
+	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_tempJoinText );
+	
 }
+
+
+
+		
