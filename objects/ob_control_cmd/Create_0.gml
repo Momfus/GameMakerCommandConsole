@@ -34,24 +34,26 @@ __cmdCursorPosition = 0; // Where the text is focus
 		cmd,
 		game,
 		help,
-		version,
+		versionLong,
+		versionShort,
 		scr,
 		destroy,
-		create
+		create,
+		clear
 
 	}
 
 	__cmdCommand[e_command.cmd] = "cmd";
 	__cmdCommand[e_command.game] = "game";
 	__cmdCommand[e_command.help] = "help";
-	__cmdCommand[e_command.version] = "version";
+	__cmdCommand[e_command.versionLong] = "version";
+	__cmdCommand[e_command.versionShort] = "v";
 	__cmdCommand[e_command.scr] = "scr";
 	__cmdCommand[e_command.destroy] = "destroy";
 	__cmdCommand[e_command.create] = "create";
+	__cmdCommand[e_command.clear] = "clear";
 
 	__cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
-
-	__cmdTextInputDelimiter = " "; // TODO: check for a delimiter array (each element with i++ position inside)
 
 #endregion
 
