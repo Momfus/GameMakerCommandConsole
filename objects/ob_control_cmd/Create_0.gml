@@ -89,7 +89,7 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	
 	// Height and Width
 	__width = display_get_gui_width();
-	__heightLog = 150;
+	__heightLog = 200;
 	__heightCmdInput = 40;
 	
 	// Position
