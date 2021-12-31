@@ -27,6 +27,37 @@ __cmdText[e_cmdTextInput.rightSide] = "";
 
 __cmdCursorPosition = 0; // Where the text is focus
 
+#region Command types and checkers
+
+	enum e_command {
+	
+		cmd,
+		game,
+		help,
+		versionLong,
+		versionShort,
+		scr,
+		destroy,
+		create,
+		clear
+
+	}
+
+	__cmdCommand[e_command.cmd] = "cmd";
+	__cmdCommand[e_command.game] = "game";
+	__cmdCommand[e_command.help] = "help";
+	__cmdCommand[e_command.versionLong] = "version";
+	__cmdCommand[e_command.versionShort] = "v";
+	__cmdCommand[e_command.scr] = "scr";
+	__cmdCommand[e_command.destroy] = "destroy";
+	__cmdCommand[e_command.create] = "create";
+	__cmdCommand[e_command.clear] = "clear";
+
+	__cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
+
+#endregion
+
+
 #region Log input
 
 	__cmdLogCountMax = 10;
@@ -58,7 +89,7 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	
 	// Height and Width
 	__width = display_get_gui_width();
-	__heightLog = 150;
+	__heightLog = 200;
 	__heightCmdInput = 40;
 	
 	// Position

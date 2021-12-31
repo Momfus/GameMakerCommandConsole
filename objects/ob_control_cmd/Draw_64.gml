@@ -25,8 +25,10 @@ if ( __currentState == e_cmdState.opened ) {
 		draw_set_color(c_white);
 		draw_set_valign(fa_bottom);
 		
+		var l_yyAux = 0;
 		for( var i = 0; i < __cmdLogCountMax; i++ ) {
-			draw_text(__posTextStartX, __heightLog - (i * 20), __cmdLogArrayMsg[i]);
+			draw_text(__posTextStartX, __heightLog - (i * 8) - l_yyAux, __cmdLogArrayMsg[i]);
+			l_yyAux += string_height(__cmdLogArrayMsg[i])
 		}
 	
 	#endregion

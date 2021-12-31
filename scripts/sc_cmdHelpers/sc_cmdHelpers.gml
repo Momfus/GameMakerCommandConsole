@@ -72,3 +72,42 @@ function fn_wrapValue(p_valueToWrap, p_min, p_max) {
 	return l_newValue;
 }
 
+
+//@function fn_stringSplit(stringToSplit, delimiter, ignoreConsecutiveDelimiter)
+//@param stringToSplit: string
+//@param delimiter: string
+//@param ignoreConsectuvieDelimite: boolean
+//@return stringSplitted: [string]
+//@desc Return an string array from an string with the given delimiter (example: "Hello Word" with the space delimiter " " give an two element array ["Hello", "World"]
+function fn_stringSplit(p_strToSplit, p_delimiter, p_ignoreEmptyString) {
+	
+	p_strToSplit += p_delimiter; // Add the delimiter to the end to finish the loop;
+	var l_delimiterLength = string_length(p_delimiter),
+		l_slotOffset = 0,
+		l_pos = 0, // Loop position used with the given string
+		l_stringSplittedArray = "",
+		l_delimiterCount = string_count(p_delimiter, p_strToSplit),
+		l_copyString = undefined; // Auxiliar string with the stringToSplit value before the delimiter
+		
+		for( var i = 0; i < l_delimiterCount; i++ ) {
+		
+			l_pos = string_pos( p_delimiter, p_strToSplit ) + (l_delimiterLength - 1); // Check for the last position with the delimiter length (-1 is used because strings are arrays starting in zero position)
+			l_copyString = string_copy( p_strToSplit, 1, l_pos - l_delimiterLength );
+			
+			if ( l_copyString != "" || !p_ignoreEmptyString ) {
+			    
+				l_stringSplittedArray[i - l_slotOffset] = l_copyString; // Copy the string section to the new array
+				
+			} else {
+			
+				l_slotOffset++;
+				
+			}
+			
+			p_strToSplit = string_delete(p_strToSplit, 1, l_pos); // Delete the section that was added in the new array
+		}
+		
+	
+	return l_stringSplittedArray;
+	
+}
