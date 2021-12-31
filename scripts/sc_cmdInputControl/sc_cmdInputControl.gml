@@ -55,7 +55,7 @@ function fn_controlCMD_parseCommand() {
 		case __cmdCommand[e_command.versionLong]:
 		case __cmdCommand[e_command.versionShort]: {
 			
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_controlCMD_inputGetVersionCMD() );
+			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_controlCMD_inputGetStringVersion() );
 			break;
 		
 		}
@@ -65,6 +65,11 @@ function fn_controlCMD_parseCommand() {
 			__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
 			break;
 			
+		}
+		
+		case __cmdCommand[e_command.help]: {
+			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_controlCMD_inputGetStringHelp() );
+			break;
 		}
 		
 		default: {
@@ -83,11 +88,35 @@ function fn_controlCMD_parseCommand() {
 
 
 
-/// @function fn_controlCMD_getVersionCMD()
+/// @function fn_controlCMD_inputGetStringVersion()
 /// @return string
 /// @desc A auxiliar function that give the complete version string to show
-function fn_controlCMD_inputGetVersionCMD() {
-	return "=============================\n===  GMS2 Console Command  ===\n========  by Crios Devs  ========\n=============================\n========  Version:   "
-							+ string(CMD_CURRENT_VERSION) 
-							+ "	 ========\n=============================\n" ;
+function fn_controlCMD_inputGetStringVersion() {
+	return 
+	@"=============================
+	===  GMS2 Console Command  ===
+	========  by Crios Devs  ========
+	=============================
+	========  Version:   " 
+	+ string(CMD_CURRENT_VERSION) 
+	+ @"	 ========
+	=============================
+	" ;
+}
+
+/// @function fn_controlCMD_inputGetStringHelp()
+/// @return string
+/// @desc A auxiliar function that give the complete version string to show
+function fn_controlCMD_inputGetStringHelp() {
+	return 
+	@"==== HELP ====
+	version|v
+	   - Get gms2CMD version
+	help
+	   - Show the most commons commands
+	clear
+	   - Clean the console log
+	===============
+	
+	";
 }
