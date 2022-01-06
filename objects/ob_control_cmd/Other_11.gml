@@ -1,44 +1,44 @@
 /// @desc Methods - Keyboard
 
-/// @function fn_controlCMD_inputKeyboardUser();
+/// @function fn_CMDControl_inputKeyboardUser();
 /// @desc Check all the inputs from keyboard that user is writing in the CMD
-function fn_controlCMD_inputKeyboardUser() {
+function fn_CMDControl_inputKeyboardUser() {
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
 		
 		// Check special keyboard commands before
 		if ( __cmdKeyPressedCommitInput ) {
 			
-			fn_controlCMD_commitInput( __cmdText[e_cmdTextInput.leftSide] + __cmdText[e_cmdTextInput.rightSide] );
+			fn_CMDControl_commitInput( __cmdText[e_cmdTextInput.leftSide] + __cmdText[e_cmdTextInput.rightSide] );
 			
 		} else if(__cmdKeyMoveArrowKeyLeft) {
 			
-			fn_controlCMD_cursorMoveLeft(false);
+			fn_CMDControl_cursorMoveLeft(false);
 			
 		} else if(__cmdKeyMoveArrowKeyRight) {
 			
-			fn_controlCMD_cursorMoveRigth(false);
+			fn_CMDControl_cursorMoveRigth(false);
 			
 		} else if( __cmdKeyMoveArrowKeyUp ) {
 			
-			fn_controlCMD_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
+			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			
 		} else if( __cmdKeyMoveArrowKeyDown ) {
 			
-			fn_controlCMD_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
+			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			
 		} else if(__cmdKeyBackspace) {
 			
-			fn_controlCMD_cursorMoveLeft(true);
+			fn_CMDControl_cursorMoveLeft(true);
 			
 		} else if( __cmdKeyDelete ){
 			
-			fn_controlCMD_cursorMoveRigth(true);
+			fn_CMDControl_cursorMoveRigth(true);
 			
 		} else {
 			#region Normal Keyboard inputs
 			
-				if ( fn_controlCMD_checkKeyboardKey() ) {
+				if ( fn_CMDControl_checkKeyboardKey() ) {
 					
 					__cmdText[e_cmdTextInput.leftSide] = string_insert(keyboard_lastchar, __cmdText[e_cmdTextInput.leftSide], __cmdCursorPosition + 1);
 					__cmdCursorPosition++;
@@ -63,9 +63,9 @@ function fn_controlCMD_inputKeyboardUser() {
 
 //-------------------------------------------------
 
-/// @function fn_controlCMD_checkKeyboardKey()
+/// @function fn_CMDControl_checkKeyboardKey()
 /// @desc Check for the normal keyboard inputs
-function fn_controlCMD_checkKeyboardKey() {
+function fn_CMDControl_checkKeyboardKey() {
 	
 	return (
 		(keyboard_key >= 48 && keyboard_key <= 90 ) ||
@@ -76,9 +76,9 @@ function fn_controlCMD_checkKeyboardKey() {
 	
 }
 
-/// @function fn_controlCMD_checkSpecilKeyInput()
+/// @function fn_CMDControl_checkSpecilKeyInput()
 /// @desc Check for the special keys when the CMD is open (there many of keys that are not used when is close)
-function fn_controlCMD_checkSpecilKeyInput() {
+function fn_CMDControl_checkSpecilKeyInput() {
 	
 	__cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( __cmdInputOpenCloseKeyArray, __cmdInputOpenCloseLength );
 	
@@ -95,10 +95,10 @@ function fn_controlCMD_checkSpecilKeyInput() {
 	
 }
 
-/// @function fn_controlCMD_cursorMoveLeft( deleeChar )
+/// @function fn_CMDControl_cursorMoveLeft( deleeChar )
 /// @param deleteChar: boolean
 /// @desc Move the cursor to the left in the input string
-function fn_controlCMD_cursorMoveLeft(p_deleteChar) {
+function fn_CMDControl_cursorMoveLeft(p_deleteChar) {
 	
 	if (__cmdCursorPosition == 0) { exit; }
 				
@@ -112,10 +112,10 @@ function fn_controlCMD_cursorMoveLeft(p_deleteChar) {
 	
 }
 
-/// @function fn_controlCMD_cursorMoveRigth( deleteChar )
+/// @function fn_CMDControl_cursorMoveRigth( deleteChar )
 /// @param deleteChar: boolean
 /// @desc Move the cursor to the right in the input string
-function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
+function fn_CMDControl_cursorMoveRigth(p_deleteChar) {
 	
 	if ( __cmdText[e_cmdTextInput.rightSide] == "") { exit; }
 				
@@ -131,10 +131,10 @@ function fn_controlCMD_cursorMoveRigth(p_deleteChar) {
 				
 }
 
-/// @function fn_controlCMD_cursorMovInputLog( historyDirection )
+/// @function fn_CMDControl_cursorMovInputLog( historyDirection )
 /// @param historyDirection: boolean	Previo: +1; Posterior: -º
 /// @desc Move the cursor to a more older input log
-function fn_controlCMD_cursorMoveInputLog( p_historyDirection ) {
+function fn_CMDControl_cursorMoveInputLog( p_historyDirection ) {
 	
 	// Check for the current input text
 	if (__cmdLogHistoryPosition == -1 ) {

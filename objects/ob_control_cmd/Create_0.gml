@@ -1,6 +1,6 @@
 /// @desc Attributes
 
-#macro CMD_CURRENT_VERSION "0.1.0"
+#macro CMD_CURRENT_VERSION "0.1.2"
 
 // States
 enum e_cmdState {
@@ -79,9 +79,10 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 
 #region Visual Settings
 
+	__surfCmdWindow = noone;
 	
 	// Visual
-	__alphaLog = 0.4;
+	__alphaLog = 0.5;
 	__alphaCmdInput = __alphaLog + 0.4;
 
 	// Padding
@@ -114,6 +115,7 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 event_user(0); // Begin Step States
 event_user(1); // Declare keyboard cmd functions
 event_user(2); // Commit cmd functions
+event_user(3); // GUI and Surface functions
 
 // Set states
 __currentState_beginStep = StateBeginStep_closed;

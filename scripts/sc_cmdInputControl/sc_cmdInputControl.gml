@@ -1,8 +1,8 @@
-/// @function fn_controlCMD_commitInput( commitInput )
+/// @function fn_CMDControl_commitInput( commitInput )
 /// @param commitInput: String
 /// @return void
 /// @desc Control the input to commit
-function fn_controlCMD_commitInput(p_commitInput) {
+function fn_CMDControl_commitInput(p_commitInput) {
 
 	if( p_commitInput == "" || p_commitInput == noone || p_commitInput == undefined ) {
 		exit;
@@ -20,7 +20,7 @@ function fn_controlCMD_commitInput(p_commitInput) {
 	} else {
 	
 		fn_cmdArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
-		fn_controlCMD_parseCommand();
+		fn_CMDControl_parseCommand();
 	
 	}
 	
@@ -35,10 +35,10 @@ function fn_controlCMD_commitInput(p_commitInput) {
 
 }
 
-/// @function fn_controlCMD_parseCommand()
+/// @function fn_CMDControl_parseCommand()
 /// @return void
 /// @desc Check the command type added and resolve the input
-function fn_controlCMD_parseCommand() {
+function fn_CMDControl_parseCommand() {
 	
 	// @TODO: Delete this that is just for test before submit a new version
 	var l_tempJoinText = "";
@@ -55,7 +55,7 @@ function fn_controlCMD_parseCommand() {
 		case __cmdCommand[e_command.versionLong]:
 		case __cmdCommand[e_command.versionShort]: {
 			
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_controlCMD_inputGetStringVersion() );
+			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringVersion() );
 			break;
 		
 		}
@@ -68,7 +68,7 @@ function fn_controlCMD_parseCommand() {
 		}
 		
 		case __cmdCommand[e_command.help]: {
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_controlCMD_inputGetStringHelp() );
+			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringHelp() );
 			break;
 		}
 		
@@ -88,10 +88,10 @@ function fn_controlCMD_parseCommand() {
 
 
 
-/// @function fn_controlCMD_inputGetStringVersion()
+/// @function fn_CMDControl_inputGetStringVersion()
 /// @return string
 /// @desc A auxiliar function that give the complete version string to show
-function fn_controlCMD_inputGetStringVersion() {
+function fn_CMDControl_inputGetStringVersion() {
 	return 
 	@"=============================
 	===  GMS2 Console Command  ===
@@ -100,14 +100,13 @@ function fn_controlCMD_inputGetStringVersion() {
 	========  Version:   " 
 	+ string(CMD_CURRENT_VERSION) 
 	+ @"	 ========
-	=============================
-	" ;
+	=============================" ;
 }
 
-/// @function fn_controlCMD_inputGetStringHelp()
+/// @function fn_CMDControl_inputGetStringHelp()
 /// @return string
 /// @desc A auxiliar function that give the complete version string to show
-function fn_controlCMD_inputGetStringHelp() {
+function fn_CMDControl_inputGetStringHelp() {
 	return 
 	@"==== HELP ====
 	version|v
@@ -116,7 +115,5 @@ function fn_controlCMD_inputGetStringHelp() {
 	   - Show the most commons commands
 	clear
 	   - Clean the console log
-	===============
-	
-	";
+	===============";
 }
