@@ -47,8 +47,6 @@ function fn_CMDControl_parseCommand() {
 		l_tempJoinText += __cmdTextPartArray[i] + " ";
 	}
 	
-	// @TODO: Delete this after add the correct check and validator
-	//fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_tempJoinText );
 	
 	switch(__cmdTextPartArray[0]) {
 	
@@ -84,7 +82,6 @@ function fn_CMDControl_parseCommand() {
 	}
 	
 }
-
 
 
 

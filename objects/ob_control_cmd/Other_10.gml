@@ -35,7 +35,12 @@ function StateBeginStep_opened() {
 		} else 
 			
 			// Input CMD
-			fn_CMDControl_inputKeyboardUser();		
+			fn_CMDControl_inputKeyboardUser();
+			
+			// Mouse input
+			if( __cmdMouseHover ) {
+				fn_CMDControl_inputMouse();
+			}
 		}
 			
 }

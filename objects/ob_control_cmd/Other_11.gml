@@ -1,6 +1,6 @@
 /// @desc Methods - Keyboard
 
-/// @function fn_CMDControl_inputKeyboardUser();
+/// @function fn_CMDControl_inputKeyboardUser()
 /// @desc Check all the inputs from keyboard that user is writing in the CMD
 function fn_CMDControl_inputKeyboardUser() {
 			
@@ -19,11 +19,11 @@ function fn_CMDControl_inputKeyboardUser() {
 			
 			fn_CMDControl_cursorMoveRigth(false);
 			
-		} else if( __cmdKeyMoveArrowKeyUp ) {
+		} else if( __cmdKeyMoveArrowKeyUp and !__cmdMouseHover) {
 			
 			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			
-		} else if( __cmdKeyMoveArrowKeyDown ) {
+		} else if( __cmdKeyMoveArrowKeyDown and !__cmdMouseHover ) {
 			
 			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			
@@ -95,7 +95,7 @@ function fn_CMDControl_checkSpecilKeyInput() {
 	
 }
 
-/// @function fn_CMDControl_cursorMoveLeft( deleeChar )
+/// @function fn_CMDControl_cursorMoveLeft( deleteChar )
 /// @param deleteChar: boolean
 /// @desc Move the cursor to the left in the input string
 function fn_CMDControl_cursorMoveLeft(p_deleteChar) {

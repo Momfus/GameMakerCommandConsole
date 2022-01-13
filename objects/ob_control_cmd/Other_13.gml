@@ -1,4 +1,4 @@
-/// @description Methos - GUI & Surface
+/// @description Methods - GUI & Surface
 
 /// @function fn_CMDControl_fn_windoCMD_drawElements()
 /// @return void
@@ -31,7 +31,7 @@ function fn_CMDWindow_drawSurfce(){
 		draw_set_color(c_white);
 		draw_set_valign(fa_bottom);
 		
-		var l_yyAux = 0;
+		var l_yyAux = 0 + __windowTop;
 		for( var i = 0; i < __cmdLogCountMax; i++ ) {
 			draw_text(__posTextStartX, __heightLog - (i * 8) - l_yyAux, __cmdLogArrayMsg[i]);
 			l_yyAux += string_height(__cmdLogArrayMsg[i])
@@ -73,5 +73,5 @@ function fn_CMDWindow_drawSurfce(){
 	
 	surface_reset_target();
 	
-	draw_surface(__surfCmdWindow, 0, 0);
+	draw_surface(__surfCmdWindow, __xx, __yy);
 }

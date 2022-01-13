@@ -1,5 +1,6 @@
 /// @desc Attributes
 
+
 #macro CMD_CURRENT_VERSION "0.1.2"
 
 // States
@@ -110,12 +111,27 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 
 #endregion
 
+#region Mouse variables
+
+	// Set collision mask that trigger witht mouse events 
+	image_xscale = __width;
+	image_yscale = __posCmdInputY1
+
+	__cmdMouseHover = false;
+	__cmdScrollSpeed = 5;
+	__windowTop = 0;
+
+#endregion
 
 // Declare methods
-event_user(0); // Begin Step States
+event_user(0); // BWegin Step States
 event_user(1); // Declare keyboard cmd functions
 event_user(2); // Commit cmd functions
 event_user(3); // GUI and Surface functions
+event_user(4); // Declare mouse and scrollbar functions
+
+
+
 
 // Set states
 __currentState_beginStep = StateBeginStep_closed;

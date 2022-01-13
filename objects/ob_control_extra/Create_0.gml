@@ -8,3 +8,4 @@ __xx = room_width * 0.5;
 __yy = room_height - 50;
 
 __instructionMainWidthHalf = string_width(__instructionMain) * 0.5;
+
