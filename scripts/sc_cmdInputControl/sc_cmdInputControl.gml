@@ -24,6 +24,10 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	
 	}
 	
+	if( __cmdLogMsgCountCurrent != __cmdLogCountMax ) {
+		__cmdLogMsgCountCurrent = fn_cmdGetArrayStringSizeNoEmpty(__cmdLogArrayMsg);
+	}
+	
 	// Clean old message input
 	__cmdText[e_cmdTextInput.leftSide] = "";
 	__cmdText[e_cmdTextInput.rightSide] = "";
@@ -47,6 +51,8 @@ function fn_CMDControl_parseCommand() {
 		l_tempJoinText += __cmdTextPartArray[i] + " ";
 	}
 	
+	// @TODO: Delete this after add the correct check and validator
+	//fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_tempJoinText );
 	
 	switch(__cmdTextPartArray[0]) {
 	
@@ -61,6 +67,7 @@ function fn_CMDControl_parseCommand() {
 		case __cmdCommand[e_command.clear]: {
 			
 			__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
+			__cmdLogMsgCountCurrent = 0;
 			break;
 			
 		}
@@ -82,6 +89,7 @@ function fn_CMDControl_parseCommand() {
 	}
 	
 }
+
 
 
 

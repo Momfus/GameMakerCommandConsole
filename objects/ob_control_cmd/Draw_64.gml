@@ -2,16 +2,35 @@
 
 if ( __currentState == e_cmdState.opened ) {
 	
+	#region Background
 	
-	if( surface_exists(__surfCmdWindow) ) {
-		
-		fn_CMDWindow_drawSurfce();
-		
+		// Log background
+		draw_set_color(c_black);
+		draw_set_alpha(__alphaLog);
+		draw_rectangle(__xx, __yy, __width, __heightLog, false)
+	
+		// CMD Input background
+		draw_set_alpha(__alphaCmdInput)
+		draw_rectangle(__xx, __posCmdInputY1, __width, __posCmdInputY2, false);
+	
+		draw_set_alpha(1);		
+	
+	#endregion
+	
+	if !( surface_exists(__surfCmdWindow) ) {
+		__surfCmdWindow = surface_create( __width, __heightLog);
 	} else {
 		
-		__surfCmdWindow = surface_create( __width, __posCmdInputY2);
-		fn_CMDWindow_drawSurfce();
+		
+		fn_CMDWindow_drawCommandInput();
+		fn_CMDWindow_drawSurfaceMsg();
+		
+	
 	}
+	
+		
+	fn_CMDWindow_drawSurfaceMsg();
+	fn_CMDWindow_drawCommandInput();
 	
 
 	// Reset

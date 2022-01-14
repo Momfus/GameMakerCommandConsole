@@ -24,9 +24,9 @@ function fn_CMDControl_inputMouse() {
 /// @desc Check and calculate the scroll up with mouse or keyboard input
 function fn_CMDControl_scrollUp() {
 	show_debug_message("subir UP")
-	__windowTop -= __cmdScrollSpeed;
+	__cmdWindowsScrollPosition -= __cmdScrollSpeed;
 	
-	__windowTop = clamp(__windowTop, 0, __heightLog);
+	__cmdWindowsScrollPosition = clamp(__cmdWindowsScrollPosition, 0, __heightLog);
 }
 
 /// @function fn_CMDControl_scrollDown()
@@ -35,7 +35,6 @@ function fn_CMDControl_scrollDown() {
 	show_debug_message("bajar Down");
 	
 	
-	__windowTop += __cmdScrollSpeed;
-	__windowTop = clamp(__windowTop, 0, __heightLog);
+	__cmdWindowsScrollPosition += __cmdScrollSpeed;
+	__cmdWindowsScrollPosition = clamp(__cmdWindowsScrollPosition, 0, __heightLog);
 }
-

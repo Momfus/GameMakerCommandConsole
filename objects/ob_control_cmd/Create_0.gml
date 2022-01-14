@@ -66,6 +66,8 @@ __cmdCursorPosition = 0; // Where the text is focus
 	
 	__cmdLogLastText = ""; // Used to save the old value when user check log input text
 	
+	__cmdLogMsgCountCurrent = 0;
+	
 	// FIFO list to check Log cmd inputs
 	__cmdLogArrayInput = array_create(__cmdLogCountMax, "");
 	__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
@@ -85,6 +87,11 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	// Visual
 	__alphaLog = 0.5;
 	__alphaCmdInput = __alphaLog + 0.4;
+	
+	
+	__cmdMsgHeight = 0;
+	__cmdMsgTop = 0;
+	__cmdMsgSep = 8;
 
 	// Padding
 	__paddingInner = 10;
@@ -119,7 +126,9 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 
 	__cmdMouseHover = false;
 	__cmdScrollSpeed = 5;
-	__windowTop = 0;
+	__cmdWindowsScrollPosition = 0;
+	
+
 
 #endregion
 
