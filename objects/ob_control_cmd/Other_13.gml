@@ -35,10 +35,6 @@ function fn_CMDWindow_drawSurfaceMsg(){
 		__cmdMsgTop =  __heightLog - ( __cmdMsgHeight + (__cmdLogMsgCountCurrent * __cmdMsgSep) )
 		
 	
-		draw_set_color(c_red);
-		draw_line_width(__xx, __heightLog, __width,__heightLog, 2 )
-		draw_line_width(__xx, __cmdMsgTop, __width,__cmdMsgTop, 2 )
-	
 	#endregion
 	
 
