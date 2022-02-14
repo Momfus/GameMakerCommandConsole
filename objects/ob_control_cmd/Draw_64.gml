@@ -19,18 +19,13 @@ if ( __currentState == e_cmdState.opened ) {
 	
 	if !( surface_exists(__surfCmdWindow) ) {
 		__surfCmdWindow = surface_create( __width, __heightLog);
+		fn_CMDWindow_updateSurface();
 	} else {
 		
-		
+		draw_surface(__surfCmdWindow, __xx, __yy);
 		fn_CMDWindow_drawCommandInput();
-		fn_CMDWindow_drawSurfaceMsg();
 		
-	
 	}
-	
-		
-	fn_CMDWindow_drawSurfaceMsg();
-	fn_CMDWindow_drawCommandInput();
 	
 
 	// Reset

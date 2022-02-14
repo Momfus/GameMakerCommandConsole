@@ -1,13 +1,15 @@
 /// @description Methods - GUI & Surface
+
+
 /// @function fn_CMDWindow_drawSurfaceMsg()
 /// @return void
 /// @desc Draw all the elements needed in the surface for the CMD Window
-function fn_CMDWindow_drawSurfaceMsg(){
+function fn_CMDWindow_updateSurface(){
 	
 	surface_set_target(__surfCmdWindow);
 	draw_clear_alpha(c_black, 0);
 	
-	draw_set_font(ft_arial_12);
+	draw_set_font(ft_consolas_9);
 	draw_set_halign(fa_left);
 	
 	#region Log text cmd
@@ -40,7 +42,6 @@ function fn_CMDWindow_drawSurfaceMsg(){
 
 	surface_reset_target();
 
-	draw_surface(__surfCmdWindow, __xx, __yy);
 }
 
 /// @function fn_CMDWindow_drawCommandInput()

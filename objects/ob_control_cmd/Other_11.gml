@@ -19,11 +19,11 @@ function fn_CMDControl_inputKeyboardUser() {
 			
 			fn_CMDControl_cursorMoveRigth(false);
 			
-		} else if( __cmdKeyMoveArrowKeyUp and !__cmdMouseHover) {
+		} else if( __cmdKeyMoveArrowKeyUp ) {
 			
 			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			
-		} else if( __cmdKeyMoveArrowKeyDown and !__cmdMouseHover ) {
+		} else if( __cmdKeyMoveArrowKeyDown ) {
 			
 			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
 			

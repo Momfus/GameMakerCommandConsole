@@ -125,6 +125,8 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	image_yscale = __posCmdInputY1
 
 	__cmdMouseHover = false;
+	
+	// Scroll
 	__cmdScrollSpeed = 5;
 	__cmdWindowsScrollPosition = 0;
 	

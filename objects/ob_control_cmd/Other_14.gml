@@ -6,12 +6,11 @@ function fn_CMDControl_inputMouse() {
 	
 	#region Scrollbar move
 	
-		if( mouse_wheel_up() or __cmdKeyMoveArrowKeyUp ) {
-			fn_CMDControl_scrollUp();
-		} else {
-			if( mouse_wheel_down() or __cmdKeyMoveArrowKeyDown ) {
-				fn_CMDControl_scrollDown();	
-			}
+		var l_mouseWheelUp = mouse_wheel_up(),
+			l_mouseWheelDown = mouse_wheel_down();
+	
+		if( l_mouseWheelUp || l_mouseWheelDown ) {
+			fn_CMDControl_scrollWindow();
 		}
 	
 	#endregion
@@ -22,19 +21,12 @@ function fn_CMDControl_inputMouse() {
 
 /// @function fn_CMDControl_scrollUp()
 /// @desc Check and calculate the scroll up with mouse or keyboard input
-function fn_CMDControl_scrollUp() {
-	show_debug_message("subir UP")
-	__cmdWindowsScrollPosition -= __cmdScrollSpeed;
+function fn_CMDControl_scrollWindow() {
+	show_debug_message("scrollear")
 	
-	__cmdWindowsScrollPosition = clamp(__cmdWindowsScrollPosition, 0, __heightLog);
+	//__cmdWindowsScrollPosition -= __cmdScrollSpeed ;
+	//__cmdWindowsScrollPosition = clamp(__cmdWindowsScrollPosition, 0, __heightLog);
+	
+	fn_CMDWindow_updateSurface();
 }
 
-/// @function fn_CMDControl_scrollDown()
-/// @desc Check and calculate the scroll down with mouse or keyboard input
-function fn_CMDControl_scrollDown() {
-	show_debug_message("bajar Down");
-	
-	
-	__cmdWindowsScrollPosition += __cmdScrollSpeed;
-	__cmdWindowsScrollPosition = clamp(__cmdWindowsScrollPosition, 0, __heightLog);
-}

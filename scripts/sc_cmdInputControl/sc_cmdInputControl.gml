@@ -36,6 +36,9 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	// Reset the text part array
 	__cmdTextPartArray = undefined;
 	__cmdTextPartArray[0] = "";
+	
+	
+	fn_CMDWindow_updateSurface();
 
 }
 
@@ -44,7 +47,7 @@ function fn_CMDControl_commitInput(p_commitInput) {
 /// @desc Check the command type added and resolve the input
 function fn_CMDControl_parseCommand() {
 	
-	// @TODO: Delete this that is just for test before submit a new version
+	// @TODO: Delete this, is just for test before submit a new version
 	var l_tempJoinText = "";
 	for( var i = 0; i < array_length(__cmdTextPartArray); i++) {
 		show_debug_message(__cmdTextPartArray[i])
