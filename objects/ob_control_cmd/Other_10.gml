@@ -23,7 +23,6 @@ function StateBeginStep_opened() {
   
 		// Check first if the user want to close the cmd panel
 		fn_CMDControl_checkSpecilKeyInput();
-
 		if (__cmdKeyPressedShowHide) {
 	    
 			show_debug_message("Close cmd");
@@ -37,7 +36,9 @@ function StateBeginStep_opened() {
 			// Input CMD
 			fn_CMDControl_inputKeyboardUser();
 			
-			// Mouse input
+			// Mouse event control
+			fn_CMDControl_checkMouseEvent(); // Global mouse check (not necesarry when is hover the CMD
+
 			if( __cmdMouseHover ) {
 				fn_CMDControl_inputMouse();
 			}

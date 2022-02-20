@@ -1,7 +1,7 @@
 /// @description Methods - GUI & Surface
 
 
-/// @function fn_CMDWindow_drawSurfaceMsg()
+/// @function fn_CMDWindow_updateSurface()
 /// @return void
 /// @desc Draw all the elements needed in the surface for the CMD Window
 function fn_CMDWindow_updateSurface(){
@@ -27,14 +27,14 @@ function fn_CMDWindow_updateSurface(){
 			}
 			
 			draw_text(__posTextStartX, __heightLog - (i * __cmdMsgSep) 
-										- l_yyMsgPositionAux - __cmdWindowsScrollPosition, 
+										- l_yyMsgPositionAux - __cmdWindowSurfaceYoffset, 
 						__cmdLogArrayMsg[i]);
 			l_yyMsgPositionAux += string_height(__cmdLogArrayMsg[i])
 		};
 		
 			
-		__cmdMsgHeight = l_yyMsgPositionAux;
-		__cmdMsgTop =  __heightLog - ( __cmdMsgHeight + (__cmdLogMsgCountCurrent * __cmdMsgSep) )
+		__cmdMsgWindowHeight = l_yyMsgPositionAux;
+		__cmdMsgTop =  __heightLog - ( __cmdMsgWindowHeight + (__cmdLogMsgCountCurrent * __cmdMsgSep) )
 		
 	
 	#endregion

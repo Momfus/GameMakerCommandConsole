@@ -89,7 +89,7 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	__alphaCmdInput = __alphaLog + 0.4;
 	
 	
-	__cmdMsgHeight = 0;
+	__cmdMsgWindowHeight = 0;
 	__cmdMsgTop = 0;
 	__cmdMsgSep = 8;
 
@@ -125,10 +125,13 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	image_yscale = __posCmdInputY1
 
 	__cmdMouseHover = false;
+	__cmdMouseWheelUp = false;
+	__cmdMouseWheelDown = false;
+	
 	
 	// Scroll
-	__cmdScrollSpeed = 5;
-	__cmdWindowsScrollPosition = 0;
+	__cmdScrollSpeed = 10;
+	__cmdWindowSurfaceYoffset = 0;
 	
 
 

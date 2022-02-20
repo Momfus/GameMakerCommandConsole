@@ -1,16 +1,15 @@
 /// @description Methods - Mouse and scroll
 
+
 /// @function fn_CMDControl_inputMouse()
+/// @return void
 /// @desc Check all the inputs from the mouse
 function fn_CMDControl_inputMouse() {
 	
 	#region Scrollbar move
 	
-		var l_mouseWheelUp = mouse_wheel_up(),
-			l_mouseWheelDown = mouse_wheel_down();
-	
-		if( l_mouseWheelUp || l_mouseWheelDown ) {
-			fn_CMDControl_scrollWindow();
+		if( (__cmdMouseWheelDown || __cmdMouseWheelUp) and  __cmdMsgTop < 0) {
+			fn_CMDControl_scrollWindow( __cmdMouseWheelDown - __cmdMouseWheelUp );
 		}
 	
 	#endregion
@@ -19,14 +18,26 @@ function fn_CMDControl_inputMouse() {
 	
 }
 
-/// @function fn_CMDControl_scrollUp()
+/// @function fn_CMDControl_scrollWindow(scrollDirection)
+/// @param scrollDirection: int
+/// @return void
 /// @desc Check and calculate the scroll up with mouse or keyboard input
-function fn_CMDControl_scrollWindow() {
-	show_debug_message("scrollear")
+function fn_CMDControl_scrollWindow(p_scrollDirection) {
+
+	__cmdWindowSurfaceYoffset += __cmdScrollSpeed * p_scrollDirection ;
+	__cmdWindowSurfaceYoffset = clamp(__cmdWindowSurfaceYoffset,  __cmdMsgTop, 0)
 	
-	//__cmdWindowsScrollPosition -= __cmdScrollSpeed ;
-	//__cmdWindowsScrollPosition = clamp(__cmdWindowsScrollPosition, 0, __heightLog);
+	
 	
 	fn_CMDWindow_updateSurface();
 }
 
+/// @function fn_CMDControl_checkMouseEvent(scrollDirection)
+/// @return void
+/// @desc Check for mouse inputs when the CMD is open
+function fn_CMDControl_checkMouseEvent() {
+	
+	__cmdMouseWheelDown = mouse_wheel_down();
+	__cmdMouseWheelUp = mouse_wheel_up();
+	
+}

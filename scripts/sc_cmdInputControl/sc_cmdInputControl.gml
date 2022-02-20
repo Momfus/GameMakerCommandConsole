@@ -37,7 +37,7 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	__cmdTextPartArray = undefined;
 	__cmdTextPartArray[0] = "";
 	
-	
+	__cmdWindowSurfaceYoffset = 0; // Go to the bottom of the CMD log window
 	fn_CMDWindow_updateSurface();
 
 }

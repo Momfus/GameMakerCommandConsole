@@ -92,7 +92,6 @@ function fn_CMDControl_checkSpecilKeyInput() {
 	__cmdKeyBackspace = keyboard_check(vk_backspace);
 	__cmdKeyDelete = keyboard_check(vk_delete);
 	
-	
 }
 
 /// @function fn_CMDControl_cursorMoveLeft( deleteChar )
