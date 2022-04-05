@@ -61,7 +61,7 @@ __cmdCursorPosition = 0; // Where the text is focus
 
 #region Log input
 
-	__cmdLogCountMax = 10;
+	__cmdLogCountMax = 50;
 	__cmdLogHistoryPosition = -1; // Used to quick access the input log text with the arrow keys (up and down)
 	
 	__cmdLogLastText = ""; // Used to save the old value when user check log input text

@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"sp_backgroundTile","path":"sprites/sp_backgroundTile/sp_backgroundTile.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "sp_backgroundTile",
     "tags": [],
     "resourceType": "GMSequence",

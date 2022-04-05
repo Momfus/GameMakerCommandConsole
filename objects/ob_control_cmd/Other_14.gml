@@ -19,7 +19,7 @@ function fn_CMDControl_inputMouse() {
 }
 
 /// @function fn_CMDControl_scrollWindow(scrollDirection)
-/// @param scrollDirection: int
+/// @param scrollDirection : int
 /// @return void
 /// @desc Check and calculate the scroll up with mouse or keyboard input
 function fn_CMDControl_scrollWindow(p_scrollDirection) {

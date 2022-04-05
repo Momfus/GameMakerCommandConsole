@@ -77,5 +77,48 @@ function fn_CMDWindow_drawCommandInput() {
 	#endregion
 		
 	
+}
+
+/// @function fn_CMDWindow_drawScrollbar()
+/// @return void
+/// @desc Draw the scrollbar for the cmd window
+function fn_CMDWindow_drawScrollbar() {
+
+	if ( __cmdMsgTop < 0 ) {
+		
+		draw_set_color(c_white);
+		draw_set_alpha(1);
+		
+		var l_heightLogOffset = __heightLog - 1;
+		
+		/////////
+		var l_cmdPadHeightMin = 6,
+			l_cmdPadHeight = l_heightLogOffset,
+			l_cmdPadWidth = 8,
+			l_cmdPadHeightRelative =  l_heightLogOffset / __cmdMsgWindowHeight;
+		
+		l_cmdPadHeight = clamp(l_heightLogOffset * l_cmdPadHeightRelative, l_cmdPadHeightMin, l_heightLogOffset);
+		
+		
+		//////
+		var l_cmdPadX = x + __width - 6,
+			l_cmdPadY = l_heightLogOffset,
+			l_cmdPadRelativePosY = __cmdWindowSurfaceYoffset / __cmdMsgTop,
+			l_cmdPadPosY = l_heightLogOffset - (l_cmdPadRelativePosY * l_cmdPadY);
+		
+
+		l_cmdPadPosY = clamp(l_cmdPadPosY, l_cmdPadHeight, l_heightLogOffset);
+
+		
+		//draw_text(2, 10, l_cmdPadHeightRelative);
+
+		draw_rectangle( l_cmdPadX,
+						l_cmdPadPosY - l_cmdPadHeight,
+						l_cmdPadX + l_cmdPadWidth,
+						l_cmdPadPosY,
+						false);
+		
+	}
 	
+
 }
