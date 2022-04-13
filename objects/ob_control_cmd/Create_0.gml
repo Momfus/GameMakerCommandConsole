@@ -61,7 +61,7 @@ __cmdCursorPosition = 0; // Where the text is focus
 
 #region Log input
 
-	__cmdLogCountMax = 10;
+	__cmdLogCountMax = 50;
 	__cmdLogHistoryPosition = -1; // Used to quick access the input log text with the arrow keys (up and down)
 	
 	__cmdLogLastText = ""; // Used to save the old value when user check log input text
@@ -130,10 +130,17 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	
 	
 	// Scroll
-	__cmdScrollSpeed = 10;
+	__cmdScrollSpeed = 40;
 	__cmdWindowSurfaceYoffset = 0;
 	
-
+	// scrollbar tap
+	__cmdScrollBarTapHeight = 0;
+	__cmdScrollBarTapHeightMin = 4;
+	__cmdScrollBarTapWidth = 6;
+	
+	__cmdScrollBarTapPositionX = 0;
+	__cmdScrollBarTapRelativeEmptySpace =  0;
+	__cmdScrollBarTapPositionOffset = 0;
 
 #endregion
 

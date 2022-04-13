@@ -1,11 +1,13 @@
 /// @description Methods - GUI & Surface
 
 
-/// @function fn_CMDWindow_updateSurface()
+/// @function fn_CMDWindow_updateSurface( updateMsgTop )
+/// @param updateMsgTop: bool - Not everytime is necesary, only 
 /// @return void
 /// @desc Draw all the elements needed in the surface for the CMD Window
-function fn_CMDWindow_updateSurface(){
+function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 	
+	// Draw text on surface
 	surface_set_target(__surfCmdWindow);
 	draw_clear_alpha(c_black, 0);
 	
@@ -33,14 +35,18 @@ function fn_CMDWindow_updateSurface(){
 		};
 		
 			
-		__cmdMsgWindowHeight = l_yyMsgPositionAux;
-		__cmdMsgTop =  __heightLog - ( __cmdMsgWindowHeight + (__cmdLogMsgCountCurrent * __cmdMsgSep) )
-		
-	
 	#endregion
-	
 
 	surface_reset_target();
+	
+	// Update cdm window propieties
+	__cmdMsgWindowHeight = l_yyMsgPositionAux;
+		
+	if (p_updateMsgeTop) {
+		__cmdMsgTop =  __heightLog - ( __cmdMsgWindowHeight + (__cmdLogMsgCountCurrent * __cmdMsgSep) );
+	}
+		
+
 
 }
 
@@ -78,4 +84,27 @@ function fn_CMDWindow_drawCommandInput() {
 		
 	
 	
+}
+
+/// @function fn_CMDWindow_drawScrollbar()
+/// @return void
+/// @desc Draw the scrollbar for the cmd window
+function fn_CMDWindow_drawScrollbar() {
+
+	if ( __cmdMsgTop < 0 ) {
+		
+		draw_set_color(c_white);
+		draw_set_alpha(1);
+		
+
+				
+		draw_rectangle( __cmdScrollBarTapPositionX,
+						__cmdScrollBarTapRelativeEmptySpace + __cmdScrollBarTapPositionOffset,
+						__cmdScrollBarTapPositionX + __cmdScrollBarTapWidth,
+						__cmdScrollBarTapRelativeEmptySpace + __cmdScrollBarTapPositionOffset + __cmdScrollBarTapHeight,
+						false);
+
+	}
+	
+
 }
