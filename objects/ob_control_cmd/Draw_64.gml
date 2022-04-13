@@ -19,7 +19,7 @@ if ( __currentState == e_cmdState.opened ) {
 	
 	if !( surface_exists(__surfCmdWindow) ) {
 		__surfCmdWindow = surface_create( __width, __heightLog);
-		fn_CMDWindow_updateSurface();
+		fn_CMDWindow_updateSurface(false);
 	}
 	
 		

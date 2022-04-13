@@ -130,10 +130,17 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	
 	
 	// Scroll
-	__cmdScrollSpeed = 10;
+	__cmdScrollSpeed = 40;
 	__cmdWindowSurfaceYoffset = 0;
 	
-
+	// scrollbar tap
+	__cmdScrollBarTapHeight = 0;
+	__cmdScrollBarTapHeightMin = 4;
+	__cmdScrollBarTapWidth = 6;
+	
+	__cmdScrollBarTapPositionX = 0;
+	__cmdScrollBarTapRelativeEmptySpace =  0;
+	__cmdScrollBarTapPositionOffset = 0;
 
 #endregion
 

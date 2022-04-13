@@ -1,11 +1,13 @@
 /// @description Methods - GUI & Surface
 
 
-/// @function fn_CMDWindow_updateSurface()
+/// @function fn_CMDWindow_updateSurface( updateMsgTop )
+/// @param updateMsgTop: bool - Not everytime is necesary, only 
 /// @return void
 /// @desc Draw all the elements needed in the surface for the CMD Window
-function fn_CMDWindow_updateSurface(){
+function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 	
+	// Draw text on surface
 	surface_set_target(__surfCmdWindow);
 	draw_clear_alpha(c_black, 0);
 	
@@ -33,14 +35,18 @@ function fn_CMDWindow_updateSurface(){
 		};
 		
 			
-		__cmdMsgWindowHeight = l_yyMsgPositionAux;
-		__cmdMsgTop =  __heightLog - ( __cmdMsgWindowHeight + (__cmdLogMsgCountCurrent * __cmdMsgSep) )
-		
-	
 	#endregion
-	
 
 	surface_reset_target();
+	
+	// Update cdm window propieties
+	__cmdMsgWindowHeight = l_yyMsgPositionAux;
+		
+	if (p_updateMsgeTop) {
+		__cmdMsgTop =  __heightLog - ( __cmdMsgWindowHeight + (__cmdLogMsgCountCurrent * __cmdMsgSep) );
+	}
+		
+
 
 }
 
@@ -77,6 +83,7 @@ function fn_CMDWindow_drawCommandInput() {
 	#endregion
 		
 	
+	
 }
 
 /// @function fn_CMDWindow_drawScrollbar()
@@ -89,26 +96,13 @@ function fn_CMDWindow_drawScrollbar() {
 		draw_set_color(c_white);
 		draw_set_alpha(1);
 		
-		var h1 = __heightLog,
-			h2 = __cmdMsgWindowHeight,
-			hRelative = h1/h2,
-			tapH = hRelative * h1,
-			tapW = 6,
-			tapX = x + __width - tapW,
-			tapRelativeEmptySpaceToScroll = h1 - tapH,
-			tapPosOffset = (tapRelativeEmptySpaceToScroll * __cmdWindowSurfaceYoffset ) / (-__cmdMsgTop);
+
 				
-		draw_rectangle( tapX,
-						tapRelativeEmptySpaceToScroll + tapPosOffset,
-						tapX + tapW,
-						tapRelativeEmptySpaceToScroll + tapPosOffset + tapH,
+		draw_rectangle( __cmdScrollBarTapPositionX,
+						__cmdScrollBarTapRelativeEmptySpace + __cmdScrollBarTapPositionOffset,
+						__cmdScrollBarTapPositionX + __cmdScrollBarTapWidth,
+						__cmdScrollBarTapRelativeEmptySpace + __cmdScrollBarTapPositionOffset + __cmdScrollBarTapHeight,
 						false);
-		
-		draw_set_color(c_red);
-		draw_line_width(0, tapRelativeEmptySpaceToScroll, room_width, tapRelativeEmptySpaceToScroll, 2);		
-		
-		draw_set_color(c_blue);
-		draw_line_width(0, tapRelativeEmptySpaceToScroll + tapPosOffset, room_width, tapRelativeEmptySpaceToScroll +tapPosOffset, 2);		
 
 	}
 	
