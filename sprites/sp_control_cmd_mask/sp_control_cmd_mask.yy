@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"sp_control_cmd_mask","path":"sprites/sp_control_cmd_mask/sp_control_cmd_mask.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "sp_control_cmd_mask",
     "tags": [],
     "resourceType": "GMSequence",
