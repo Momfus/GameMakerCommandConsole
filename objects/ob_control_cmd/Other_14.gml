@@ -8,7 +8,7 @@ function fn_CMDControl_inputMouse() {
 	
 	#region Scrollbar move
 	
-		if( (__cmdMouseWheelDown || __cmdMouseWheelUp) and  __cmdMsgTop < 0) {
+		if( (__cmdMouseWheelDown or __cmdMouseWheelUp) and  __cmdMsgTop < 0) {
 			fn_CMDControl_scrollWindow( __cmdMouseWheelDown - __cmdMouseWheelUp );
 		}
 	
@@ -30,6 +30,7 @@ function fn_CMDControl_scrollWindow(p_scrollDirection) {
 	
 	
 	fn_CMDWindow_updateSurface();
+	
 }
 
 /// @function fn_CMDControl_checkMouseEvent(scrollDirection)

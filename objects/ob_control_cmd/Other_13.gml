@@ -89,35 +89,27 @@ function fn_CMDWindow_drawScrollbar() {
 		draw_set_color(c_white);
 		draw_set_alpha(1);
 		
-		var l_heightLogOffset = __heightLog - 1;
-		
-		/////////
-		var l_cmdPadHeightMin = 6,
-			l_cmdPadHeight = l_heightLogOffset,
-			l_cmdPadWidth = 8,
-			l_cmdPadHeightRelative =  l_heightLogOffset / __cmdMsgWindowHeight;
-		
-		l_cmdPadHeight = clamp(l_heightLogOffset * l_cmdPadHeightRelative, l_cmdPadHeightMin, l_heightLogOffset);
-		
-		
-		//////
-		var l_cmdPadX = x + __width - 6,
-			l_cmdPadY = l_heightLogOffset,
-			l_cmdPadRelativePosY = __cmdWindowSurfaceYoffset / __cmdMsgTop,
-			l_cmdPadPosY = l_heightLogOffset - (l_cmdPadRelativePosY * l_cmdPadY);
-		
-
-		l_cmdPadPosY = clamp(l_cmdPadPosY, l_cmdPadHeight, l_heightLogOffset);
-
-		
-		//draw_text(2, 10, l_cmdPadHeightRelative);
-
-		draw_rectangle( l_cmdPadX,
-						l_cmdPadPosY - l_cmdPadHeight,
-						l_cmdPadX + l_cmdPadWidth,
-						l_cmdPadPosY,
+		var h1 = __heightLog,
+			h2 = __cmdMsgWindowHeight,
+			hRelative = h1/h2,
+			tapH = hRelative * h1,
+			tapW = 6,
+			tapX = x + __width - tapW,
+			tapRelativeEmptySpaceToScroll = h1 - tapH,
+			tapPosOffset = (tapRelativeEmptySpaceToScroll * __cmdWindowSurfaceYoffset ) / (-__cmdMsgTop);
+				
+		draw_rectangle( tapX,
+						tapRelativeEmptySpaceToScroll + tapPosOffset,
+						tapX + tapW,
+						tapRelativeEmptySpaceToScroll + tapPosOffset + tapH,
 						false);
 		
+		draw_set_color(c_red);
+		draw_line_width(0, tapRelativeEmptySpaceToScroll, room_width, tapRelativeEmptySpaceToScroll, 2);		
+		
+		draw_set_color(c_blue);
+		draw_line_width(0, tapRelativeEmptySpaceToScroll + tapPosOffset, room_width, tapRelativeEmptySpaceToScroll +tapPosOffset, 2);		
+
 	}
 	
 
