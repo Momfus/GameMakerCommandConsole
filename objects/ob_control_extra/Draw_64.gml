@@ -16,6 +16,8 @@ draw_text(2, l_yy + 10, "__cmdWindowSurfaceYoffset: " + string(ob_control_cmd.__
  + 
  "\n__cmdMsgTop: " + string(ob_control_cmd.__cmdMsgTop)
  +
+ "\n__heightLog: " + string(ob_control_cmd.__heightLog)
+ +
  "\n cmd.Y: " + string( ob_control_cmd.y));
 
 

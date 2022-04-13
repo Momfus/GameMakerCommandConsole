@@ -95,7 +95,7 @@ function fn_CMDControl_checkSpecilKeyInput() {
 }
 
 /// @function fn_CMDControl_cursorMoveLeft( deleteChar )
-/// @param deleteChar: boolean
+/// @param deleteChar : boolean
 /// @desc Move the cursor to the left in the input string
 function fn_CMDControl_cursorMoveLeft(p_deleteChar) {
 	
@@ -112,7 +112,7 @@ function fn_CMDControl_cursorMoveLeft(p_deleteChar) {
 }
 
 /// @function fn_CMDControl_cursorMoveRigth( deleteChar )
-/// @param deleteChar: boolean
+/// @param deleteChar : boolean
 /// @desc Move the cursor to the right in the input string
 function fn_CMDControl_cursorMoveRigth(p_deleteChar) {
 	
@@ -131,7 +131,7 @@ function fn_CMDControl_cursorMoveRigth(p_deleteChar) {
 }
 
 /// @function fn_CMDControl_cursorMovInputLog( historyDirection )
-/// @param historyDirection: boolean	Previo: +1; Posterior: -º
+/// @param historyDirection : boolean	Previo: +1; Posterior: -º
 /// @desc Move the cursor to a more older input log
 function fn_CMDControl_cursorMoveInputLog( p_historyDirection ) {
 	

@@ -38,8 +38,37 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	__cmdTextPartArray[0] = "";
 	
 	__cmdWindowSurfaceYoffset = 0; // Go to the bottom of the CMD log window
-	fn_CMDWindow_updateSurface();
+	
+	fn_CMDWindow_updateSurface(true);
+	
+	if( __cmdMsgTop < 0 ) {
+		fc_CMDControl_updateScrollbarProperties(true, true);
+	}
 
+}
+
+
+/// @function fc_CMDControl_updateScrollbarProperties(updatePositionX, updateHeight)
+/// @param updatePositionX: boolean
+/// @param updateHeight: boolean
+/// @return void
+/// @desc Update the visual properties to show the scrollbar (sometimes there is no need to update the X position or the height)
+function fc_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHeight) {
+		
+	if( p_updatePositionX ) {
+		__cmdScrollBarTapPositionX = x + __width - __cmdScrollBarTapWidth;
+	}
+	
+	if( p_updateHeight ) {
+		var l_heightLogOffset = __heightLog - 2,
+			l_heightRelativeScrollbar = l_heightLogOffset / __cmdMsgWindowHeight;
+		
+		__cmdScrollBarTapHeight = clamp(l_heightRelativeScrollbar * l_heightLogOffset, __cmdScrollBarTapHeightMin, l_heightLogOffset);
+		__cmdScrollBarTapRelativeEmptySpace = l_heightLogOffset - __cmdScrollBarTapHeight;
+	}
+
+	__cmdScrollBarTapPositionOffset = (__cmdScrollBarTapRelativeEmptySpace * __cmdWindowSurfaceYoffset ) / (-__cmdMsgTop);
+	
 }
 
 /// @function fn_CMDControl_parseCommand()
