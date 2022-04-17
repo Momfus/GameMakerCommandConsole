@@ -1,9 +1,9 @@
-/// @function fn_cmdArrayPushFIFO( array, newElement )
+/// @function fn_CMDArrayPushFIFO( array, newElement )
 /// @param array: [any]
 /// @param newElement: any
 /// @return oldElement: any
 /// @desc Remove the old element and add a new one in the top
-function fn_cmdArrayPushFIFO(p_array, p_elementToInsert){
+function fn_CMDArrayPushFIFO(p_array, p_elementToInsert){
 	
 	var l_oldElement = array_pop(p_array);
 	array_insert(p_array, 0, p_elementToInsert);
@@ -110,4 +110,23 @@ function fn_stringSplit(p_strToSplit, p_delimiter, p_ignoreEmptyString) {
 	
 	return l_stringSplittedArray;
 	
+}
+
+
+//@function fn_stringAddPad(text, spaces)
+//@param text: string
+//@param spaces: real
+//@return textWithPadding: string
+//@desc Return a string with a padding space if the text is smaller than the space number.
+function fn_stringAddPad(p_text, p_spaces) {
+
+	var l_padToAdd = "",
+		l_textLength = string_length(p_text);
+	
+	for ( var i = 0; i < p_spaces - l_textLength; i++ ){
+		l_padToAdd += " ";
+	}
+	
+	return p_text + l_padToAdd;
+
 }

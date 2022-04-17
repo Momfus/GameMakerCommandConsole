@@ -10,6 +10,7 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 	// Draw text on surface
 	surface_set_target(__surfCmdWindow);
 	draw_clear_alpha(c_black, 0);
+	gpu_set_blendenable(false);
 	
 	draw_set_font(ft_consolas_9);
 	draw_set_halign(fa_left);
@@ -37,6 +38,7 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 			
 	#endregion
 
+	gpu_set_blendenable(true);
 	surface_reset_target();
 	
 	// Update cdm window propieties
