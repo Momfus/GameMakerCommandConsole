@@ -1,5 +1,6 @@
 /// @description Test variable area
-
+/*
+//TODO: Delete this (its just a temporal test field
 var l_guiHeight = display_get_gui_height(),
 	l_yy = l_guiHeight - 300;
 
@@ -20,4 +21,4 @@ draw_text(2, l_yy + 10, "__cmdWindowSurfaceYoffset: " + string(ob_control_cmd.__
  +
  "\n cmd.Y: " + string( ob_control_cmd.y));
 
-
+*/

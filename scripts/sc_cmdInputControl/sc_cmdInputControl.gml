@@ -15,11 +15,11 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	if( array_length(__cmdTextPartArray) == undefined ) { 
 		
 		var l_tempTextError = "[ERROR] Empty command sent";
-		fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_tempTextError);
+		fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_tempTextError);
 		
 	} else {
 	
-		fn_cmdArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
+		fn_CMDArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
 		fn_CMDControl_parseCommand();
 	
 	}
@@ -42,18 +42,18 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	fn_CMDWindow_updateSurface(true);
 	
 	if( __cmdMsgTop < 0 ) {
-		fc_CMDControl_updateScrollbarProperties(true, true);
+		fn_CMDControl_updateScrollbarProperties(true, true);
 	}
 
 }
 
 
-/// @function fc_CMDControl_updateScrollbarProperties(updatePositionX, updateHeight)
+/// @function fn_CMDControl_updateScrollbarProperties(updatePositionX, updateHeight)
 /// @param updatePositionX: boolean
 /// @param updateHeight: boolean
 /// @return void
 /// @desc Update the visual properties to show the scrollbar (sometimes there is no need to update the X position or the height)
-function fc_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHeight) {
+function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHeight) {
 		
 	if( p_updatePositionX ) {
 		__cmdScrollBarTapPositionX = x + __width - __cmdScrollBarTapWidth;
@@ -84,35 +84,34 @@ function fn_CMDControl_parseCommand() {
 	}
 	
 	// @TODO: Delete this after add the correct check and validator
-	//fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_tempJoinText );
+	//fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_tempJoinText );
 	
 	switch(__cmdTextPartArray[0]) {
 	
 		case __cmdCommand[e_command.versionLong]:
 		case __cmdCommand[e_command.versionShort]: {
 			
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringVersion() );
+			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringVersion() );
 			break;
 		
 		}
 		
 		case __cmdCommand[e_command.clear]: {
 			
-			__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
-			__cmdLogMsgCountCurrent = 0;
+			fn_CMDControl_clearLog();
 			break;
 			
 		}
 		
 		case __cmdCommand[e_command.help]: {
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringHelp() );
+			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringHelp() );
 			break;
 		}
 		
 		default: {
 		
 			var l_tempTextError = "[ERROR] The '" + __cmdTextPartArray[0] + "' command isn't recognized" ;
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_tempTextError);
+			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_tempTextError);
 		
 			break;
 		
@@ -122,35 +121,105 @@ function fn_CMDControl_parseCommand() {
 	
 }
 
+/// @function objCommand(title, shortTitle, description, [function], [arguments], [argsDescription])
+/// @return newCommand: ligthObject
+/// @desc Create a command object
+function objCommand(p_title, p_shortTitle, p_description, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
+	cmdTitle = p_title;
+	cmdShort = p_shortTitle;
+	cmdDesc = p_description;
+	cmdFunc = p_function;
+	cmdArgs = p_arguments;
+	cmdArgDesc = p_argsDescription;
+}
 
+/// @function fn_CMDControl_getCommands()
+/// @return commandList: [ligthObject]
+/// @desc Get the commands available with their properties and binding function
+function fn_CMDControl_getCommands() {
+	
+	#region Command List
+	
+	var l_commandList = [
+	
+		// Header
+		new objCommand("Title", "Short", "Description"),
+		
+		// Help
+		new objCommand("help", "h", 
+			"Show all the help about commands",
+			fn_CMDControl_getCommands,
+			["command"],
+			["It show a more detail description about an specific command"]),
+		
+		// Version
+		new objCommand("version", "v", 
+			"Show the current gms2CMD version",
+			fn_CMDControl_inputGetStringVersion),
+		
+		// Clear
+		new objCommand("clear", "-",
+			"Clear the current console log (it also reset the command history)",
+			fn_CMDControl_inputGetStringVersion),
 
+		
+	];
+	
+	#endregion
+	
+	return l_commandList
+	
+
+}
+
+//----------------------------
+#region Commands action list
+
+/// @function fn_CMDControl_clearLog()
+/// @return void
+/// @desc Clear the current console log (it also reset the command history)
+function fn_CMDControl_clearLog() {
+	__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
+	__cmdLogMsgCountCurrent = 0;
+}
 
 /// @function fn_CMDControl_inputGetStringVersion()
 /// @return string
 /// @desc A auxiliar function that give the complete version string to show
 function fn_CMDControl_inputGetStringVersion() {
 	return 
-	@"=============================
+	@"==============================
 	===  GMS2 Console Command  ===
-	========  by Crios Devs  ========
-	=============================
-	========  Version:   " 
-	+ string(CMD_CURRENT_VERSION) 
-	+ @"	 ========
-	=============================" ;
+	======  by Crios Devs  =======
+	==============================
+	> Version:   " + string(CMD_CURRENT_VERSION) + 
+	"\n==============================" ;
 }
 
 /// @function fn_CMDControl_inputGetStringHelp()
-/// @return string
+/// @return helpText: string
 /// @desc A auxiliar function that give the complete version string to show
 function fn_CMDControl_inputGetStringHelp() {
-	return 
-	@"==== HELP ====
-	version|v
-	   - Get gms2CMD version
-	help
-	   - Show the most commons commands
-	clear
-	   - Clean the console log
-	===============";
+	var l_helpText = "==== HELP ====",
+		l_cmdCommands = fn_CMDControl_getCommands(),
+		l_cmdCommandsLength = array_length(l_cmdCommands);
+		
+	for( var i = 0; i < l_cmdCommandsLength; i++ ) {
+		
+		var l_cmdTitle = string_upper(l_cmdCommands[i].cmdTitle),
+			l_cmdShortTitle = string_upper(l_cmdCommands[i].cmdShort),
+			l_cmdDescription = l_cmdCommands[i].cmdDesc;
+			
+		l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 10) +
+						fn_stringAddPad(l_cmdShortTitle, 8) +
+						l_cmdDescription;
+	}
+	
+	l_helpText += "\n===============";
+	
+	return l_helpText; 
 }
+
+#endregion
+
+

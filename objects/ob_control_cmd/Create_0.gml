@@ -1,7 +1,7 @@
 /// @desc Attributes
 
 
-#macro CMD_CURRENT_VERSION "0.1.2"
+#macro CMD_CURRENT_VERSION "0.5.2"
 
 // States
 enum e_cmdState {
