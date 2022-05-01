@@ -1,3 +1,6 @@
+function sc_cmdInputControl() {	
+
+
 /// @function fn_CMDControl_commitInput( commitInput )
 /// @param commitInput: String
 /// @return void
@@ -83,41 +86,28 @@ function fn_CMDControl_parseCommand() {
 		l_tempJoinText += __cmdTextPartArray[i] + " ";
 	}
 	
-	// @TODO: Delete this after add the correct check and validator
-	//fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_tempJoinText );
+	var l_mainCommand = __cmdTextPartArray[0],
+		l_params = [];
+	array_copy(l_params, 0, __cmdTextPartArray, 1, array_length(__cmdTextPartArray) - 1);
 	
-	switch(__cmdTextPartArray[0]) {
+	var l_commandList = fn_CMDControl_getCommands(),
+		l_commandListLength = array_length(l_commandList);
 	
-		case __cmdCommand[e_command.versionLong]:
-		case __cmdCommand[e_command.versionShort]: {
-			
-			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringVersion() );
-			break;
+	for( var i = 0; i < l_commandListLength; i++ ) {
 		
+		//show_debug_message()
+		
+		if( l_commandList[i].cmdTitle == l_mainCommand or ( l_commandList[i].cmdShort == l_mainCommand and l_commandList[i].cmdShort != "-" )) {
+			l_commandList[i].cmdFunc(l_params);
+			return -1;
 		}
 		
-		case __cmdCommand[e_command.clear]: {
-			
-			fn_CMDControl_clearLog();
-			break;
-			
-		}
 		
-		case __cmdCommand[e_command.help]: {
-			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, fn_CMDControl_inputGetStringHelp() );
-			break;
-		}
-		
-		default: {
-		
-			var l_tempTextError = "[ERROR] The '" + __cmdTextPartArray[0] + "' command isn't recognized" ;
-			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_tempTextError);
-		
-			break;
-		
-		}
-	
 	}
+	
+	fn_CMDControl_MsgShowError("[ERROR] The '" + __cmdTextPartArray[0] + "' command isn't recognized");
+		
+	
 	
 }
 
@@ -148,7 +138,7 @@ function fn_CMDControl_getCommands() {
 		// Help
 		new objCommand("help", "h", 
 			"Show all the help about commands",
-			fn_CMDControl_getCommands,
+			fn_CMDControl_showHelp,
 			["command"],
 			["It show a more detail description about an specific command"]),
 		
@@ -160,8 +150,14 @@ function fn_CMDControl_getCommands() {
 		// Clear
 		new objCommand("clear", "-",
 			"Clear the current console log (it also reset the command history)",
-			fn_CMDControl_inputGetStringVersion),
+			fn_CMDControl_clearLog),
 
+		// Game
+		new objCommand("game", "g",
+			"Choose to restart or exit the game",
+			fn_CMDControl_game,
+			["status"],
+			[ "Can take values 'exit' or 'restart'" ]),
 		
 	];
 	
@@ -184,42 +180,116 @@ function fn_CMDControl_clearLog() {
 }
 
 /// @function fn_CMDControl_inputGetStringVersion()
-/// @return string
-/// @desc A auxiliar function that give the complete version string to show
+/// @return void
+/// @desc Show in the console the current version
 function fn_CMDControl_inputGetStringVersion() {
-	return 
+	var l_versionText = 
 	@"==============================
 	===  GMS2 Console Command  ===
 	======  by Crios Devs  =======
 	==============================
 	> Version:   " + string(CMD_CURRENT_VERSION) + 
 	"\n==============================" ;
+	
+	fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_versionText);
 }
 
-/// @function fn_CMDControl_inputGetStringHelp()
-/// @return helpText: string
-/// @desc A auxiliar function that give the complete version string to show
-function fn_CMDControl_inputGetStringHelp() {
-	var l_helpText = "==== HELP ====",
-		l_cmdCommands = fn_CMDControl_getCommands(),
-		l_cmdCommandsLength = array_length(l_cmdCommands);
-		
-	for( var i = 0; i < l_cmdCommandsLength; i++ ) {
-		
-		var l_cmdTitle = string_upper(l_cmdCommands[i].cmdTitle),
-			l_cmdShortTitle = string_upper(l_cmdCommands[i].cmdShort),
-			l_cmdDescription = l_cmdCommands[i].cmdDesc;
+/// @function fn_CMDControl_showHelp(args)
+/// @param args: Array[any]
+/// @return void
+/// @desc Show the help information of the given command
+function fn_CMDControl_showHelp(p_args) {
+	
+	var p_argsLength = array_length(p_args);
+	
+	// In case there are too much arguments
+	
+	switch( p_argsLength ) {
+	
+		// General commands
+		case 0: {
 			
-		l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 10) +
-						fn_stringAddPad(l_cmdShortTitle, 8) +
-						l_cmdDescription;
+			var l_helpText = "==== HELP ====",
+				l_cmdCommands = fn_CMDControl_getCommands(),
+				l_cmdCommandsLength = array_length(l_cmdCommands);
+		
+			for( var i = 0; i < l_cmdCommandsLength; i++ ) {
+		
+				var l_cmdTitle = string_upper(l_cmdCommands[i].cmdTitle),
+					l_cmdShortTitle = string_upper(l_cmdCommands[i].cmdShort),
+					l_cmdDescription = l_cmdCommands[i].cmdDesc;
+			
+				l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 10) +
+								fn_stringAddPad(l_cmdShortTitle, 8) +
+								l_cmdDescription;
+			}
+	
+			l_helpText += "\n===============";
+	
+			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_helpText); 
+	
+	
+			break;
+			
+		}
+		
+		// One leve depth arguments
+		case 1: {
+			
+			// Check if the command to get help exsts
+			
+			
+			break;
+			
+		}
+		
+		// Too much arguments
+		default: {
+		
+			var l_errorMsg = fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "help", p_argsLength, 0, 1);
+			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_errorMsg);
+			return -1;
+			
+			break;
+			
+		}
+	
 	}
+
 	
-	l_helpText += "\n===============";
-	
-	return l_helpText; 
 }
+
+	
+/// @function fn_CMDControl_game(status)
+/// @param gameCMD: String
+/// @return void
+/// @desc Select the function to execute a game command
+function fn_CMDControl_game(p_gameCMD) {
+		
+	switch(p_gameCMD) {
+			
+		case "restart":{
+			game_restart();
+			break;
+		}
+			
+		case "exit":{
+			game_end();
+			break;
+		}
+			
+		default: {
+			fn_CMDControl_MsgShowError(
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exits, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+			);
+		}
+			
+	}
+		
+}
+
+	
 
 #endregion
 
-
+}

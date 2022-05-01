@@ -28,35 +28,9 @@ __cmdText[e_cmdTextInput.rightSide] = "";
 
 __cmdCursorPosition = 0; // Where the text is focus
 
-#region Command types and checkers
+__cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
 
-	enum e_command {
-	
-		cmd,
-		game,
-		help,
-		versionLong,
-		versionShort,
-		scr,
-		destroy,
-		create,
-		clear
 
-	}
-
-	__cmdCommand[e_command.cmd] = "cmd";
-	__cmdCommand[e_command.game] = "game";
-	__cmdCommand[e_command.help] = "help";
-	__cmdCommand[e_command.versionLong] = "version";
-	__cmdCommand[e_command.versionShort] = "v";
-	__cmdCommand[e_command.scr] = "scr";
-	__cmdCommand[e_command.destroy] = "destroy";
-	__cmdCommand[e_command.create] = "create";
-	__cmdCommand[e_command.clear] = "clear";
-
-	__cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
-
-#endregion
 
 
 #region Log input
@@ -158,3 +132,6 @@ event_user(4); // Declare mouse and scrollbar functions
 __currentState_beginStep = StateBeginStep_closed;
 
 show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
+
+
+sc_cmdInputControl();
