@@ -17,8 +17,7 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	
 	if( array_length(__cmdTextPartArray) == undefined ) { 
 		
-		var l_tempTextError = "[ERROR] Empty command sent";
-		fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_tempTextError);
+		fn_CMDControl_MsgShowError("Empty command sent");
 		
 	} else {
 	
@@ -97,15 +96,15 @@ function fn_CMDControl_parseCommand() {
 		
 		//show_debug_message()
 		
-		if( l_commandList[i].cmdTitle == l_mainCommand or ( l_commandList[i].cmdShort == l_mainCommand and l_commandList[i].cmdShort != "-" )) {
-			l_commandList[i].cmdFunc(l_params);
+		if( l_commandList[i].__cmdTitle == l_mainCommand or ( l_commandList[i].__cmdShort == l_mainCommand and l_commandList[i].__cmdShort != "-" )) {
+			l_commandList[i].__cmdFunc(l_params);
 			return -1;
 		}
 		
 		
 	}
 	
-	fn_CMDControl_MsgShowError("[ERROR] The '" + __cmdTextPartArray[0] + "' command isn't recognized");
+	fn_CMDControl_MsgShowError("The '" + __cmdTextPartArray[0] + "' command isn't recognized");
 		
 	
 	
@@ -115,12 +114,12 @@ function fn_CMDControl_parseCommand() {
 /// @return newCommand: ligthObject
 /// @desc Create a command object
 function objCommand(p_title, p_shortTitle, p_description, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
-	cmdTitle = p_title;
-	cmdShort = p_shortTitle;
-	cmdDesc = p_description;
-	cmdFunc = p_function;
-	cmdArgs = p_arguments;
-	cmdArgDesc = p_argsDescription;
+	__cmdTitle = p_title;
+	__cmdShort = p_shortTitle;
+	__cmdDesc = p_description;
+	__cmdFunc = p_function;
+	__cmdArgs = p_arguments;
+	__cmdArgDesc = p_argsDescription;
 }
 
 /// @function fn_CMDControl_getCommands()
@@ -133,14 +132,14 @@ function fn_CMDControl_getCommands() {
 	var l_commandList = [
 	
 		// Header
-		new objCommand("Title", "Short", "Description"),
+		new objCommand("TITLE", "SHORT", "DESCRIPTION", undefined, ["ARGUMENT"], ["DESCRIPTION"]),
 		
 		// Help
 		new objCommand("help", "h", 
 			"Show all the help about commands",
 			fn_CMDControl_showHelp,
 			["command"],
-			["It show a more detail description about an specific command"]),
+			["It shows more details description about an specific command"]),
 		
 		// Version
 		new objCommand("version", "v", 
@@ -157,7 +156,7 @@ function fn_CMDControl_getCommands() {
 			"Choose to restart or exit the game",
 			fn_CMDControl_game,
 			["status"],
-			[ "Can take values 'exit' or 'restart'" ]),
+			[ "Can take the values 'exit' or 'restart'" ]),
 		
 	];
 	
@@ -200,28 +199,25 @@ function fn_CMDControl_inputGetStringVersion() {
 /// @desc Show the help information of the given command
 function fn_CMDControl_showHelp(p_args) {
 	
-	var p_argsLength = array_length(p_args);
-	
-	// In case there are too much arguments
-	
+	var p_argsLength = array_length(p_args),
+		l_helpText = "==== HELP ====",
+		l_cmdCommands = fn_CMDControl_getCommands(),
+		l_cmdCommandsLength = array_length(l_cmdCommands);
+		
 	switch( p_argsLength ) {
 	
 		// General commands
 		case 0: {
-			
-			var l_helpText = "==== HELP ====",
-				l_cmdCommands = fn_CMDControl_getCommands(),
-				l_cmdCommandsLength = array_length(l_cmdCommands);
 		
 			for( var i = 0; i < l_cmdCommandsLength; i++ ) {
 		
-				var l_cmdTitle = string_upper(l_cmdCommands[i].cmdTitle),
-					l_cmdShortTitle = string_upper(l_cmdCommands[i].cmdShort),
-					l_cmdDescription = l_cmdCommands[i].cmdDesc;
+				var l___cmdTitle = string_upper(l_cmdCommands[i].__cmdTitle),
+					l___cmdShortTitle = string_upper(l_cmdCommands[i].__cmdShort),
+					l___cmdDescription = l_cmdCommands[i].__cmdDesc;
 			
-				l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 10) +
-								fn_stringAddPad(l_cmdShortTitle, 8) +
-								l_cmdDescription;
+				l_helpText += "\n" + fn_stringAddPad(l___cmdTitle, 10) +
+								fn_stringAddPad(l___cmdShortTitle, 8) +
+								l___cmdDescription;
 			}
 	
 			l_helpText += "\n===============";
@@ -233,10 +229,86 @@ function fn_CMDControl_showHelp(p_args) {
 			
 		}
 		
-		// One leve depth arguments
+		// First level argument information
 		case 1: {
 			
-			// Check if the command to get help exsts
+			#region Check if the first level commandexists
+			
+				var l_cmdArgumentExists = false;
+			
+				for (var i = 0; i < l_cmdCommandsLength; i++) {
+			   
+				   if (l_cmdCommands[i].__cmdTitle == p_args[0] or l_cmdCommands[i].__cmdShort == p_args[0]) {
+				       l_cmdArgumentExists = true;
+					   break;
+				   }
+			   
+				}
+			
+				// If the command doesnt exists
+				if !( l_cmdArgumentExists ) {
+			    
+					var l_errorMsgCommandNoExists = fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, p_args[0]);
+					fn_CMDControl_MsgShowError(l_errorMsgCommandNoExists);
+				
+					return -1; // exit the function
+				}
+			
+			#endregion 
+			
+			#region Show the command information
+			
+				var l_cmdName,
+					l_cmdShort;
+				
+
+					
+				// Get the command information
+				for (var i = 0; i < l_cmdCommandsLength; i++) {
+					l_cmdName = l_cmdCommands[i].__cmdTitle;
+					l_cmdShort = l_cmdCommands[i].__cmdShort;
+					
+					// Go to the next iteration if isn't the command to show info
+					if ( l_cmdName != p_args[0] and l_cmdShort != p_args[0] ) {
+						continue;    
+					}
+					
+					var l_cmdDesc = l_cmdCommands[i].__cmdDesc,
+						l_cmdArgs = l_cmdCommands[i].__cmdArgs, // it could be undefined
+						l_cmdArgsDesc = l_cmdCommands[i].__cmdArgDesc; // it could be undefined
+
+					
+					// Name
+					fn_CMDArrayPushFIFO( __cmdLogArrayMsg, fn_stringAddPad(">>>",6) + l_cmdName);
+					
+					// Description
+					fn_CMDArrayPushFIFO( __cmdLogArrayMsg, l_cmdDesc + "\n");
+					
+					// Arguments name and description
+					
+					if( is_array(l_cmdArgs) ) {
+						
+						// Headers
+						fn_CMDArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(l_cmdCommands[0].__cmdArgs[0], 10)
+							+ fn_stringAddPad("", 4) + l_cmdCommands[0].__cmdArgDesc[0]);
+						
+						// Arguments name-desc
+						var l_argumentDesc = "";
+						for( var j = 0; j < p_argsLength; j++ ) {
+					
+
+							l_argumentDesc += fn_stringAddPad(l_cmdArgs[j], 10) + fn_stringAddPad(" :", 4) + l_cmdArgsDesc[j] + "\n";
+						}
+						
+						fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_argumentDesc + "\n");
+						
+					}
+					
+					
+					return -1; // Exit the function
+				}
+				
+			#endregion
 			
 			
 			break;
@@ -246,8 +318,7 @@ function fn_CMDControl_showHelp(p_args) {
 		// Too much arguments
 		default: {
 		
-			var l_errorMsg = fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "help", p_argsLength, 0, 1);
-			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_errorMsg);
+			fn_CMDControl_MsgShowError(fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "help", p_argsLength, 0, 1) );
 			return -1;
 			
 			break;
@@ -261,30 +332,60 @@ function fn_CMDControl_showHelp(p_args) {
 
 	
 /// @function fn_CMDControl_game(status)
-/// @param gameCMD: String
+/// @param gameCMD: Array<String>
 /// @return void
 /// @desc Select the function to execute a game command
 function fn_CMDControl_game(p_gameCMD) {
+	
+	var p_argsLength = array_length(p_gameCMD);
+	
+	switch(p_argsLength) {
 		
-	switch(p_gameCMD) {
+		// Error - need at least one argument
+		case 0: {
 			
-		case "restart":{
-			game_restart();
+			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "game", p_argsLength, 1, 1) );
 			break;
-		}
 			
-		case "exit":{
-			game_end();
+		}
+		
+		// Execute game command
+		case 1: {
+		
+			switch(p_gameCMD[0]) {
+			
+				case "restart":{
+					game_restart();
+					break;
+				}
+			
+				case "exit":{
+					game_end();
+					break;
+				}
+			
+				default: {
+					fn_CMDControl_MsgShowError(
+						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					);
+					break;
+				}
+			}
+			
 			break;
-		}
 			
+		}
+		
+		// Error - need lest than 2 arguments
 		default: {
-			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exits, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
-			);
-		}
 			
+			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "game", p_argsLength, 1, 1) );
+			
+			break;
+			
+		}
 	}
+
 		
 }
 

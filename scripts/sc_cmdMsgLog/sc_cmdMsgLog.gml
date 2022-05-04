@@ -3,7 +3,7 @@ enum e_cmdTypeMessage {
 
 	params_less_min,
 	params_more_max,
-	command_not_exits
+	command_not_exists
 
 }
 
@@ -12,7 +12,7 @@ enum e_cmdTypeMessage {
 /// @desc Show the error msg
 function fn_CMDControl_MsgShowError( p_message ) {
 	
-	fn_CMDArrayPushFIFO(__cmdLogArrayMsg, p_message);
+	fn_CMDArrayPushFIFO(__cmdLogArrayMsg, "[ERROR] " + p_message);
 	
 }
 
@@ -29,21 +29,21 @@ function fn_CMDControl_MsgGetGenericMessage( p_type, p_command, p_paramTotalGive
 	
 	switch( p_type ) {
 		
-		case e_cmdTypeMessage.command_not_exits: {
+		case e_cmdTypeMessage.command_not_exists: {
 			
-			return "[ERROR] The \"" + p_command + "\" command isn't recognized";
+			return "The \"" + p_command + "\" command isn't recognized";
 			break;
 		}
 		
 		case e_cmdTypeMessage.params_less_min: {
 			
-			return "[ERROR] \"" + p_command + "\" need at least " + string(p_minParams) + " argument/s, but " + string(p_paramTotalGiven) + " were given";
+			return "\"" + p_command + "\" need at least " + string(p_minParams) + " argument/s, but " + string(p_paramTotalGiven) + " were given";
 			break;
 		}
 		
 		case e_cmdTypeMessage.params_more_max: {
 			
-			return "[ERROR] \"" + p_command + "\" must recieve no more than " + string(p_maxParams) + " argument/s, but " + string(p_paramTotalGiven) + " were given";
+			return "\"" + p_command + "\" must recieve no more than " + string(p_maxParams) + " argument/s, but " + string(p_paramTotalGiven) + " were given";
 			break;
 		}
 		
