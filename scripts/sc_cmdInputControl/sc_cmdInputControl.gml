@@ -1,6 +1,71 @@
 function sc_cmdInputControl() {	
 
 
+/// @function objCommand(title, shortTitle, description, [function], [arguments], [argsDescription])
+/// @return newCommand: ligthObject
+/// @desc Create a command object
+function objCommand(p_title, p_shortTitle, p_description, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
+	__cmdTitle = p_title;
+	__cmdShort = p_shortTitle;
+	__cmdDesc = p_description;
+	__cmdFunc = p_function;
+	__cmdArgs = p_arguments;
+	__cmdArgDesc = p_argsDescription;
+}
+
+/// @function fn_CMDControl_getCommands()
+/// @return commandList: [ligthObject]
+/// @desc Get the commands available with their properties and binding function
+function fn_CMDControl_getCommands() {
+	
+	#region Command List
+	
+	var l_commandList = [
+	
+		// Header
+		new objCommand("TITLE", "SHORT", "DESCRIPTION", undefined, ["ARGUMENT"], ["DESCRIPTION"]),
+		
+		// Help
+		new objCommand("help", "h", 
+			"Show all the help about commands",
+			fn_CMDControl_showHelp,
+			["command"],
+			["It shows more details description about an specific command"]),
+		
+		// Version
+		new objCommand("version", "v", 
+			"Show the current gms2CMD version",
+			fn_CMDControl_inputGetStringVersion),
+		
+		// Clear
+		new objCommand("clear", "-",
+			"Clear the current console log (it also reset the command history)",
+			fn_CMDControl_clearLog),
+
+		// Game
+		new objCommand("game", "g",
+			"Choose to restart or exit the game",
+			fn_CMDControl_game,
+			["status"],
+			[ "Can take the values 'exit' or 'restart'" ]),
+			
+		// Fullscreen on-off
+		new objCommand("fullscreen", "fs",
+			"Change to fullscreen (on) or windowed mode (off)",
+			fn_CMDControl_fullscreenMode,
+			["activate"],
+			[ "Can take the values 'on'(1) or 'off'(0)" ]),
+		
+	];
+	
+	#endregion
+	
+	return l_commandList
+	
+
+}
+
+
 /// @function fn_CMDControl_commitInput( commitInput )
 /// @param commitInput: String
 /// @return void
@@ -78,12 +143,12 @@ function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHei
 /// @desc Check the command type added and resolve the input
 function fn_CMDControl_parseCommand() {
 	
-	// @TODO: Delete this, is just for test before submit a new version
-	var l_tempJoinText = "";
-	for( var i = 0; i < array_length(__cmdTextPartArray); i++) {
-		show_debug_message(__cmdTextPartArray[i])
-		l_tempJoinText += __cmdTextPartArray[i] + " ";
-	}
+	// NOTE: The below commented code is just for test and see each input word.
+	//var l_tempJoinText = "";
+	//for( var i = 0; i < array_length(__cmdTextPartArray); i++) {
+	//	show_debug_message(__cmdTextPartArray[i])
+	//	l_tempJoinText += __cmdTextPartArray[i] + " ";
+	//}
 	
 	var l_mainCommand = __cmdTextPartArray[0],
 		l_params = [];
@@ -93,9 +158,7 @@ function fn_CMDControl_parseCommand() {
 		l_commandListLength = array_length(l_commandList);
 	
 	for( var i = 0; i < l_commandListLength; i++ ) {
-		
-		//show_debug_message()
-		
+	
 		if( l_commandList[i].__cmdTitle == l_mainCommand or ( l_commandList[i].__cmdShort == l_mainCommand and l_commandList[i].__cmdShort != "-" )) {
 			l_commandList[i].__cmdFunc(l_params);
 			return -1;
@@ -108,63 +171,6 @@ function fn_CMDControl_parseCommand() {
 		
 	
 	
-}
-
-/// @function objCommand(title, shortTitle, description, [function], [arguments], [argsDescription])
-/// @return newCommand: ligthObject
-/// @desc Create a command object
-function objCommand(p_title, p_shortTitle, p_description, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
-	__cmdTitle = p_title;
-	__cmdShort = p_shortTitle;
-	__cmdDesc = p_description;
-	__cmdFunc = p_function;
-	__cmdArgs = p_arguments;
-	__cmdArgDesc = p_argsDescription;
-}
-
-/// @function fn_CMDControl_getCommands()
-/// @return commandList: [ligthObject]
-/// @desc Get the commands available with their properties and binding function
-function fn_CMDControl_getCommands() {
-	
-	#region Command List
-	
-	var l_commandList = [
-	
-		// Header
-		new objCommand("TITLE", "SHORT", "DESCRIPTION", undefined, ["ARGUMENT"], ["DESCRIPTION"]),
-		
-		// Help
-		new objCommand("help", "h", 
-			"Show all the help about commands",
-			fn_CMDControl_showHelp,
-			["command"],
-			["It shows more details description about an specific command"]),
-		
-		// Version
-		new objCommand("version", "v", 
-			"Show the current gms2CMD version",
-			fn_CMDControl_inputGetStringVersion),
-		
-		// Clear
-		new objCommand("clear", "-",
-			"Clear the current console log (it also reset the command history)",
-			fn_CMDControl_clearLog),
-
-		// Game
-		new objCommand("game", "g",
-			"Choose to restart or exit the game",
-			fn_CMDControl_game,
-			["status"],
-			[ "Can take the values 'exit' or 'restart'" ]),
-		
-	];
-	
-	#endregion
-	
-	return l_commandList
-	
-
 }
 
 //----------------------------
@@ -215,7 +221,7 @@ function fn_CMDControl_showHelp(p_args) {
 					l___cmdShortTitle = string_upper(l_cmdCommands[i].__cmdShort),
 					l___cmdDescription = l_cmdCommands[i].__cmdDesc;
 			
-				l_helpText += "\n" + fn_stringAddPad(l___cmdTitle, 10) +
+				l_helpText += "\n" + fn_stringAddPad(l___cmdTitle, 14) +
 								fn_stringAddPad(l___cmdShortTitle, 8) +
 								l___cmdDescription;
 			}
@@ -389,7 +395,64 @@ function fn_CMDControl_game(p_gameCMD) {
 		
 }
 
+/// @function fn_CMDControl_fullscreenMode(activate)
+/// @param activate: Array<String> (boolean)
+/// @return void
+/// @desc Select the function to execute a game command
+function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 	
+	var p_argsLength = array_length(p_fullscreenCMD);
+
+	switch(p_argsLength) {
+		
+		// Error - need at least one argument
+		case 0: {
+			
+			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "fullscreen", p_argsLength, 1, 1) );
+			break;
+			
+		}
+		
+		// Execute fullscreen command
+		case 1: {
+		
+			switch(p_fullscreenCMD[0]) {
+			
+				case "on":
+				case "1": {
+					window_set_fullscreen(true)
+					break;
+				}
+			
+				case "off":
+				case 0: {
+					window_set_fullscreen(false);
+					break;
+				}
+			
+				default: {
+					fn_CMDControl_MsgShowError(
+						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					);
+					break;
+				}
+			}
+			
+			break;
+			
+		}
+		
+		// Error - need lest than 2 arguments
+		default: {
+			
+			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "game", p_argsLength, 1, 1) );
+			
+			break;
+			
+		}
+	}
+	
+}	
 
 #endregion
 
