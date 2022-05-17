@@ -176,6 +176,51 @@ function fn_CMDControl_parseCommand() {
 //----------------------------
 #region Commands action list
 
+/// @function fn_CMDControl_generalCommand_oneArgumentOnly()
+/// @param gameCMD: Array<String>
+/// @return void
+/// @desc Used for commands that have the general error with the given parameter
+function fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD) constructor {
+	
+	var p_argsLength = array_length(p_gameCMD);
+	__myCommand = function() {};
+
+	fn_CMDControl_MsgShowError( 
+		fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "game", p_argsLength, 1, 1),
+		other.id
+	);	
+	//switch(p_argsLength) {
+		
+	//	// Error - need at least one argument
+	//	case 0: {
+			
+	//		fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "game", p_argsLength, 1, 1) );
+	//		break;
+			
+	//	}
+		
+	//	// Execute game command
+	//	case 1: {
+		
+	//		__myCommand();
+			
+	//		break;
+			
+	//	}
+		
+	//	// Error - need lest than 2 arguments
+	//	default: {
+			
+	//		//fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "game", p_argsLength, 1, 1) );
+			
+	//		break;
+			
+	//	}
+	
+	//}
+	
+}
+
 /// @function fn_CMDControl_clearLog()
 /// @return void
 /// @desc Clear the current console log (it also reset the command history)
@@ -341,54 +386,27 @@ function fn_CMDControl_showHelp(p_args) {
 /// @param gameCMD: Array<String>
 /// @return void
 /// @desc Select the function to execute a game command
-function fn_CMDControl_game(p_gameCMD) {
+function fn_CMDControl_game(p_gameCMD): fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD) constructor{
+		
+	__myCommand = function() {
 	
-	var p_argsLength = array_length(p_gameCMD);
-	
-	switch(p_argsLength) {
-		
-		// Error - need at least one argument
-		case 0: {
-			
-			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "game", p_argsLength, 1, 1) );
-			break;
-			
-		}
-		
-		// Execute game command
-		case 1: {
-		
-			switch(p_gameCMD[0]) {
-			
-				case "restart":{
-					game_restart();
-					break;
-				}
-			
-				case "exit":{
-					game_end();
-					break;
-				}
-			
-				default: {
-					fn_CMDControl_MsgShowError(
-						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
-					);
-					break;
-				}
+		switch(p_gameCMD[0]) {		
+			case "restart":{
+				game_restart();
+				break;
 			}
 			
-			break;
+			case "exit":{
+				game_end();
+				break;
+			}
 			
-		}
-		
-		// Error - need lest than 2 arguments
-		default: {
-			
-			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "game", p_argsLength, 1, 1) );
-			
-			break;
-			
+			default: {
+				fn_CMDControl_MsgShowError(
+					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+				);
+				break;
+			}
 		}
 	}
 
@@ -457,3 +475,4 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 #endregion
 
 }
+

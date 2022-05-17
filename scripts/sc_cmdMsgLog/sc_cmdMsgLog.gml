@@ -7,12 +7,18 @@ enum e_cmdTypeMessage {
 
 }
 
-/// @function fn_CMDControl_MsgShowError(errorMsg)
+/// @function fn_CMDControl_MsgShowError(errorMsg, objectArrayMsgOwned)
+/// @param message: string
+/// @param objectArrayMsgOwned: object|instance
 /// @return erroMsg: String
 /// @desc Show the error msg
-function fn_CMDControl_MsgShowError( p_message ) {
-	
-	fn_CMDArrayPushFIFO(__cmdLogArrayMsg, "[ERROR] " + p_message);
+function fn_CMDControl_MsgShowError(p_message, p_objectArrayMsgOwned ) {
+
+	var l_arrayTouse = p_objectArrayMsgOwned ? p_objectArrayMsgOwned.__cmdLogArrayMsg : __cmdLogArrayMsg;
+		
+	fn_CMDArrayPushFIFO(l_arrayTouse, "[ERROR] " + p_message);
+		
+
 	
 }
 
@@ -51,3 +57,7 @@ function fn_CMDControl_MsgGetGenericMessage( p_type, p_command, p_paramTotalGive
 	
 	
 }
+
+
+
+
