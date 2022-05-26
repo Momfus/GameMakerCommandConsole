@@ -130,3 +130,18 @@ function fn_stringAddPad(p_text, p_spaces) {
 	return p_text + l_padToAdd;
 
 }
+
+///@function fn_isSingleton()
+function fn_isSingleton() {
+
+	var l_instNumber = instance_number(self.object_index);
+	
+	if(l_instNumber > 1) {
+		instance_destroy();
+		
+		var l_objectName = object_get_name(self.object_index)
+		show_debug_message("WARNING >>> Instance from object " + l_objectName + " already exists and is a singleton (id: "+ string(id) + ")" );
+		
+	}
+	
+}

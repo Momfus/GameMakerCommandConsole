@@ -3,6 +3,8 @@
 
 #macro CMD_CURRENT_VERSION "0.5.2"
 
+fn_isSingleton(); 
+
 // States
 enum e_cmdState {
 
