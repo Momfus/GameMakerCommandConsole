@@ -1,5 +1,7 @@
 function sc_cmdInputControl() {	
 
+/// General variables for this functions
+__currentCommandExecute = undefined;
 
 /// @function objCommand(title, shortTitle, description, [function], [arguments], [argsDescription])
 /// @return newCommand: ligthObject
@@ -143,6 +145,7 @@ function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHei
 /// @desc Check the command type added and resolve the input
 function fn_CMDControl_parseCommand() {
 	
+
 	// NOTE: The below commented code is just for test and see each input word.
 	//var l_tempJoinText = "";
 	//for( var i = 0; i < array_length(__cmdTextPartArray); i++) {
@@ -153,13 +156,14 @@ function fn_CMDControl_parseCommand() {
 	var l_mainCommand = __cmdTextPartArray[0],
 		l_params = [];
 	array_copy(l_params, 0, __cmdTextPartArray, 1, array_length(__cmdTextPartArray) - 1);
-	
+
 	var l_commandList = fn_CMDControl_getCommands(),
 		l_commandListLength = array_length(l_commandList);
 	
 	for( var i = 0; i < l_commandListLength; i++ ) {
 	
 		if( l_commandList[i].__cmdTitle == l_mainCommand or ( l_commandList[i].__cmdShort == l_mainCommand and l_commandList[i].__cmdShort != "-" )) {
+			__currentCommandExecute = l_commandList[i];
 			l_commandList[i].__cmdFunc(l_params);
 			return -1;
 		}
@@ -180,44 +184,44 @@ function fn_CMDControl_parseCommand() {
 /// @param gameCMD: Array<String>
 /// @return void
 /// @desc Used for commands that have the general error with the given parameter
-function fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD) constructor {
+function fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD) {
+	
 	
 	var p_argsLength = array_length(p_gameCMD);
-	__myCommand = function() {};
-
-	fn_CMDControl_MsgShowError( 
-		fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "game", p_argsLength, 1, 1),
-		other.id
-	);	
-	//switch(p_argsLength) {
-		
-	//	// Error - need at least one argument
-	//	case 0: {
-			
-	//		fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "game", p_argsLength, 1, 1) );
-	//		break;
-			
-	//	}
-		
-	//	// Execute game command
-	//	case 1: {
-		
-	//		__myCommand();
-			
-	//		break;
-			
-	//	}
-		
-	//	// Error - need lest than 2 arguments
-	//	default: {
-			
-	//		//fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "game", p_argsLength, 1, 1) );
-			
-	//		break;
-			
-	//	}
 	
-	//}
+	switch(p_argsLength) {
+		
+		// Error - need at least one argument
+		case 0: {
+			
+			fn_CMDControl_MsgShowError( 
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, __currentCommandExecute.__cmdTitle, p_argsLength, 1, 1)
+			);
+			break;
+			
+		}
+		
+		// Execute game command
+		case 1: {
+		
+			__myMethod(p_gameCMD); // Important: the function tha use this one, need to declare a __myCommand function.
+			
+			break;
+			
+		}
+		
+		// Error - need lest than 2 arguments
+		default: {
+			
+			fn_CMDControl_MsgShowError(
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, 1, 1)
+			);
+			
+			break;
+			
+		}
+	
+	}
 	
 }
 
@@ -386,9 +390,9 @@ function fn_CMDControl_showHelp(p_args) {
 /// @param gameCMD: Array<String>
 /// @return void
 /// @desc Select the function to execute a game command
-function fn_CMDControl_game(p_gameCMD): fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD) constructor{
-		
-	__myCommand = function() {
+function fn_CMDControl_game(p_gameCMD) {
+
+	__myMethod = function(p_gameCMD) {
 	
 		switch(p_gameCMD[0]) {		
 			case "restart":{
@@ -402,7 +406,9 @@ function fn_CMDControl_game(p_gameCMD): fn_CMDControl_generalCommand_oneArgument
 			}
 			
 			default: {
-				fn_CMDControl_MsgShowError(
+
+
+				fn_CMDControl_MsgShowError( 
 					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
 				);
 				break;
@@ -410,7 +416,9 @@ function fn_CMDControl_game(p_gameCMD): fn_CMDControl_generalCommand_oneArgument
 		}
 	}
 
-		
+				
+	fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD);
+	
 }
 
 /// @function fn_CMDControl_fullscreenMode(activate)
@@ -418,57 +426,34 @@ function fn_CMDControl_game(p_gameCMD): fn_CMDControl_generalCommand_oneArgument
 /// @return void
 /// @desc Select the function to execute a game command
 function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
-	
-	var p_argsLength = array_length(p_fullscreenCMD);
 
-	switch(p_argsLength) {
+	__myMethod = function(p_fullscreenCMD) {
 		
-		// Error - need at least one argument
-		case 0: {
+		switch(p_fullscreenCMD[0]) {
 			
-			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, "fullscreen", p_argsLength, 1, 1) );
-			break;
-			
-		}
-		
-		// Execute fullscreen command
-		case 1: {
-		
-			switch(p_fullscreenCMD[0]) {
-			
-				case "on":
-				case "1": {
-					window_set_fullscreen(true)
-					break;
-				}
-			
-				case "off":
-				case 0: {
-					window_set_fullscreen(false);
-					break;
-				}
-			
-				default: {
-					fn_CMDControl_MsgShowError(
-						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
-					);
-					break;
-				}
+			case "on":
+			case "1": {
+				window_set_fullscreen(true)
+				break;
 			}
 			
-			break;
+			case "off":
+			case 0: {
+				window_set_fullscreen(false);
+				break;
+			}
 			
+			default: {
+				fn_CMDControl_MsgShowError(
+					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+				);
+				break;
+			}
 		}
-		
-		// Error - need lest than 2 arguments
-		default: {
-			
-			fn_CMDControl_MsgShowError( fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "game", p_argsLength, 1, 1) );
-			
-			break;
-			
-		}
+				
 	}
+
+	fn_CMDControl_generalCommand_oneArgumentOnly(p_fullscreenCMD);
 	
 }	
 

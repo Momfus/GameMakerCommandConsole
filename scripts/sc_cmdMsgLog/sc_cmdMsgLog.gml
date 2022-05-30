@@ -7,12 +7,12 @@ enum e_cmdTypeMessage {
 
 }
 
-/// @function fn_CMDControl_MsgShowError(errorMsg, objectArrayMsgOwned)
+/// @function fn_CMDControl_MsgShowError(errorMsg, objectArrayMsgOwned*)
 /// @param message: string
-/// @param objectArrayMsgOwned: object|instance
+/// @param objectArrayMsgOwned*: object|instance
 /// @return erroMsg: String
 /// @desc Show the error msg
-function fn_CMDControl_MsgShowError(p_message, p_objectArrayMsgOwned ) {
+function fn_CMDControl_MsgShowError(p_message, p_objectArrayMsgOwned = undefined ) {
 
 	var l_arrayTouse = p_objectArrayMsgOwned ? p_objectArrayMsgOwned.__cmdLogArrayMsg : __cmdLogArrayMsg;
 		
