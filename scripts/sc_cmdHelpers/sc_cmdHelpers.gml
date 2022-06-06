@@ -60,7 +60,7 @@ function fn_cmdInputArrayCheckPressed(p_arrayToCheck, p_arrayLength){
 /// @desc Return a value wrapper between [min, max]
 function fn_wrapValue(p_valueToWrap, p_min, p_max) {
 	
-	// Forst to be int values (with real numbers sometimes have wrong returns)
+	// Forst to be int values (with real numbers sometimes hººave wrong returns)
 	p_valueToWrap = floor(p_valueToWrap);
 	p_min = floor(p_min);
 	p_max = floor(p_max);
@@ -143,5 +143,14 @@ function fn_isSingleton() {
 		show_debug_message("WARNING >>> Instance from object " + l_objectName + " already exists and is a singleton (id: "+ string(id) + ")" );
 		
 	}
+	
+}
+
+
+//@function fs_resizeResolutionToObjects();
+function fs_resizeResolutionToObjects() {
+
+	ob_camera_main.fn_resizeWindow();
+	ob_control_cmd.fn_resizeWindow();
 	
 }

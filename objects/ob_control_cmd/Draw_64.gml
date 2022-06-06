@@ -36,3 +36,5 @@ if ( __currentState == e_cmdState.opened ) {
 	draw_set_alpha(1);
 	
 }
+
+

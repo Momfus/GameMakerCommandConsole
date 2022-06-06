@@ -3,6 +3,7 @@ function sc_cmdInputControl() {
 /// General variables for this functions
 __currentCommandExecute = undefined;
 
+
 /// @function objCommand(title, shortTitle, description, [function], [arguments], [argsDescription])
 /// @return newCommand: ligthObject
 /// @desc Create a command object
@@ -434,12 +435,14 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 			case "on":
 			case "1": {
 				window_set_fullscreen(true)
+				fn_CMDTriggerResolutionChange();
 				break;
 			}
 			
 			case "off":
 			case 0: {
 				window_set_fullscreen(false);
+				fn_CMDTriggerResolutionChange();
 				break;
 			}
 			

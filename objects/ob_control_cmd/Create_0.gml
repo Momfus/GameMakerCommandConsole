@@ -137,3 +137,22 @@ show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @
 
 
 sc_cmdInputControl();
+
+/// @function fn_resizeWindow()
+/// @return void
+/// @desc Change the necesary attributes when the resolution is different.
+function fn_resizeWindow() {
+	
+	__width = display_get_gui_width();
+
+}
+
+/// @function fn_CMDTriggerResolutionChange()
+/// @return void
+/// @desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
+function fn_CMDTriggerResolutionChange() {
+
+	ob_control_resolution.fn_controlResolutionResize();
+
+}
+	
