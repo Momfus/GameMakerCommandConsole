@@ -32,18 +32,35 @@ function fn_controlResolutionResize(p_isFirsTimeStart = false) {
 	__resIdealWidth = round( __resBaseHeight * __resAspectRatio ); // This is for widescreen aspect ratio (aspectRadio > 1);
 	__resIdealHeight = __resBaseHeight;
 
-	/// Perfect pixel scaling
+	#region Perfect pixel scaling
+	
+	// Widescreen
 	if ( ( display_get_width() mod __resIdealWidth ) != 0 ) { // Stretch to resolution to maintain dimensions
     
 		var l_display = round( display_get_width() / __resIdealWidth );
 		__resIdealWidth = display_get_width() / l_display;  
 	
 	}
+	
+	// Portrait (uncomment to enable and comment the other)
+	//if ( ( display_get_width() mod __resIdealWidth ) != 0 ) { // Stretch to resolution to maintain dimensions
+    
+	//	var l_display = round( display_get_width() / __resIdealWidth );
+	//	__resIdealWidth = display_get_width() / l_display;  
+	
+	//}
+	
+	#endregion
 
 	// Check for odd resolution numbers. Note: There is any "odd number resolution" but just in case, this will round into a even one
 	if( __resIdealWidth & 1 ) {
 		__resIdealWidth++;
 	}
+	
+	if( __resIdealHeight & 1 ) {
+		__resIdealHeight++;
+	}
+
 
 	/// Set surface and center
 	surface_resize(application_surface, __resIdealWidth, __resIdealHeight);
@@ -61,8 +78,9 @@ function fn_controlResolutionResize(p_isFirsTimeStart = false) {
 		display_set_gui_size(__resIdealWidth, __resIdealHeight);
 	}
 
-	alarm[0] = 1;
+	alarm[0] = 1; // it need at lest one step to center the window
 	
+	// This is just to not generate a loop when the object is created (start with the base and if needed, call it again)
 	if not( p_isFirsTimeStart) {
 		fs_resizeResolutionToObjects();
 	}
