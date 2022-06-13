@@ -397,6 +397,7 @@ function fn_CMDControl_game(p_gameCMD) {
 	
 		switch(p_gameCMD[0]) {		
 			case "restart":{
+				
 				game_restart();
 				break;
 			}
@@ -432,18 +433,43 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 		
 		switch(p_fullscreenCMD[0]) {
 			
-			case "on":
-			case "1": {
-				window_set_fullscreen(true)
-				fn_CMDTriggerResolutionChange();
+			case "off":
+			case 0: {
+				
+				if ( window_get_fullscreen() ) {
+					
+					window_set_fullscreen(false);
+					window_set_size(480, 270);
+					fn_CMDTriggerResolutionChange(480, 270);
+					
+				} else {
+					fn_CMDControl_MsgShowError("The screen is already windowed");
+				}
+				
 				break;
 			}
 			
-			case "off":
-			case 0: {
-				window_set_fullscreen(false);
-				fn_CMDTriggerResolutionChange();
+			case "on":
+			case 1: {
+				window_set_fullscreen(true)
+				fn_CMDTriggerResolutionChange(display_get_width(), display_get_height());
 				break;
+			}
+			
+			case 2: {
+				window_set_size(960, 540);
+				fn_CMDTriggerResolutionChange(960, 540);
+				break;	
+			}
+			
+			case 3: {
+				window_set_size(480, 270);
+				fn_CMDTriggerResolutionChange(480, 270);
+				break;	
+			}
+			case 4: {
+				fn_CMDTriggerResolutionChange(480,270, true);
+				break;	
 			}
 			
 			default: {

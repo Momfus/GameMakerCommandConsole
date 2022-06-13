@@ -144,15 +144,22 @@ sc_cmdInputControl();
 function fn_resizeWindow() {
 	
 	__width = display_get_gui_width();
-
+	
 }
 
 /// @function fn_CMDTriggerResolutionChange()
+/// @param windowWidth : int
+/// @param windowHeight : int
+/// @param isOnlyResizeGUI : boolean
 /// @return void
 /// @desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
-function fn_CMDTriggerResolutionChange() {
+function fn_CMDTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
 
-	ob_control_resolution.fn_controlResolutionResize();
+	if ( p_isOnlyResizeGUI ) {
+		ob_control_resolution.fn_controlResolutionResizeGUI(p_windowWidth, p_windowHeight)
+	} else {
+		ob_control_resolution.fn_controlResolutionResizeAll(false, p_windowWidth, p_windowHeight);
+	}
 
 }
 	
