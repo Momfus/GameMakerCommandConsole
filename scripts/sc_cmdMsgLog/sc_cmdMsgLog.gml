@@ -16,7 +16,7 @@ function fn_CMDControl_MsgShowError(p_message, p_objectArrayMsgOwned = undefined
 
 	var l_arrayTouse = p_objectArrayMsgOwned ? p_objectArrayMsgOwned.__cmdLogArrayMsg : __cmdLogArrayMsg;
 		
-	fn_CMDArrayPushFIFO(l_arrayTouse, "[ERROR] " + p_message);
+	fn_cmdArrayPushFIFO(l_arrayTouse, "[ERROR] " + p_message);
 		
 
 	

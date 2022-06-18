@@ -1,5 +1,7 @@
 /// @desc Attributes init
 
+//application_surface_draw_enable(false);
+
 // This object must be in the beggining of the game in a blank room with the same size as the base widthxheight
 fn_isSingleton();
 
@@ -17,8 +19,8 @@ __resMaxHeight = 1080;
 __resGUIAspectOffset = 1;
 __resGUIWidthOld = __resBaseWidth;
 
-__resDisplayWidth =  display_get_width(); // Example: 1366
-__resDisplayHeight = display_get_height(); // Example: 768
+__resDisplayWidth =   1366
+__resDisplayHeight =  768
 
 // Ini states (if you want to set fullscreen and another resolution in the beggining, create a ini file that is read and then excecute the resolution function
 window_set_fullscreen(false);
@@ -32,9 +34,12 @@ window_set_size(__resBaseWidth, __resBaseHeight);
 /// @param newWindowHeight: int
 /// @return void
 /// @desc Change the necesary attributes when the resolution is different.
-function fn_controlResolutionResizeAll(p_isFirsTimeStart = false, p_newWindowWidth = __resBaseWidth, p_newWindowHeight = __resIdealHeight) {
+function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = __resBaseWidth, p_newWindowHeight = __resIdealHeight) {
 	
-	__resAspectRatio = __resDisplayWidth / __resDisplayHeight;
+	__resDisplayWidth = p_newWindowWidth;
+	__resDisplayHeight = p_newWindowHeight;
+	
+	__resAspectRatio = p_newWindowWidth / p_newWindowHeight;//__resDisplayWidth / __resDisplayHeight;
 	
 	__resIdealWidth = round( __resBaseHeight * __resAspectRatio ); // This is for widescreen aspect ratio (aspectRadio > 1);
 	// __resIdealHeight = round( __resIdealWidth * __resAspectRatio ); /// This is for portrait aspect ratio (aspect ratio < 1),
@@ -44,8 +49,8 @@ function fn_controlResolutionResizeAll(p_isFirsTimeStart = false, p_newWindowWid
 		// Widescreen
 		if ( (__resDisplayWidth mod __resIdealWidth ) != 0 ) { // Stretch to resolution to maintain dimensions
     
-			var l_display = round( __resDisplayWidth / __resIdealWidth );
-			__resIdealWidth = __resDisplayWidth / l_display;  
+			var l_display = floor( __resDisplayWidth / __resIdealWidth );
+			__resIdealWidth = round(__resDisplayWidth / l_display) ;
 	
 		}
 	
@@ -71,15 +76,22 @@ function fn_controlResolutionResizeAll(p_isFirsTimeStart = false, p_newWindowWid
 	#endregion
 
 	/// Set surface and center
-	surface_resize(application_surface, __resIdealWidth, __resIdealHeight);
+	
+	window_set_size(p_newWindowWidth, p_newWindowHeight)
+	
+//__resIdealWidth = __resIdealWidth + (p_newWindowWidth - p_newWindowWidth);
+ //__resIdealWidth = __resIdealWidth + (abs( __resIdealWidth - __resBaseWidth ))
+ 
+	surface_resize(application_surface,__resIdealWidth , __resIdealHeight);
+	
 
 	fn_controlResolutionResizeGUI(p_newWindowWidth, p_newWindowHeight);
 
 	alarm[0] = 1; // it need at lest one step to center the window
 	
 	// This is just to not generate a loop when the object is created (start with the base and if needed, call it again)
-	if not( p_isFirsTimeStart) {
-		fs_resizeResolutionToObjects();
+	if not( p_isFirstTimeStart) {
+		alarm[1] = 1; // It need at least one time after the rescale is made
 	} else {
 		room_goto_next();	
 	}
@@ -107,6 +119,7 @@ function fn_controlResolutionResizeGUI(p_newGUIWidth, p_newGUIHeight) {
 }
 
 #endregion
+
 
 
 fn_controlResolutionResizeAll(true); // Is important to call this in the beggining

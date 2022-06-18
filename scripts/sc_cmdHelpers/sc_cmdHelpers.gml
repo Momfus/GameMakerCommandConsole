@@ -1,14 +1,35 @@
-/// @function fn_CMDArrayPushFIFO( array, newElement )
+/// @function fn_cmdArrayPushFIFO( array, newElement )
 /// @param array: [any]
 /// @param newElement: any
 /// @return oldElement: any
 /// @desc Remove the old element and add a new one in the top
-function fn_CMDArrayPushFIFO(p_array, p_elementToInsert){
+function fn_cmdArrayPushFIFO(p_array, p_elementToInsert){
 	
 	var l_oldElement = array_pop(p_array);
 	array_insert(p_array, 0, p_elementToInsert);
 
 	return l_oldElement;
+
+}
+
+///@function fn_cmdGUICheckMouseIsHoverThisObject(stateMouseHover)
+///@param stateMouseHover : boolean
+///@return isHover : boolean
+///@desc Check if the mouse enter or leave the object using the gui layer
+function fn_cmdGUICheckMouseIsHoverThisObject(p_stateMouseHover) {
+	var l_mouseMeetingCMD = position_meeting(MOUSE_GUI_X, MOUSE_GUI_Y, id);
+	
+	if( p_stateMouseHover ) {
+		if( !l_mouseMeetingCMD ) {
+			p_stateMouseHover =  false;	
+		}
+	} else {
+		if( l_mouseMeetingCMD ) {
+			p_stateMouseHover = true
+		}
+	} 
+	
+	return p_stateMouseHover;
 
 }
 
@@ -147,10 +168,12 @@ function fn_isSingleton() {
 }
 
 
-//@function fs_resizeResolutionToObjects();
-function fs_resizeResolutionToObjects() {
+///@function fs_resizeResolutionToObjects(guiOffsetMultiplier)
+///@param guiOffsetMultiplier : real
+///@return void
+function fs_resizeResolutionToObjects(p_guiOffsetMultiplier) {
 
 	ob_camera_main.fn_resizeWindow();
-	ob_control_cmd.fn_resizeWindow();
+	ob_control_cmd.fn_resizeWindow(p_guiOffsetMultiplier);
 	
 }

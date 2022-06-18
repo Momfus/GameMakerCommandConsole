@@ -74,7 +74,7 @@ function fn_CMDWindow_drawCommandInput() {
 		// Cursor
 		draw_set_color(c_orange);
 		if( __cmdCursorVisible ) {
-			draw_text( __posTextStartX + l_textLeftCursorWidth, __posTextY, "|");	
+			draw_text( __posTextStartX + l_textLeftCursorWidth - 4 , __posTextY, "|");	
 		}
 			
 		// Test Right

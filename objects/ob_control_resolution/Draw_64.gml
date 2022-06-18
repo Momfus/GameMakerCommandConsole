@@ -8,6 +8,7 @@ if( __resShowInfo ) {
 	draw_set_halign(fa_right);
 	draw_text(l_xx, l_yy, "Display: " + string(__resDisplayWidth) + " x " + string(__resDisplayHeight) );
 	draw_text(l_xx, l_yy + 20, "Window: " + string(window_get_width()) + " x " + string( window_get_height() ) );
+	draw_text(l_xx, l_yy + 40, "App Surface: " + string(surface_get_width(application_surface)) + " x " + string( surface_get_height(application_surface) ) );
 	draw_text(l_xx, l_yy + 60, "GUI: " + string(display_get_gui_width()) + " x " + string(display_get_gui_height() ));
 	draw_text(l_xx, l_yy + 80, "Base: " + string(__resBaseWidth) + " x " + string(__resBaseHeight ));
 	draw_text(l_xx, l_yy + 100, "Aspect Ratio W/H: " + string(__resAspectRatio) );

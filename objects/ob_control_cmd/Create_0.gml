@@ -3,6 +3,11 @@
 
 #macro CMD_CURRENT_VERSION "0.5.3"
 
+// This was intended to be used only on PC, so I'm aiming for a single mouse/touch device
+#macro MOUSE_GUI_X  device_mouse_x_to_gui(0)
+#macro MOUSE_GUI_Y  device_mouse_y_to_gui(0)
+
+
 fn_isSingleton(); 
 
 // States
@@ -31,8 +36,6 @@ __cmdText[e_cmdTextInput.rightSide] = "";
 __cmdCursorPosition = 0; // Where the text is focus
 
 __cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
-
-
 
 
 #region Log input
@@ -85,7 +88,7 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	__posCmdInputY2 = __posCmdInputY1 + __heightCmdInput;
 	
 	__posTextY = __posCmdInputY1 + floor( (__posCmdInputY2 - __posCmdInputY1) * 0.5);
-	__posTextStartX = __xx + __paddingInner + 12;
+	__posTextStartX = __xx + __paddingInner + 16;
 	
 	// Cursor flash
 	__cmdCursorFlashTime = 20;
@@ -98,7 +101,7 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 
 	// Set collision mask that trigger witht mouse events 
 	image_xscale = __width;
-	image_yscale = __posCmdInputY1
+	image_yscale = __posCmdInputY1;
 
 	__cmdMouseHover = false;
 	__cmdMouseWheelUp = false;
@@ -121,7 +124,7 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 #endregion
 
 // Declare methods
-event_user(0); // BWegin Step States
+event_user(0); // Begin Step States
 event_user(1); // Declare keyboard cmd functions
 event_user(2); // Commit cmd functions
 event_user(3); // GUI and Surface functions
@@ -138,12 +141,21 @@ show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @
 
 sc_cmdInputControl();
 
-/// @function fn_resizeWindow()
+/// @function fn_resizeWindow(guiOffsetMultiplier)
+/// @param guiOffsetMultiplier: real
 /// @return void
 /// @desc Change the necesary attributes when the resolution is different.
-function fn_resizeWindow() {
+function fn_resizeWindow(p_guiOffsetMultiplier) {
 	
-	__width = display_get_gui_width();
+	// Visual
+	__width	*= p_guiOffsetMultiplier;
+	if( __width > window_get_width() ) {
+		__width = window_get_width();
+	}
+	
+	// Mouse collision
+	
+	image_xscale *= p_guiOffsetMultiplier;
 	
 }
 

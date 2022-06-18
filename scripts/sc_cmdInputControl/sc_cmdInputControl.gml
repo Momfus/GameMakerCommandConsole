@@ -89,7 +89,7 @@ function fn_CMDControl_commitInput(p_commitInput) {
 		
 	} else {
 	
-		fn_CMDArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
+		fn_cmdArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
 		fn_CMDControl_parseCommand();
 	
 	}
@@ -246,7 +246,7 @@ function fn_CMDControl_inputGetStringVersion() {
 	> Version:   " + string(CMD_CURRENT_VERSION) + 
 	"\n==============================" ;
 	
-	fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_versionText);
+	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_versionText);
 }
 
 /// @function fn_CMDControl_showHelp(args)
@@ -278,7 +278,7 @@ function fn_CMDControl_showHelp(p_args) {
 	
 			l_helpText += "\n===============";
 	
-			fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_helpText); 
+			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_helpText); 
 	
 	
 			break;
@@ -335,17 +335,17 @@ function fn_CMDControl_showHelp(p_args) {
 
 					
 					// Name
-					fn_CMDArrayPushFIFO( __cmdLogArrayMsg, fn_stringAddPad(">>>",6) + l_cmdName);
+					fn_cmdArrayPushFIFO( __cmdLogArrayMsg, fn_stringAddPad(">>>",6) + l_cmdName);
 					
 					// Description
-					fn_CMDArrayPushFIFO( __cmdLogArrayMsg, l_cmdDesc + "\n");
+					fn_cmdArrayPushFIFO( __cmdLogArrayMsg, l_cmdDesc + "\n");
 					
 					// Arguments name and description
 					
 					if( is_array(l_cmdArgs) ) {
 						
 						// Headers
-						fn_CMDArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(l_cmdCommands[0].__cmdArgs[0], 10)
+						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(l_cmdCommands[0].__cmdArgs[0], 10)
 							+ fn_stringAddPad("", 4) + l_cmdCommands[0].__cmdArgDesc[0]);
 						
 						// Arguments name-desc
@@ -356,7 +356,7 @@ function fn_CMDControl_showHelp(p_args) {
 							l_argumentDesc += fn_stringAddPad(l_cmdArgs[j], 10) + fn_stringAddPad(" :", 4) + l_cmdArgsDesc[j] + "\n";
 						}
 						
-						fn_CMDArrayPushFIFO(__cmdLogArrayMsg, l_argumentDesc + "\n");
+						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_argumentDesc + "\n");
 						
 					}
 					
@@ -439,7 +439,7 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 				if ( window_get_fullscreen() ) {
 					
 					window_set_fullscreen(false);
-					window_set_size(480, 270);
+					//window_set_size(480, 270);
 					fn_CMDTriggerResolutionChange(480, 270);
 					
 				} else {
@@ -457,13 +457,15 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 			}
 			
 			case 2: {
-				window_set_size(960, 540);
-				fn_CMDTriggerResolutionChange(960, 540);
+				//window_set_size(960, 540);
+				//fn_CMDTriggerResolutionChange(960, 540);
+				//window_set_size(1366, 768);
+				fn_CMDTriggerResolutionChange(1366, 768);
 				break;	
 			}
 			
 			case 3: {
-				window_set_size(480, 270);
+				//window_set_size(480, 270);
 				fn_CMDTriggerResolutionChange(480, 270);
 				break;	
 			}
