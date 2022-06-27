@@ -440,7 +440,7 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 					
 					window_set_fullscreen(false);
 					//window_set_size(480, 270);
-					fn_CMDTriggerResolutionChange(480, 270);
+					fn_CMDTriggerResolutionChange(960, 540);
 					
 				} else {
 					fn_CMDControl_MsgShowError("The screen is already windowed");
@@ -456,21 +456,22 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 				break;
 			}
 			
-			case 2: {
+			case 2:{
 				//window_set_size(960, 540);
 				//fn_CMDTriggerResolutionChange(960, 540);
 				//window_set_size(1366, 768);
-				fn_CMDTriggerResolutionChange(1366, 768);
+				fn_CMDTriggerResolutionChange(1400, 1050);
 				break;	
 			}
 			
 			case 3: {
 				//window_set_size(480, 270);
-				fn_CMDTriggerResolutionChange(480, 270);
+				fn_CMDTriggerResolutionChange(960, 540);
 				break;	
 			}
 			case 4: {
-				fn_CMDTriggerResolutionChange(480,270, true);
+				//fn_CMDTriggerResolutionChange(480,270, true);
+				fn_CMDTriggerResolutionChange(1280, 540);
 				break;	
 			}
 			

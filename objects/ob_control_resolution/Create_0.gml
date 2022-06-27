@@ -1,13 +1,13 @@
 /// @desc Attributes init
 
-//application_surface_draw_enable(false);
+application_surface_draw_enable(false);
 
 // This object must be in the beggining of the game in a blank room with the same size as the base widthxheight
 fn_isSingleton();
 
 __resShowInfo = true;
-__resBaseWidth = 480; // Priorizate the Height for widescreen
-__resBaseHeight = 270;
+__resBaseWidth = 960; // Priorizate the Height for widescreen
+__resBaseHeight = 540;
 
 __resIdealWidth = __resBaseWidth;
 __resIdealHeight = __resBaseHeight;
@@ -19,8 +19,9 @@ __resMaxHeight = 1080;
 __resGUIAspectOffset = 1;
 __resGUIWidthOld = __resBaseWidth;
 
-__resDisplayWidth =   1366
-__resDisplayHeight =  768
+__resDisplayWidth =   display_get_width();
+__resDisplayHeight =  display_get_height();
+
 
 // Ini states (if you want to set fullscreen and another resolution in the beggining, create a ini file that is read and then excecute the resolution function
 window_set_fullscreen(false);
@@ -32,35 +33,47 @@ window_set_size(__resBaseWidth, __resBaseHeight);
 /// @param isFirsTimeStart: boolean
 /// @param newWindowWidth: int
 /// @param newWindowHeight: int
+/// @param p_isPortrait : boolean
 /// @return void
 /// @desc Change the necesary attributes when the resolution is different.
-function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = __resBaseWidth, p_newWindowHeight = __resIdealHeight) {
+function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = __resBaseWidth, p_newWindowHeight = __resIdealHeight,  p_isPortrait = false) {
 	
-	__resDisplayWidth = p_newWindowWidth;
-	__resDisplayHeight = p_newWindowHeight;
+	var l_isWindowFS = window_get_fullscreen(),
+		l_displayReferenceWidth = l_isWindowFS ? __resDisplayWidth : p_newWindowWidth,
+		l_displayReferenceHeight = l_isWindowFS ? __resDisplayHeight : p_newWindowHeight;
+
 	
-	__resAspectRatio = p_newWindowWidth / p_newWindowHeight;//__resDisplayWidth / __resDisplayHeight;
+	__resAspectRatio = l_displayReferenceWidth / l_displayReferenceHeight;
 	
-	__resIdealWidth = round( __resBaseHeight * __resAspectRatio ); // This is for widescreen aspect ratio (aspectRadio > 1);
-	// __resIdealHeight = round( __resIdealWidth * __resAspectRatio ); /// This is for portrait aspect ratio (aspect ratio < 1),
+	if not( p_isPortrait ) {
+		__resIdealWidth = round( __resBaseHeight * __resAspectRatio ); // This is for widescreen aspect ratio (aspectRadio > 1);	
+		__resIdealHeight = __resBaseHeight;
+	} else{
+		__resIdealHeight = round( __resBaseWidth * __resAspectRatio ); // This is for portrait aspect ratio (aspectRadio < 1);		
+		__resIdealWidth = __resBaseWidth;
+	}
 
 	#region Perfect pixel scaling
 	
+		// For test purposes, is important to adjust not only the width but the height also, it works for differents ratios fixing the camera width and height then 
+		
 		// Widescreen
-		if ( (__resDisplayWidth mod __resIdealWidth ) != 0 ) { // Stretch to resolution to maintain dimensions
+		if ( ( not(p_isPortrait) and (l_displayReferenceWidth mod __resIdealWidth ) != 0 ) or not(l_isWindowFS) ) { // Stretch to resolution to maintain dimensions
     
-			var l_display = floor( __resDisplayWidth / __resIdealWidth );
-			__resIdealWidth = round(__resDisplayWidth / l_display) ;
+			var l_display = round( l_displayReferenceWidth / __resIdealWidth );
+			__resIdealWidth = round(l_displayReferenceWidth / l_display);
+			
 	
 		}
 	
 		// Portrait (uncomment to enable and comment the other)
-		//if ( ( __resDisplayHeight  mod __resIdealHeight ) != 0 ) { // Stretch to resolution to maintain dimensions
-    
-		//	var l_display = round(__resDisplayHeight / __resIdealHeight );
-		//	__resIdealHeight =__resDisplayHeight / l_display;  
+		if ( ( p_isPortrait and ( l_displayReferenceHeight  mod __resIdealHeight ) != 0 ) or not(l_isWindowFS) ) { // Stretch to resolution to maintain dimensions
+			var l_display = round(l_displayReferenceHeight / __resIdealHeight );
+			__resIdealHeight =l_displayReferenceHeight / l_display;  
 	
-		//}
+		}
+	
+	
 	
 	
 		// Check for odd resolution numbers. Note: There is any "odd number resolution" but just in case, this will round into a even one
@@ -77,14 +90,10 @@ function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWi
 
 	/// Set surface and center
 	
-	window_set_size(p_newWindowWidth, p_newWindowHeight)
+	window_set_size(p_newWindowWidth, p_newWindowHeight);
 	
-//__resIdealWidth = __resIdealWidth + (p_newWindowWidth - p_newWindowWidth);
- //__resIdealWidth = __resIdealWidth + (abs( __resIdealWidth - __resBaseWidth ))
- 
 	surface_resize(application_surface,__resIdealWidth , __resIdealHeight);
 	
-
 	fn_controlResolutionResizeGUI(p_newWindowWidth, p_newWindowHeight);
 
 	alarm[0] = 1; // it need at lest one step to center the window
@@ -95,6 +104,8 @@ function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWi
 	} else {
 		room_goto_next();	
 	}
+	
+	
 }
 
 /// @function fn_controlResolutionResizeGUI()
@@ -119,7 +130,6 @@ function fn_controlResolutionResizeGUI(p_newGUIWidth, p_newGUIHeight) {
 }
 
 #endregion
-
 
 
 fn_controlResolutionResizeAll(true); // Is important to call this in the beggining
