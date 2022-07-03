@@ -1,6 +1,6 @@
-/// @desc Show infor
+/// @desc Show info
 
-if( __resShowInfo ) {
+if(__isNewWindowSizeSetted and __resShowInfo ) {
 	
 	var l_xx = display_get_gui_width() - 40,
 		l_yy = 24;

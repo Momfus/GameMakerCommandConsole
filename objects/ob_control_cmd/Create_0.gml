@@ -156,6 +156,7 @@ function fn_resizeWindow(p_guiOffsetMultiplier) {
 	// Mouse collision
 	
 	image_xscale *= p_guiOffsetMultiplier;
+	fn_CMDControl_updateScrollbarProperties(true, true);
 	
 }
 

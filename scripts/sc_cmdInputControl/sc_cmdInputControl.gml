@@ -457,20 +457,15 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 			}
 			
 			case 2:{
-				//window_set_size(960, 540);
-				//fn_CMDTriggerResolutionChange(960, 540);
-				//window_set_size(1366, 768);
-				fn_CMDTriggerResolutionChange(1400, 1050);
+				fn_CMDTriggerResolutionChange(1024, 768);
 				break;	
 			}
 			
 			case 3: {
-				//window_set_size(480, 270);
 				fn_CMDTriggerResolutionChange(960, 540);
 				break;	
 			}
 			case 4: {
-				//fn_CMDTriggerResolutionChange(480,270, true);
 				fn_CMDTriggerResolutionChange(1280, 540);
 				break;	
 			}
