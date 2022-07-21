@@ -33,31 +33,47 @@ function fn_CMDControl_getCommands() {
 			"Show all the help about commands",
 			fn_CMDControl_showHelp,
 			["command"],
-			["It shows more details description about an specific command"]),
+			["It shows more details description about an specific command"]
+		),
 		
 		// Version
 		new objCommand("version", "v", 
 			"Show the current gms2CMD version",
-			fn_CMDControl_inputGetStringVersion),
+			fn_CMDControl_inputGetStringVersion
+		),
 		
 		// Clear
 		new objCommand("clear", "-",
 			"Clear the current console log (it also reset the command history)",
-			fn_CMDControl_clearLog),
+			fn_CMDControl_clearLog
+		),
 
 		// Game
 		new objCommand("game", "g",
 			"Choose to restart or exit the game",
 			fn_CMDControl_game,
 			["status"],
-			[ "Can take the values 'exit' or 'restart'" ]),
+			[ "Can take the values 'exit' or 'restart'" ]
+		),
 			
 		// Fullscreen on-off
 		new objCommand("fullscreen", "fs",
 			"Change to fullscreen (on) or windowed mode (off)",
 			fn_CMDControl_fullscreenMode,
 			["activate"],
-			[ "Can take the values 'on'(1) or 'off'(0)" ]),
+			[ "Can take the values 'on'(1) or 'off'(0)" ]
+		),
+			
+		// Change resolution based on an array
+		new objCommand("resolution", "res",
+			"Change to fullscreen (on) or windowed mode (off)",
+			fn_CMDControl_resolution,
+			["subcommand", "arg1", "arg2"],
+			[	"Could be: \n\T[16]- window/w (change window size). \n\T[16]- info (0/false = hide; 1/true = show).\n\T[16]- gui/g (change GUI surface resolution)", 
+				"width or boolean or index for the default resolution array", 
+				"height"
+			]
+		),
 		
 	];
 	
@@ -344,16 +360,23 @@ function fn_CMDControl_showHelp(p_args) {
 					
 					if( is_array(l_cmdArgs) ) {
 						
+				
 						// Headers
 						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(l_cmdCommands[0].__cmdArgs[0], 10)
 							+ fn_stringAddPad("", 4) + l_cmdCommands[0].__cmdArgDesc[0]);
 						
 						// Arguments name-desc
-						var l_argumentDesc = "";
-						for( var j = 0; j < p_argsLength; j++ ) {
-					
+						var l_cmdArgsLength = array_length(l_cmdArgs);
 
-							l_argumentDesc += fn_stringAddPad(l_cmdArgs[j], 10) + fn_stringAddPad(" :", 4) + l_cmdArgsDesc[j] + "\n";
+						
+						var l_argumentDesc = "";
+						for( var j = 0; j < l_cmdArgsLength; j++ ) {
+							
+							var l_formattedString  = fn_stringFromatTab(l_cmdArgsDesc[j]);
+							// CHeck tab
+							
+							l_argumentDesc += fn_stringAddPad(l_cmdArgs[j], 10) + fn_stringAddPad(" :", 4) + l_formattedString + "\n";
+							
 						}
 						
 						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_argumentDesc + "\n");
@@ -484,6 +507,19 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 	
 }	
 
+
+
+function fn_CMDControl_resolution(p_args) {
+
+	var l_argsLength = array_length(p_args);
+	
+	for( var i = 0; i < l_argsLength; i++ ) {
+		
+		show_debug_message(p_args[i]);
+		
+	}
+
+}
 #endregion
 
 }

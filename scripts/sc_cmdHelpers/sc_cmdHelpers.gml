@@ -133,7 +133,6 @@ function fn_stringSplit(p_strToSplit, p_delimiter, p_ignoreEmptyString) {
 	
 }
 
-
 //@function fn_stringAddPad(text, spaces)
 //@param text: string
 //@param spaces: real
@@ -151,6 +150,51 @@ function fn_stringAddPad(p_text, p_spaces) {
 	return p_text + l_padToAdd;
 
 }
+
+///@function fn_stringFromatTab(stringToFormat, separator)
+///@param stringArray : string
+///@param separator : string
+///@return stringFormatted : string
+///@desc Return the given string with a new formated with tab space (that is the number of spaces given between [..] )
+function fn_stringFromatTab(p_stringToFormat, p_separator = "\T") { // the T is important that is uppercase
+
+	var l_arrayStringSplit = fn_stringSplit(p_stringToFormat, p_separator, true),
+		l_arrayStringSplitLength = array_length(l_arrayStringSplit),
+		l_stringFormatted = "";
+		
+	if not( l_arrayStringSplitLength > 1 ) {
+		
+		l_stringFormatted = p_stringToFormat; // Just in case a text withotu special tab is used
+		
+	} else {
+		
+		#region Add spaces
+		
+		l_stringFormatted = l_arrayStringSplit[0];
+		
+		for( var i = 1; i < l_arrayStringSplitLength; i++ ) { // The text before the tag is not used because it doesnt have any format to add
+			
+			var l_stringRow = l_arrayStringSplit[i],
+				l_posOpen = string_pos("[", l_stringRow),
+				l_posClose = string_pos("]", l_stringRow),
+				l_spaceNumber = real( string_copy(l_stringRow, l_posOpen + 1, l_posClose - l_posOpen + 1 ) );
+			
+			l_stringRow = string_delete(l_stringRow, l_posOpen, l_posClose);
+			l_stringRow = fn_stringAddPad(" ", l_spaceNumber) + l_stringRow;
+			
+			l_stringFormatted += l_stringRow;
+			
+		}
+	
+		#endregion
+	
+	}
+	
+	return l_stringFormatted;
+
+}
+
+
 
 ///@function fn_isSingleton()
 function fn_isSingleton() {
