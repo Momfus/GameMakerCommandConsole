@@ -59,6 +59,7 @@ __cmdTextPartArray[0] = ""; // This is use to check each string inside an input 
 __cmdInputOpenCloseKeyArray = [220, 112, 27] // [º, F1, Esc] 
 __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 
+
 #region Visual Settings
 
 	__surfCmdWindow = noone;
@@ -122,6 +123,18 @@ __cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
 	__cmdScrollBarTapPositionOffset = 0;
 
 #endregion
+
+
+// Others
+
+__cmdWindowSizeArrayBase = [ // used to test windows size to use with the ob_control_resolution
+
+	[960, 540], // base
+	[1024, 768],
+	[1280, 540]
+	
+];
+
 
 // Declare methods
 event_user(0); // Begin Step States

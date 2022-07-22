@@ -1,3 +1,5 @@
+/// @function sc_cmdInputControl()
+/// @return void
 function sc_cmdInputControl() {	
 
 /// General variables for this functions
@@ -66,11 +68,11 @@ function fn_CMDControl_getCommands() {
 			
 		// Change resolution based on an array
 		new objCommand("resolution", "res",
-			"Change to fullscreen (on) or windowed mode (off)",
+			"Change window size or resolution GUI or test resolution information",
 			fn_CMDControl_resolution,
 			["subcommand", "arg1", "arg2"],
-			[	"Could be: \n\T[16]- window/w (change window size). \n\T[16]- info (0/false = hide; 1/true = show).\n\T[16]- gui/g (change GUI surface resolution)", 
-				"width or boolean or index for the default resolution array", 
+			[	"Could be... \n\T[16]- window/w (change window size). \n\T[16]- info/i (0/false = hide; 1/true = show).\n\T[16]- gui/g (change GUI surface resolution)", 
+				"width || boolean || index for the default resolution array", 
 				"height"
 			]
 		),
@@ -162,15 +164,7 @@ function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHei
 /// @desc Check the command type added and resolve the input
 function fn_CMDControl_parseCommand() {
 	
-
-	// NOTE: The below commented code is just for test and see each input word.
-	//var l_tempJoinText = "";
-	//for( var i = 0; i < array_length(__cmdTextPartArray); i++) {
-	//	show_debug_message(__cmdTextPartArray[i])
-	//	l_tempJoinText += __cmdTextPartArray[i] + " ";
-	//}
-	
-	var l_mainCommand = __cmdTextPartArray[0],
+	var l_mainCommand = string_lower(__cmdTextPartArray[0]),
 		l_params = [];
 	array_copy(l_params, 0, __cmdTextPartArray, 1, array_length(__cmdTextPartArray) - 1);
 
@@ -197,48 +191,32 @@ function fn_CMDControl_parseCommand() {
 //----------------------------
 #region Commands action list
 
-/// @function fn_CMDControl_generalCommand_oneArgumentOnly()
+/// @function fn_CMDControl_generalCommand_argumentControl(gameCMD, argMin, argMax)
 /// @param gameCMD: Array<String>
+/// @param argMin: int
+/// @param argMax: int
 /// @return void
-/// @desc Used for commands that have the general error with the given parameter
-function fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD) {
-	
+/// @desc Used for commands that have the general error with the given parameters, and minimum and maximum argument number to check
+function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_argMax) {
 	
 	var p_argsLength = array_length(p_gameCMD);
-	
-	switch(p_argsLength) {
+
+	if( p_argsLength >= p_argMin and p_argsLength <= p_argMax ) {
 		
-		// Error - need at least one argument
-		case 0: {
-			
-			fn_CMDControl_MsgShowError( 
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, __currentCommandExecute.__cmdTitle, p_argsLength, 1, 1)
-			);
-			break;
-			
-		}
+		__myMethod(p_gameCMD); // Important: the function tha use this one, need to declare a __myCommand function.
 		
-		// Execute game command
-		case 1: {
+	} else {
 		
-			__myMethod(p_gameCMD); // Important: the function tha use this one, need to declare a __myCommand function.
-			
-			break;
-			
-		}
-		
-		// Error - need lest than 2 arguments
-		default: {
-			
+		if( p_argsLength < p_argMin ) {
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, 1, 1)
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
 			);
-			
-			break;
-			
+		} else {
+			fn_CMDControl_MsgShowError(
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)			);
 		}
-	
 	}
+
 	
 }
 
@@ -432,17 +410,17 @@ function fn_CMDControl_game(p_gameCMD) {
 			
 			default: {
 
-
 				fn_CMDControl_MsgShowError( 
 					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
 				);
 				break;
+				
 			}
 		}
 	}
 
 				
-	fn_CMDControl_generalCommand_oneArgumentOnly(p_gameCMD);
+	fn_CMDControl_generalCommand_argumentControl(p_gameCMD, 1, 1);
 	
 }
 
@@ -462,7 +440,6 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 				if ( window_get_fullscreen() ) {
 					
 					window_set_fullscreen(false);
-					//window_set_size(480, 270);
 					fn_CMDTriggerResolutionChange(960, 540);
 					
 				} else {
@@ -503,23 +480,114 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 				
 	}
 
-	fn_CMDControl_generalCommand_oneArgumentOnly(p_fullscreenCMD);
+	fn_CMDControl_generalCommand_argumentControl(p_fullscreenCMD, 1, 1);
 	
 }	
 
 
+/// @function fn_CMDControl_resolution(argToUse)
+/// @param argToUse: Array<String>
+/// @return void
+/// @desc Select the function to execute a game command
+function fn_CMDControl_resolution(p_argSToUse) {
 
-function fn_CMDControl_resolution(p_args) {
-
-	var l_argsLength = array_length(p_args);
 	
-	for( var i = 0; i < l_argsLength; i++ ) {
+	__myMethod = function(p_argSToUse) { 
 		
-		show_debug_message(p_args[i]);
+		var l_firstArg = string_lower(p_argSToUse[0])
+		switch(l_firstArg) {
+		
+			case "window":
+			case "w": {
+				array_delete(p_argSToUse, 0, 1);
+				fn_CMDControl_resolutionSetWindowSize( p_argSToUse );
+				
+				break;
+			}
+			
+			case "info":
+			case "i": {
+				show_debug_message(">> Information");
+				break;
+			}
+			
+			case "gui":
+			case "g": {
+				show_debug_message(">> GUI");
+				break;
+			}
+			
+			default: {
+				fn_CMDControl_MsgShowError(
+					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+				);
+				break;
+			}
+		}
 		
 	}
+	
+	fn_CMDControl_generalCommand_argumentControl(p_argSToUse, 1, 3);
+
 
 }
+
+///@function fn_CMDControl_resolutionSetWindowSize(argToUse)
+///@param argToUse: Array<String> (int)
+///@return void
+///@desc Set the windows size with a width and heigth, or use an index input with the array base to test.
+function fn_CMDControl_resolutionSetWindowSize(p_argSToUse) {
+	
+	//// CONTINUE
+	__myMethod = function(p_argSToUse) { 
+	
+		var l_arrayLength = array_length(p_argSToUse);
+		
+		try{
+			
+			var l_firstNumber = real(p_argSToUse[0]);	
+		
+			if( l_arrayLength == 1 ) {
+		
+				#region Check for array index
+			
+			
+				#endregion
+		
+			} else {
+			
+				#region Set window width and heigth
+			
+					var l_secondNumber = real(p_argSToUse[1]);
+			
+				#endregion
+			
+			}
+		
+		} catch(l_error) {
+			
+			show_debug_message(l_error.message);
+			show_debug_message(l_error.longMessage);
+			show_debug_message(l_error.script);
+			show_debug_message(l_error.stacktrace);
+			
+			fn_CMDControl_MsgShowError(l_error.message);
+		}
+		
+		
+		for( var i = 0; i < l_arrayLength; i++ ) {
+			show_debug_message(p_argSToUse[i])	
+		}
+	
+	}
+	
+	
+	fn_CMDControl_generalCommand_argumentControl(p_argSToUse, 1, 2);
+	
+}
+
+
+
 #endregion
 
 }

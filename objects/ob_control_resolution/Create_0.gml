@@ -15,6 +15,7 @@ __resIdealHeight = __resBaseHeight;
 __resMaxWidth = 1920;
 __resMaxHeight = 1080;
 
+
 // Check helpers (for GUI resize)
 __newResSizeWidth = 0;
 __newResSizeHeight = 0;
