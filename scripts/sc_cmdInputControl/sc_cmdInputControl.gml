@@ -456,20 +456,6 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 				break;
 			}
 			
-			case 2:{
-				fn_CMDTriggerResolutionChange(1024, 768);
-				break;	
-			}
-			
-			case 3: {
-				fn_CMDTriggerResolutionChange(960, 540);
-				break;	
-			}
-			case 4: {
-				fn_CMDTriggerResolutionChange(1280, 540);
-				break;	
-			}
-			
 			default: {
 				fn_CMDControl_MsgShowError(
 					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
@@ -489,25 +475,33 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 /// @param argToUse: Array<String>
 /// @return void
 /// @desc Select the function to execute a game command
-function fn_CMDControl_resolution(p_argSToUse) {
+function fn_CMDControl_resolution(p_argsToUse) {
 
 	
-	__myMethod = function(p_argSToUse) { 
+	__myMethod = function(p_argsToUse) { 
 		
-		var l_firstArg = string_lower(p_argSToUse[0])
+		var l_firstArg = string_lower(p_argsToUse[0])
 		switch(l_firstArg) {
 		
 			case "window":
 			case "w": {
-				array_delete(p_argSToUse, 0, 1);
-				fn_CMDControl_resolutionSetWindowSize( p_argSToUse );
+				array_delete(p_argsToUse, 0, 1);
+				fn_CMDControl_resolutionSetWindowSize( p_argsToUse );
 				
 				break;
 			}
 			
 			case "info":
 			case "i": {
-				show_debug_message(">> Information");
+				
+				var l_resShowInfo = not(ob_control_resolution.__resShowInfo),
+					l_resInfoStateString = (l_resShowInfo)? "displayed" : "hidden";
+					
+				ob_control_resolution.__resShowInfo = l_resShowInfo;
+				
+				fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "Resolution information is now " + l_resInfoStateString); 
+				
+				
 				break;
 			}
 			
@@ -527,7 +521,7 @@ function fn_CMDControl_resolution(p_argSToUse) {
 		
 	}
 	
-	fn_CMDControl_generalCommand_argumentControl(p_argSToUse, 1, 3);
+	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 1, 3);
 
 
 }
@@ -536,21 +530,35 @@ function fn_CMDControl_resolution(p_argSToUse) {
 ///@param argToUse: Array<String> (int)
 ///@return void
 ///@desc Set the windows size with a width and heigth, or use an index input with the array base to test.
-function fn_CMDControl_resolutionSetWindowSize(p_argSToUse) {
+function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 	
-	//// CONTINUE
-	__myMethod = function(p_argSToUse) { 
+	__myMethod = function(p_argsToUse) { 
 	
-		var l_arrayLength = array_length(p_argSToUse);
+		var l_arrayLength = array_length(p_argsToUse);
 		
 		try{
 			
-			var l_firstNumber = real(p_argSToUse[0]);	
+			var l_firstNumber = real(p_argsToUse[0]);	
 		
 			if( l_arrayLength == 1 ) {
 		
 				#region Check for array index
 			
+				var l_windowArrayBaseLength = array_length(__cmdWindowSizeArrayBase),
+				
+				if( l_firstNumber >= 0 and l_firstNumber < l_windowArrayBaseLength) {
+				
+					var l_width = __cmdWindowSizeArrayBase[l_firstNumber][0],
+						l_height = __cmdWindowSizeArrayBase[l_firstNumber][1];
+					fn_CMDTriggerResolutionChange(l_width, l_height);
+					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "Window size and GUI resolution set to: " + string(l_width) + " x " + string(l_height)); 
+				
+				} else {
+					
+					// Out of rang
+					fn_CMDControl_MsgShowError("The index " + string(l_firstNumber) + " is out of range.");
+					
+				}
 			
 				#endregion
 		
@@ -558,7 +566,10 @@ function fn_CMDControl_resolutionSetWindowSize(p_argSToUse) {
 			
 				#region Set window width and heigth
 			
-					var l_secondNumber = real(p_argSToUse[1]);
+					var l_secondNumber = real(p_argsToUse[1]);
+					
+					fn_CMDTriggerResolutionChange(l_firstNumber, l_secondNumber);
+					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "Window size and GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
 			
 				#endregion
 			
@@ -574,17 +585,48 @@ function fn_CMDControl_resolutionSetWindowSize(p_argSToUse) {
 			fn_CMDControl_MsgShowError(l_error.message);
 		}
 		
-		
-		for( var i = 0; i < l_arrayLength; i++ ) {
-			show_debug_message(p_argSToUse[i])	
-		}
+
 	
 	}
 	
 	
-	fn_CMDControl_generalCommand_argumentControl(p_argSToUse, 1, 2);
+	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 1, 2);
 	
 }
+
+///@function fn_CMDControl_resolutionSetGUISize(argToUse)
+///@param argToUse: Array<String> (int)
+///@return void
+///@desc Set the GUI size with a width and heigth.
+function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
+	
+	__myMethod = function(p_argsToUse) { 
+	
+		var l_arrayLength = array_length(p_argsToUse);
+		
+		try{
+			
+	
+		
+		} catch(l_error) {
+			
+			show_debug_message(l_error.message);
+			show_debug_message(l_error.longMessage);
+			show_debug_message(l_error.script);
+			show_debug_message(l_error.stacktrace);
+			
+			fn_CMDControl_MsgShowError(l_error.message);
+		}
+		
+
+	
+	}
+	
+	
+	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 1, 2);
+	
+}
+
 
 
 
