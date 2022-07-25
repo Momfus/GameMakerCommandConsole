@@ -71,7 +71,7 @@ function fn_CMDControl_getCommands() {
 			"Change window size or resolution GUI or test resolution information",
 			fn_CMDControl_resolution,
 			["subcommand", "arg1", "arg2"],
-			[	"Could be... \n\T[16]- window/w (change window size). \n\T[16]- info/i (0/false = hide; 1/true = show).\n\T[16]- gui/g (change GUI surface resolution)", 
+			[	"Could be... \n\T[16]- window/w (change window size). \n\T[16]- info/i (to show or hide resolution information).\n\T[16]- gui/g (change GUI surface resolution)", 
 				"width || boolean || index for the default resolution array", 
 				"height"
 			]
@@ -435,12 +435,15 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 		switch(p_fullscreenCMD[0]) {
 			
 			case "off":
+			case "false":
 			case 0: {
 				
 				if ( window_get_fullscreen() ) {
 					
 					window_set_fullscreen(false);
 					fn_CMDTriggerResolutionChange(960, 540);
+					
+					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "The programa now is windowed: 960 x 540");
 					
 				} else {
 					fn_CMDControl_MsgShowError("The screen is already windowed");
@@ -450,10 +453,27 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 			}
 			
 			case "on":
+			case "true":
 			case 1: {
-				window_set_fullscreen(true)
-				fn_CMDTriggerResolutionChange(display_get_width(), display_get_height());
+				
+				if( window_get_fullscreen() ) {
+					
+					fn_CMDControl_MsgShowError("The screen is already fullscreen");
+					
+				} else {
+					
+					var l_displayWidth = display_get_width(),
+						l_displayHeight = display_get_height();
+					
+					window_set_fullscreen(true)
+					fn_CMDTriggerResolutionChange(l_displayWidth, l_displayHeight);
+				
+					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "The programa now is fullscreen: " + string(l_displayWidth) + " x " + string(l_displayHeight) );
+				
+				}
+				
 				break;
+				
 			}
 			
 			default: {
@@ -507,7 +527,8 @@ function fn_CMDControl_resolution(p_argsToUse) {
 			
 			case "gui":
 			case "g": {
-				show_debug_message(">> GUI");
+				array_delete(p_argsToUse, 0, 1);
+				fn_CMDControl_resolutionSetGUISize( p_argsToUse );
 				break;
 			}
 			
@@ -598,15 +619,17 @@ function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 ///@param argToUse: Array<String> (int)
 ///@return void
 ///@desc Set the GUI size with a width and heigth.
-function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
+function fn_CMDControl_resolutionSetGUISize(p_argsToUse) {
 	
 	__myMethod = function(p_argsToUse) { 
 	
-		var l_arrayLength = array_length(p_argsToUse);
-		
 		try{
 			
-	
+			var l_firstNumber = real(p_argsToUse[0]),
+				l_secondNumber = real(p_argsToUse[1]);
+					
+			fn_CMDTriggerResolutionChange(l_firstNumber, l_secondNumber, true);
+			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
 		
 		} catch(l_error) {
 			
@@ -623,7 +646,7 @@ function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 	}
 	
 	
-	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 1, 2);
+	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 2, 2);
 	
 }
 

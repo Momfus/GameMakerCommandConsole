@@ -39,19 +39,6 @@ if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
 	
 	}
-
-
-	// Corner square test
-	//draw_set_color(c_red);
-	//var l_guiWidth = display_get_gui_width(),
-	//	l_guiHeight = display_get_gui_height();
-
-	
-	//draw_rectangle(10, 10, 10 + 32, 10 + 32, false);
-	//draw_rectangle(l_guiWidth - 10 - 32, 10, l_guiWidth - 10, 10 + 32, false);
-	//draw_rectangle(10, l_guiHeight - 10 - 32, 10 + 32, l_guiHeight - 10, false);
-	//draw_rectangle(l_guiWidth - 10 - 32, l_guiHeight - 10 - 32, l_guiWidth - 10, l_guiHeight - 10, false);
-	
 	
 }
 
