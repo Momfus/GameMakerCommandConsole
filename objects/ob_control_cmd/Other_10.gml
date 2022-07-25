@@ -39,6 +39,7 @@ function StateBeginStep_opened() {
 			// Mouse event control
 			fn_CMDControl_checkMouseEvent(); // Global mouse check (not necesarry when is hover the CMD
 
+			__cmdMouseHover = fn_cmdGUICheckMouseIsHoverThisObject(__cmdMouseHover);
 			if( __cmdMouseHover ) {
 				fn_CMDControl_inputMouse();
 			}

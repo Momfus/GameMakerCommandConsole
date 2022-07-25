@@ -1,9 +1,9 @@
 /// @description Methods - Mouse and scroll
 
 
-/// @function fn_CMDControl_inputMouse()
-/// @return void
-/// @desc Check all the inputs from the mouse
+///@function fn_CMDControl_inputMouse()
+///@return void
+///@desc Check all the inputs from the mouse
 function fn_CMDControl_inputMouse() {
 	
 	#region Scrollbar move
@@ -13,8 +13,6 @@ function fn_CMDControl_inputMouse() {
 		}
 	
 	#endregion
-	
-	
 	
 }
 

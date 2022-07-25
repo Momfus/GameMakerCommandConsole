@@ -4,35 +4,41 @@ draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-if ( __currentState == e_cmdState.opened ) {
+if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
-	#region Background
+	if ( __currentState == e_cmdState.opened ) {
 	
-		// Log background
-		draw_set_color(c_black);
-		draw_set_alpha(__alphaLog);
-		draw_rectangle(__xx, __yy, __width, __heightLog, false)
+		#region Background
 	
-		// CMD Input background
-		draw_set_alpha(__alphaCmdInput)
-		draw_rectangle(__xx, __posCmdInputY1, __width, __posCmdInputY2, false);
+			// Log background
+			draw_set_color(c_black);
+			draw_set_alpha(__alphaLog);
+			draw_rectangle(__xx, __yy, __width, __heightLog, false)
 	
-		draw_set_alpha(1);		
+			// CMD Input background
+			draw_set_alpha(__alphaCmdInput)
+			draw_rectangle(__xx, __posCmdInputY1, __width, __posCmdInputY2, false);
 	
-	#endregion
+			draw_set_alpha(1);		
 	
-	if !( surface_exists(__surfCmdWindow) ) {
-		__surfCmdWindow = surface_create( __width, __heightLog);
-		fn_CMDWindow_updateSurface(false);
-	}
+		#endregion
+	
+		if !( surface_exists(__surfCmdWindow) ) {
+			__surfCmdWindow = surface_create( __width, __heightLog);
+			fn_CMDWindow_updateSurface(false);
+		}
 	
 		
-	draw_surface(__surfCmdWindow, __xx, __yy);
-	fn_CMDWindow_drawCommandInput();
-	fn_CMDWindow_drawScrollbar();
+		draw_surface(__surfCmdWindow, __xx, __yy);
+		fn_CMDWindow_drawCommandInput();
+		fn_CMDWindow_drawScrollbar();
 
-	// Reset
-	draw_set_valign(fa_top);
-	draw_set_alpha(1);
+		// Reset
+		draw_set_valign(fa_top);
+		draw_set_alpha(1);
+	
+	
+	}
 	
 }
+
