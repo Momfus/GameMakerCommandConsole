@@ -77,6 +77,15 @@ function fn_CMDControl_getCommands() {
 			]
 		),
 		
+		// Execute scripts or object functions
+		new objCommand("function", "fn",
+			"Execute an object function or script",
+			fn_CMDControl_functionExecute,
+			["args..."],
+			[	"All the arguments needed to execute the script"
+			]
+		),
+		
 	];
 	
 	#endregion
@@ -188,20 +197,17 @@ function fn_CMDControl_parseCommand() {
 	
 }
 
-//----------------------------
-#region Commands action list
-
 /// @function fn_CMDControl_generalCommand_argumentControl(gameCMD, argMin, argMax)
 /// @param gameCMD: Array<String>
 /// @param argMin: int
 /// @param argMax: int
 /// @return void
 /// @desc Used for commands that have the general error with the given parameters, and minimum and maximum argument number to check
-function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_argMax) {
+function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_argMax = noone) {
 	
 	var p_argsLength = array_length(p_gameCMD);
 
-	if( p_argsLength >= p_argMin and p_argsLength <= p_argMax ) {
+	if( p_argsLength >= p_argMin and (p_argsLength <= p_argMax or p_argMax == noone ) ) {
 		
 		__myMethod(p_gameCMD); // Important: the function tha use this one, need to declare a __myCommand function.
 		
@@ -212,13 +218,23 @@ function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_arg
 				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
 			);
 		} else {
+			
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)			);
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
+			);
+			
 		}
 	}
 
 	
 }
+
+
+//----------------------------
+//----------------------------
+//----------------------------
+
+#region Commands action list
 
 /// @function fn_CMDControl_clearLog()
 /// @return void
@@ -650,7 +666,84 @@ function fn_CMDControl_resolutionSetGUISize(p_argsToUse) {
 	
 }
 
+/// @function fn_CMDControl_functionExecute(argToUse)
+/// @param gameCMD: Array<String>
+/// @return void
+/// @desc Execute an object function or script with the arguments needed. At least one object need to exists to execute the function.
+function fn_CMDControl_functionExecute(p_gameCMD) {
 
+	__myMethod = function(p_gameCMD) {
+
+		// TEst args
+		var length = array_length(p_gameCMD);
+		
+		for( var i = 0; i < length; i++ ) {
+			show_debug_message(p_gameCMD[i]);
+		}
+		
+		// End test
+
+		var l_1stArg = fn_stringSplit(p_gameCMD[0], ".", false),
+			l_1stArgLength = array_length(l_1stArg);
+		
+		var l_objectRef = undefined,
+			l_toExecute = undefined;
+			
+		// Check if is an object's function
+		if( l_1stArgLength > 1 ) {
+			
+			#region Excute object function
+			
+			// Check for just one dot operator
+			if( l_1stArgLength > 2 ) {
+				fn_CMDControl_MsgShowError("Only one dot operator is allowed");
+				return;
+			}
+			
+			// Check if object exists
+			l_objectRef = asset_get_index(l_1stArg[0]);
+			
+			if not( object_exists(l_objectRef) ) {
+			
+				fn_CMDControl_MsgShowError("The object '" + l_1stArg[0] + "' doesnt exists.");
+				return;
+			
+			}
+			
+			
+			l_toExecute =   method_get_index( variable_instance_get(l_objectRef, l_1stArg[1]) );
+		
+			
+			// Check if the function to execute exists
+			if ( l_toExecute == undefined ) {
+				fn_CMDControl_MsgShowError("The script/function '" + l_1stArg[1] + "' doesnt exists in the object '" + l_1stArg[0] + "'");
+				return;
+			}
+			
+			#endregion
+			
+			
+		} else {
+			l_toExecute = asset_get_index(l_1stArg[0]);
+			
+			// Check if the function to execute exists
+			if not( script_exists(l_toExecute) ) {
+				fn_CMDControl_MsgShowError("The script/function '" + l_1stArg[0] + "' doesnt exists.");
+				return;
+			}
+			
+		}
+		
+		// Check arguments and execute
+		var prueba = ["a1", "a2", "a3"]
+		script_execute_ext(l_toExecute, prueba, 1, 1);
+		
+	}
+
+	// Parent execute first
+	fn_CMDControl_generalCommand_argumentControl(p_gameCMD, 1);
+	
+}
 
 
 #endregion
