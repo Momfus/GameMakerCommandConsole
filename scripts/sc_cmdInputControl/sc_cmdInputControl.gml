@@ -674,12 +674,6 @@ function fn_CMDControl_functionExecute(p_gameCMD) {
 
 	__myMethod = function(p_gameCMD) {
 
-		// TEst args
-		var length = array_length(p_gameCMD);
-		
-		for( var i = 0; i < length; i++ ) {
-			show_debug_message(p_gameCMD[i]);
-		}
 		
 		// End test
 
@@ -735,8 +729,8 @@ function fn_CMDControl_functionExecute(p_gameCMD) {
 		}
 		
 		// Check arguments and execute
-		var prueba = ["a1", "a2", "a3"]
-		script_execute_ext(l_toExecute, prueba, 1, 1);
+		script_execute_ext(l_toExecute, p_gameCMD, 1);
+
 		
 	}
 
