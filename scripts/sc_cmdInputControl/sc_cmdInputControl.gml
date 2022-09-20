@@ -728,7 +728,6 @@ function fn_CMDControl_functionExecute(p_gameCMD) {
 			
 		}
 		
-		// Check arguments and execute
 		script_execute_ext(l_toExecute, p_gameCMD, 1);
 
 		
