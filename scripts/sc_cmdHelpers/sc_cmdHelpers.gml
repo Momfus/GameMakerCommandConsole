@@ -12,6 +12,27 @@ function fn_cmdArrayPushFIFO(p_array, p_elementToInsert){
 
 }
 
+///@function fn_cmdGUICheckMouseIsHoverThisObject(stateMouseHover)
+///@param stateMouseHover : boolean
+///@return isHover : boolean
+///@desc Check if the mouse enter or leave the object using the gui layer
+function fn_cmdGUICheckMouseIsHoverThisObject(p_stateMouseHover) {
+	var l_mouseMeetingCMD = position_meeting(MOUSE_GUI_X, MOUSE_GUI_Y, id);
+	
+	if( p_stateMouseHover ) {
+		if( !l_mouseMeetingCMD ) {
+			p_stateMouseHover =  false;	
+		}
+	} else {
+		if( l_mouseMeetingCMD ) {
+			p_stateMouseHover = true
+		}
+	} 
+	
+	return p_stateMouseHover;
+
+}
+
 /// @function fn_cmdGetArrayStringSizeNoEmpty( array )
 /// @param array: [string]
 /// @return arraSize: int
@@ -60,7 +81,7 @@ function fn_cmdInputArrayCheckPressed(p_arrayToCheck, p_arrayLength){
 /// @desc Return a value wrapper between [min, max]
 function fn_wrapValue(p_valueToWrap, p_min, p_max) {
 	
-	// Forst to be int values (with real numbers sometimes have wrong returns)
+	// Forst to be int values (with real numbers sometimes hººave wrong returns)
 	p_valueToWrap = floor(p_valueToWrap);
 	p_min = floor(p_min);
 	p_max = floor(p_max);
@@ -109,5 +130,94 @@ function fn_stringSplit(p_strToSplit, p_delimiter, p_ignoreEmptyString) {
 		
 	
 	return l_stringSplittedArray;
+	
+}
+
+//@function fn_stringAddPad(text, spaces)
+//@param text: string
+//@param spaces: real
+//@return textWithPadding: string
+//@desc Return a string with a padding space if the text is smaller than the space number.
+function fn_stringAddPad(p_text, p_spaces) {
+
+	var l_padToAdd = "",
+		l_textLength = string_length(p_text);
+	
+	for ( var i = 0; i < p_spaces - l_textLength; i++ ){
+		l_padToAdd += " ";
+	}
+	
+	return p_text + l_padToAdd;
+
+}
+
+///@function fn_stringFromatTab(stringToFormat, separator)
+///@param stringArray : string
+///@param separator : string
+///@return stringFormatted : string
+///@desc Return the given string with a new formated with tab space (that is the number of spaces given between [..] )
+function fn_stringFromatTab(p_stringToFormat, p_separator = "\T") { // the T is important that is uppercase
+
+	var l_arrayStringSplit = fn_stringSplit(p_stringToFormat, p_separator, true),
+		l_arrayStringSplitLength = array_length(l_arrayStringSplit),
+		l_stringFormatted = "";
+		
+	if not( l_arrayStringSplitLength > 1 ) {
+		
+		l_stringFormatted = p_stringToFormat; // Just in case a text withotu special tab is used
+		
+	} else {
+		
+		#region Add spaces
+		
+		l_stringFormatted = l_arrayStringSplit[0];
+		
+		for( var i = 1; i < l_arrayStringSplitLength; i++ ) { // The text before the tag is not used because it doesnt have any format to add
+			
+			var l_stringRow = l_arrayStringSplit[i],
+				l_posOpen = string_pos("[", l_stringRow),
+				l_posClose = string_pos("]", l_stringRow),
+				l_spaceNumber = real( string_copy(l_stringRow, l_posOpen + 1, l_posClose - l_posOpen + 1 ) );
+			
+			l_stringRow = string_delete(l_stringRow, l_posOpen, l_posClose);
+			l_stringRow = fn_stringAddPad(" ", l_spaceNumber) + l_stringRow;
+			
+			l_stringFormatted += l_stringRow;
+			
+		}
+	
+		#endregion
+	
+	}
+	
+	return l_stringFormatted;
+
+}
+
+
+
+///@function fn_isSingleton()
+function fn_isSingleton() {
+
+	var l_instNumber = instance_number(self.object_index);
+	
+	if(l_instNumber > 1) {
+		instance_destroy();
+		
+		var l_objectName = object_get_name(self.object_index)
+		show_debug_message("WARNING >>> Instance from object " + l_objectName + " already exists and is a singleton (id: "+ string(id) + ")" );
+		
+	}
+	
+}
+
+
+///@function fs_resizeResolutionToObjects(guiOffsetMultiplier)
+///@param guiOffsetMultiplier : real
+///@return void
+function fs_resizeResolutionToObjects(p_guiOffsetMultiplier) {
+
+	ob_camera_main.fn_resizeWindow();
+	ob_control_cmd.fn_resizeWindow(p_guiOffsetMultiplier);
 	
 }

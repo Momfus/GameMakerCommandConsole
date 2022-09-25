@@ -1,79 +1,44 @@
 /// @desc Draw console
 
-if ( __currentState == e_cmdState.opened ) {
+draw_set_color(c_white);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+
+if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
-	draw_set_font(ft_arial_12);
-	draw_set_halign(fa_left);
+	if ( __currentState == e_cmdState.opened ) {
 	
-	#region Background
+		#region Background
 	
-		// Log background
-		draw_set_color(c_black);
-		draw_set_alpha(__alphaLog);
-		draw_rectangle(__xx, __yy, __width, __heightLog, false)
+			// Log background
+			draw_set_color(c_black);
+			draw_set_alpha(__alphaLog);
+			draw_rectangle(__xx, __yy, __width, __heightLog, false)
 	
-		// CMD Input background
-		draw_set_alpha(__alphaCmdInput)
-		draw_rectangle(__xx, __posCmdInputY1, __width, __posCmdInputY2, false);
+			// CMD Input background
+			draw_set_alpha(__alphaCmdInput)
+			draw_rectangle(__xx, __posCmdInputY1, __width, __posCmdInputY2, false);
 	
-		draw_set_alpha(1);		
+			draw_set_alpha(1);		
 	
-	#endregion
+		#endregion
 	
-	#region Log text cmd
-	
-		draw_set_color(c_white);
-		draw_set_valign(fa_bottom);
-		
-		var l_yyAux = 0;
-		for( var i = 0; i < __cmdLogCountMax; i++ ) {
-			draw_text(__posTextStartX, __heightLog - (i * 8) - l_yyAux, __cmdLogArrayMsg[i]);
-			l_yyAux += string_height(__cmdLogArrayMsg[i])
+		if !( surface_exists(__surfCmdWindow) ) {
+			__surfCmdWindow = surface_create( __width, __heightLog);
+			fn_CMDWindow_updateSurface(false);
 		}
 	
-	#endregion
-	
-	
-	#region Main text cmd input
+		
+		draw_surface(__surfCmdWindow, __xx, __yy);
+		fn_CMDWindow_drawCommandInput();
+		fn_CMDWindow_drawScrollbar();
 
-		draw_set_color(c_orange);
-		draw_set_valign(fa_middle);
-		
-		// Arrow indicator
-		draw_text(__paddingInner, __posTextY, ">");
-		
-
-		
-		#region Input Text
-		
-			var l_textLeftCursorWidth = string_width( __cmdText[e_cmdTextInput.leftSide]);
-		
-			// Text Left
-			draw_set_color(c_white);
-			draw_text(__posTextStartX, __posTextY, __cmdText[e_cmdTextInput.leftSide]);
-		
-			// Cursor
-			draw_set_color(c_orange);
-			if( __cmdCursorVisible ) {
-				draw_text( __posTextStartX + l_textLeftCursorWidth, __posTextY, "|");	
-			}
-			
-			// Test Right
-			draw_set_color(c_white);
-			draw_text(__posTextStartX + l_textLeftCursorWidth + string_length("|"), __posTextY, __cmdText[e_cmdTextInput.rightSide]);
-			
-
-		#endregion
-		
-	
-	#endregion 
-	
-
-	// Reset
-	draw_set_valign(fa_top);
-	draw_set_alpha(1);
+		// Reset
+		draw_set_valign(fa_top);
+		draw_set_alpha(1);
 	
 	
+	}
 	
-
 }
+
