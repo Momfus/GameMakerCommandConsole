@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "sc_cmdInputControl",
+  "name": "sc_scriptExamplesToUse",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Scripts",
-    "path": "folders/gm2-consoleCommand/Scripts.yy",
+    "name": "Extra",
+    "path": "folders/gm2-consoleCommand/Scripts/Extra.yy",
   },
 }
