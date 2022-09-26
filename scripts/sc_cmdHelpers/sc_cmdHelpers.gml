@@ -93,7 +93,6 @@ function fn_wrapValue(p_valueToWrap, p_min, p_max) {
 	return l_newValue;
 }
 
-
 //@function fn_stringSplit(stringToSplit, delimiter, ignoreConsecutiveDelimiter)
 //@param stringToSplit: string
 //@param delimiter: string
