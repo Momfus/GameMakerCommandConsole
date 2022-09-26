@@ -1,5 +1,7 @@
 /// @desc Get input
 
+if( global.gCMDOpen ) { return;	} // Skip the next lines if cmd is open
+
 __moveLeft = keyboard_check( ord("A") )		or keyboard_check(vk_left);
 __moveRigth = keyboard_check( ord("D") )	or keyboard_check(vk_right);
 __moveDown = keyboard_check( ord("S") )		or keyboard_check(vk_down);

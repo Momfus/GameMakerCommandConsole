@@ -21,6 +21,9 @@ enum e_cmdState {
 __currentState = e_cmdState.closed;
 __currentState_beginStep = undefined;
 
+global.gCMDOpen = false; // Not tottally necesary, but is more quickly to use.
+
+
 // Text Attributes
 enum e_cmdTextInput {
 

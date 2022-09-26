@@ -5,7 +5,7 @@
 function fn_CMDControl_inputKeyboardUser() {
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
-		
+
 		// Check special keyboard commands before
 		if ( __cmdKeyPressedCommitInput ) {
 			
@@ -35,13 +35,14 @@ function fn_CMDControl_inputKeyboardUser() {
 			
 			fn_CMDControl_cursorMoveRigth(true);
 			
+		} else if( __cmdKeyPaste ) {
+			fn_CMDControl_clipboardPaste();
 		} else {
 			#region Normal Keyboard inputs
 			
 				if ( fn_CMDControl_checkKeyboardKey() ) {
 					
-					__cmdText[e_cmdTextInput.leftSide] = string_insert(keyboard_lastchar, __cmdText[e_cmdTextInput.leftSide], __cmdCursorPosition + 1);
-					__cmdCursorPosition++;
+					fn_CMDControl_updateInputText(keyboard_lastchar);
 					
 					// Reset log input history
 					if( __cmdLogHistoryPosition != -1 ) {
@@ -51,12 +52,11 @@ function fn_CMDControl_inputKeyboardUser() {
 				}
 				
 			#endregion
+			
 		}	
 			
 	}
 	
-	
-	keyboard_clear(keyboard_key); // Reset the input keyboard state (if was pressed, released, etc) 
 	
 }
 
@@ -91,6 +91,7 @@ function fn_CMDControl_checkSpecilKeyInput() {
 	
 	__cmdKeyBackspace = keyboard_check(vk_backspace);
 	__cmdKeyDelete = keyboard_check(vk_delete);
+	__cmdKeyPaste = keyboard_check(vk_lcontrol) and keyboard_check_pressed(ord("V"));
 	
 }
 

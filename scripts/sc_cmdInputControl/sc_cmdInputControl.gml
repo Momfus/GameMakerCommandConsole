@@ -95,6 +95,18 @@ function fn_CMDControl_getCommands() {
 
 }
 
+/// @function fn_CMDControl_updateInputText(textToInsert, positionCountToAdd)
+/// @param textToInsert: string
+/// @param positionCountToAdd*: Int
+/// @return void
+/// @desc Update the text that the user is writing in the console, it will insert the text after the cursor position
+function fn_CMDControl_updateInputText(l_textToInsert, l_positionCountToAdd = 1) {
+	
+	__cmdText[e_cmdTextInput.leftSide] = string_insert(l_textToInsert, __cmdText[e_cmdTextInput.leftSide], __cmdCursorPosition + 1);
+	__cmdCursorPosition += l_positionCountToAdd;
+
+					
+}
 
 /// @function fn_CMDControl_commitInput( commitInput )
 /// @param commitInput: String
@@ -229,7 +241,22 @@ function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_arg
 	
 }
 
+/// @function fn_CMDControl_clipboardPaste()
+/// @return void
+/// @desc Check if there is text in the clipboard and paste it in the cmd line (this must use when the console is open)
+function fn_CMDControl_clipboardPaste() {
+	
+	if( clipboard_has_text() ) {
+		var l_textToPaste = clipboard_get_text();
+		
+		l_textToPaste = string_replace_all(l_textToPaste, chr(9), "   ") // Replace the "tab spaces" for thre normal spaces.
+		fn_CMDControl_updateInputText(l_textToPaste, string_length(l_textToPaste));
+		
+	}
+	
+}
 
+// 
 //----------------------------
 //----------------------------
 //----------------------------

@@ -10,6 +10,7 @@ function StateBeginStep_closed() {
 			show_debug_message("Open cmd");
 			__currentState = e_cmdState.opened;
 			__currentState_beginStep = StateBeginStep_opened;
+			global.gCMDOpen = true;
 		}
 	#endregion
 	
@@ -28,7 +29,7 @@ function StateBeginStep_opened() {
 			show_debug_message("Close cmd");
 			__currentState = e_cmdState.closed;
 			__currentState_beginStep = StateBeginStep_closed;
-			
+			global.gCMDOpen = false;
 			surface_free(__surfCmdWindow);
 			
 		} else 

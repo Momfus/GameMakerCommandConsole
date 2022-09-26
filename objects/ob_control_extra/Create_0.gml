@@ -13,8 +13,8 @@ __instructionMainWidthHalf = string_width(__instructionMain) * 0.5;
 
 // Test
 //function fn_myTestFunction() {
-function test() {
+function fn_cmdExtraTest() {
 
-	show_message("My test function from ob_control_extra");
+	fn_cmdArrayPushFIFO(ob_control_cmd.__cmdLogArrayMsg, "My test function from ob_control_extra");
 
 }
