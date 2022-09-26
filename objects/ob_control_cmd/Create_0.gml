@@ -1,7 +1,7 @@
 /// @desc Attributes
 
 
-#macro CMD_CURRENT_VERSION "0.5.3"
+#macro CMD_CURRENT_VERSION "0.7.0"
 
 // This was intended to be used only on PC, so I'm aiming for a single mouse/touch device
 #macro MOUSE_GUI_X  device_mouse_x_to_gui(0)
@@ -20,6 +20,9 @@ enum e_cmdState {
 
 __currentState = e_cmdState.closed;
 __currentState_beginStep = undefined;
+
+global.gCMDOpen = false; // Not tottally necesary, but is more quickly to use.
+
 
 // Text Attributes
 enum e_cmdTextInput {
