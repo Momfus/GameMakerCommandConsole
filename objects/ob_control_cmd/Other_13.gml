@@ -12,7 +12,7 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 	draw_clear_alpha(c_black, 0);
 	gpu_set_blendenable(false);
 	
-	draw_set_font(ft_consolas_9);
+	draw_set_font(ft_console_9);
 	draw_set_halign(fa_left);
 	
 	#region Log text cmd
