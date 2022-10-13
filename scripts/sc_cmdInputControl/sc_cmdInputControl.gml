@@ -165,7 +165,7 @@ function fn_CMDControl_commitInput(p_commitInput) {
 function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHeight) {
 		
 	if( p_updatePositionX ) {
-		__cmdScrollBarTapPositionX = x + __width - __cmdScrollBarTapWidth;
+		__cmdScrollBarTapPositionX = __xx + __width - __cmdScrollBarTapWidth;
 	}
 	
 	if( p_updateHeight ) {
