@@ -150,12 +150,12 @@ function fn_stringAddPad(p_text, p_spaces) {
 
 }
 
-///@function fn_stringFromatTab(stringToFormat, separator)
+///@function fn_stringFormatTab(stringToFormat, separator)
 ///@param stringArray : string
 ///@param separator : string
 ///@return stringFormatted : string
 ///@desc Return the given string with a new formated with tab space (that is the number of spaces given between [..] )
-function fn_stringFromatTab(p_stringToFormat, p_separator = "\T") { // the T is important that is uppercase
+function fn_stringFormatTab(p_stringToFormat, p_separator = "\\T") { // the T is important that is uppercase and two \ (GameMaker ignore the first one)
 
 	var l_arrayStringSplit = fn_stringSplit(p_stringToFormat, p_separator, true),
 		l_arrayStringSplitLength = array_length(l_arrayStringSplit),

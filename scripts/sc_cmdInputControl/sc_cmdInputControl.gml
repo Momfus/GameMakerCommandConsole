@@ -71,7 +71,7 @@ function fn_CMDControl_getCommands() {
 			"Change window size or resolution GUI or test resolution information",
 			fn_CMDControl_resolution,
 			["subcommand", "arg1", "arg2"],
-			[	"Could be... \n\T[16]- window/w (change window size). \n\T[16]- info/i (to show or hide resolution information).\n\T[16]- gui/g (change GUI surface resolution)", 
+			[	"Could be... \n\\T[16]- window/w (change window size). \n\T[16]- info/i (to show or hide resolution information).\n\\T[16]- gui/g (change GUI surface resolution)", 
 				"width || boolean || index for the default resolution array", 
 				"height"
 			]
@@ -304,13 +304,13 @@ function fn_CMDControl_showHelp(p_args) {
 		
 			for( var i = 0; i < l_cmdCommandsLength; i++ ) {
 		
-				var l___cmdTitle = string_upper(l_cmdCommands[i].__cmdTitle),
-					l___cmdShortTitle = string_upper(l_cmdCommands[i].__cmdShort),
-					l___cmdDescription = l_cmdCommands[i].__cmdDesc;
+				var l_cmdTitle = string_upper(l_cmdCommands[i].__cmdTitle),
+					l_cmdShortTitle = string_upper(l_cmdCommands[i].__cmdShort),
+					l_cmdDescription = l_cmdCommands[i].__cmdDesc;
 			
-				l_helpText += "\n" + fn_stringAddPad(l___cmdTitle, 14) +
-								fn_stringAddPad(l___cmdShortTitle, 8) +
-								l___cmdDescription;
+				l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 14) +
+								fn_stringAddPad(l_cmdShortTitle, 8) +
+								l_cmdDescription;
 			}
 	
 			l_helpText += "\n===============";
@@ -393,7 +393,7 @@ function fn_CMDControl_showHelp(p_args) {
 						var l_argumentDesc = "";
 						for( var j = 0; j < l_cmdArgsLength; j++ ) {
 							
-							var l_formattedString  = fn_stringFromatTab(l_cmdArgsDesc[j]);
+							var l_formattedString  = fn_stringFormatTab(l_cmdArgsDesc[j]);
 							// CHeck tab
 							
 							l_argumentDesc += fn_stringAddPad(l_cmdArgs[j], 10) + fn_stringAddPad(" :", 4) + l_formattedString + "\n";
