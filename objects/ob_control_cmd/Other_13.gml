@@ -6,6 +6,10 @@
 /// @return void
 /// @desc Draw all the elements needed in the surface for the CMD Window
 function fn_CMDWindow_updateSurface(p_updateMsgeTop){
+		
+	if !( surface_exists(__surfCmdWindow) ) {
+		__surfCmdWindow = surface_create( __width, __heightLog);
+	}
 	
 	// Draw text on surface
 	surface_set_target(__surfCmdWindow);

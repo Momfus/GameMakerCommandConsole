@@ -23,10 +23,7 @@ if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
 		#endregion
 	
-		if !( surface_exists(__surfCmdWindow) ) {
-			__surfCmdWindow = surface_create( __width, __heightLog);
-			fn_CMDWindow_updateSurface(false);
-		}
+		fn_CMDWindow_updateSurface(false);
 	
 		
 		draw_surface(__surfCmdWindow, __xx, __yy);
