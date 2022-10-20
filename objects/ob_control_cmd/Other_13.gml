@@ -33,10 +33,13 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 				continue;
 			}
 			
-			draw_text(__posTextStartX, __heightLog - (i * __cmdMsgSep) 
-										- l_yyMsgPositionAux - __cmdWindowSurfaceYoffset, 
-						__cmdLogArrayMsg[i]);
-			l_yyMsgPositionAux += string_height(__cmdLogArrayMsg[i])
+				
+			draw_text_ext(	__posTextStartX, __heightLog - (i * __cmdMsgSep) - l_yyMsgPositionAux - __cmdWindowSurfaceYoffset, 
+							__cmdLogArrayMsg[i], -1, __width);
+							
+			l_yyMsgPositionAux +=  string_height_ext(__cmdLogArrayMsg[i], -1, __width);	
+
+			
 		};
 		
 			

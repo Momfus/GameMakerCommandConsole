@@ -210,6 +210,61 @@ function fn_isSingleton() {
 	
 }
 
+///@function fn_stringFormatClean(stringToFormat, removeNewLine*, removeSpecialTabSpace*)
+///@param stringToFormat: string
+///@param removeNewLine: boolean
+///@param removeSpecialTabSpace: boolean
+///@return stringFormatted: string
+///@desc Return the given string with a new formated without the some special characters that give format specified in the parameters (like \n or \\T in this case)
+function fn_stringFormatClean(p_stringToFormat, p_removeNewLine, p_removeSpecialTabSpace) {
+	
+	// Remove New lines
+	if( p_removeNewLine ) {
+		p_stringToFormat = string_replace_all(p_stringToFormat, "\n", " ");
+	}
+	
+	#region Remove the tab space
+	
+	// Note: this will remove the special substring "\\T" to remove the tab space specified between the "[...]". Take note of this with the fn_stringFormatTab function (that could be differente)
+	if (p_removeSpecialTabSpace) {
+	    
+		// String variables
+		var l_specialTabStr = "\\T",
+			l_stringToFormatLength = string_length(p_stringToFormat),
+			l_stringAux = "";
+		
+		// Position variables
+		var l_posCharArgOpen = undefined,
+			l_posCharArgClose = undefined,
+			l_posStartAux = 1; // GM use position in string from "1" (instead zero like in length)
+		
+		l_specialTabStr += "[";
+		var l_specialTabStrArgClose = "]";
+	
+		while( true ) {
+			
+			l_posCharArgOpen = string_pos_ext(l_specialTabStr, p_stringToFormat, l_posStartAux);
+			
+			if( l_posCharArgOpen == 0) { // This exit the loop when there isn't more open character/substring open to find
+				l_stringAux += string_copy(p_stringToFormat, l_posStartAux, l_stringToFormatLength - l_posStartAux + 1);
+				break; 
+			}
+			
+			l_posCharArgClose = string_pos_ext(l_specialTabStrArgClose, p_stringToFormat, l_posCharArgOpen) + 1;
+			l_stringAux += string_copy(p_stringToFormat, l_posStartAux, l_posCharArgOpen - l_posStartAux);
+			
+			l_posStartAux = l_posCharArgClose;
+			
+		}
+				
+		p_stringToFormat = l_stringAux;
+	}
+	
+	
+	#endregion
+
+	return p_stringToFormat;
+}
 
 ///@function fs_resizeResolutionToObjects(guiOffsetMultiplier)
 ///@param guiOffsetMultiplier : real

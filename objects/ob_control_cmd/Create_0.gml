@@ -155,8 +155,6 @@ __currentState_beginStep = StateBeginStep_closed;
 show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
 
 
-sc_cmdInputControl();
-
 /// @function fn_resizeWindow(guiOffsetMultiplier)
 /// @param guiOffsetMultiplier: real
 /// @return void

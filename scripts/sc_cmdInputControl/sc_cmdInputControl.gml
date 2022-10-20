@@ -6,13 +6,21 @@ function sc_cmdInputControl() {
 __currentCommandExecute = undefined;
 
 
-/// @function objCommand(title, shortTitle, description, [function], [arguments], [argsDescription])
+/// @function objCommand(title, shortTitle, description, useCleanDescription*, function*, arguments*, argsDescription*)
+/// @param title: string
+/// @param shortTitle: string
+/// @param description: string
+/// @param useCleanDescription: boolean
+/// @param function: id<function>
+/// @param arguments: Array<string>
+/// @param argsDescription: Array<string>
 /// @return newCommand: ligthObject
 /// @desc Create a command object
-function objCommand(p_title, p_shortTitle, p_description, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
+function objCommand(p_title, p_shortTitle, p_description, p_useCleanDescription = false, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
 	__cmdTitle = p_title;
 	__cmdShort = p_shortTitle;
 	__cmdDesc = p_description;
+	__cmdDescClean = (p_useCleanDescription) ? fn_stringFormatClean(p_description, true, true ): p_description;
 	__cmdFunc = p_function;
 	__cmdArgs = p_arguments;
 	__cmdArgDesc = p_argsDescription;
@@ -366,7 +374,7 @@ function fn_CMDControl_showHelp(p_args) {
 						continue;    
 					}
 					
-					var l_cmdDesc = l_cmdCommands[i].__cmdDesc,
+					var l_cmdDesc = l_cmdCommands[i].__cmdDescClean,
 						l_cmdArgs = l_cmdCommands[i].__cmdArgs, // it could be undefined
 						l_cmdArgsDesc = l_cmdCommands[i].__cmdArgDesc; // it could be undefined
 
