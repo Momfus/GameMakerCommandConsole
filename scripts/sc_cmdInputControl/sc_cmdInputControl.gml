@@ -26,13 +26,12 @@ function objCommand(p_title, p_shortTitle, p_description, p_useCleanDescription 
 	__cmdArgDesc = p_argsDescription;
 }
 
-/// @function fn_CMDControl_getCommands()
+/// @function fn_CMDControl_commandListCreate()
 /// @return commandList: [ligthObject]
-/// @desc Get the commands available with their properties and binding function
-function fn_CMDControl_getCommands() {
+/// @desc This must be call in the begining
+function fn_CMDControl_commandListCreate() {
 	
 	#region Command List
-	show_debug_message("TEST >>>>>>>>>>>>>>>>>>");
 	var l_commandList = [
 	
 		// Header
@@ -98,9 +97,8 @@ function fn_CMDControl_getCommands() {
 	
 	#endregion
 	
-	return l_commandList
+	return l_commandList;
 	
-
 }
 
 /// @function fn_CMDControl_updateInputText(textToInsert, positionCountToAdd)
@@ -197,14 +195,11 @@ function fn_CMDControl_parseCommand() {
 		l_params = [];
 	array_copy(l_params, 0, __cmdTextPartArray, 1, array_length(__cmdTextPartArray) - 1);
 
-	var l_commandList = fn_CMDControl_getCommands(),
-		l_commandListLength = array_length(l_commandList);
+	for( var i = 0; i < __cmdArrayCommandsLength; i++ ) {
 	
-	for( var i = 0; i < l_commandListLength; i++ ) {
-	
-		if( l_commandList[i].__cmdTitle == l_mainCommand or ( l_commandList[i].__cmdShort == l_mainCommand and l_commandList[i].__cmdShort != "-" )) {
-			__currentCommandExecute = l_commandList[i];
-			l_commandList[i].__cmdFunc(l_params);
+		if( __cmdArrayCommands[i].__cmdTitle == l_mainCommand or ( __cmdArrayCommands[i].__cmdShort == l_mainCommand and __cmdArrayCommands[i].__cmdShort != "-" )) {
+			__currentCommandExecute = __cmdArrayCommands[i];
+			__cmdArrayCommands[i].__cmdFunc(l_params);
 			return -1;
 		}
 		
@@ -302,19 +297,17 @@ function fn_CMDControl_showHelp(p_args) {
 	
 	var p_argsLength = array_length(p_args),
 		l_helpText = "==== HELP ====",
-		l_cmdCommands = fn_CMDControl_getCommands(),
-		l_cmdCommandsLength = array_length(l_cmdCommands);
 		
 	switch( p_argsLength ) {
 	
 		// General commands
 		case 0: {
 		
-			for( var i = 0; i < l_cmdCommandsLength; i++ ) {
+			for( var i = 0; i < __cmdArrayCommandsLength; i++ ) {
 		
-				var l_cmdTitle = string_upper(l_cmdCommands[i].__cmdTitle),
-					l_cmdShortTitle = string_upper(l_cmdCommands[i].__cmdShort),
-					l_cmdDescription = l_cmdCommands[i].__cmdDesc;
+				var l_cmdTitle = string_upper(__cmdArrayCommands[i].__cmdTitle),
+					l_cmdShortTitle = string_upper(__cmdArrayCommands[i].__cmdShort),
+					l_cmdDescription = __cmdArrayCommands[i].__cmdDesc;
 			
 				l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 14) +
 								fn_stringAddPad(l_cmdShortTitle, 8) +
@@ -337,9 +330,9 @@ function fn_CMDControl_showHelp(p_args) {
 			
 				var l_cmdArgumentExists = false;
 			
-				for (var i = 0; i < l_cmdCommandsLength; i++) {
+				for (var i = 0; i < __cmdArrayCommandsLength; i++) {
 			   
-				   if (l_cmdCommands[i].__cmdTitle == p_args[0] or l_cmdCommands[i].__cmdShort == p_args[0]) {
+				   if (__cmdArrayCommands[i].__cmdTitle == p_args[0] or __cmdArrayCommands[i].__cmdShort == p_args[0]) {
 				       l_cmdArgumentExists = true;
 					   break;
 				   }
@@ -365,18 +358,18 @@ function fn_CMDControl_showHelp(p_args) {
 
 					
 				// Get the command information
-				for (var i = 0; i < l_cmdCommandsLength; i++) {
-					l_cmdName = l_cmdCommands[i].__cmdTitle;
-					l_cmdShort = l_cmdCommands[i].__cmdShort;
+				for (var i = 0; i < __cmdArrayCommandsLength; i++) {
+					l_cmdName = __cmdArrayCommands[i].__cmdTitle;
+					l_cmdShort = __cmdArrayCommands[i].__cmdShort;
 					
 					// Go to the next iteration if isn't the command to show info
 					if ( l_cmdName != p_args[0] and l_cmdShort != p_args[0] ) {
 						continue;    
 					}
 					
-					var l_cmdDesc = l_cmdCommands[i].__cmdDescClean,
-						l_cmdArgs = l_cmdCommands[i].__cmdArgs, // it could be undefined
-						l_cmdArgsDesc = l_cmdCommands[i].__cmdArgDesc; // it could be undefined
+					var l_cmdDesc = __cmdArrayCommands[i].__cmdDescClean,
+						l_cmdArgs = __cmdArrayCommands[i].__cmdArgs, // it could be undefined
+						l_cmdArgsDesc = __cmdArrayCommands[i].__cmdArgDesc; // it could be undefined
 
 					
 					// Name
@@ -388,13 +381,11 @@ function fn_CMDControl_showHelp(p_args) {
 					// Arguments name and description
 					
 					if( is_array(l_cmdArgs) ) {
-						
-						var l_test = is_array(__cmdLogArrayMsg);
-						
+		
 						
 						// Headers
-						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(l_cmdCommands[0].__cmdArgs[0], 10)
-							+ fn_stringAddPad("", 4) + l_cmdCommands[0].__cmdArgDesc[0]);
+						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(__cmdArrayCommands[0].__cmdArgs[0], 10)
+							+ fn_stringAddPad("", 4) + __cmdArrayCommands[0].__cmdArgDesc[0]);
 						
 						// Arguments name-desc
 						var l_cmdArgsLength = array_length(l_cmdArgs);

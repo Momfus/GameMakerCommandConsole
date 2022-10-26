@@ -146,8 +146,8 @@ event_user(2); // Commit cmd functions
 event_user(3); // GUI and Surface functions
 event_user(4); // Declare mouse and scrollbar functions
 
-
-
+__cmdArrayCommands = fn_CMDControl_commandListCreate(); // Use the CMD to call functions and parse them
+__cmdArrayCommandsLength = array_length(__cmdArrayCommands);
 
 // Set states
 __currentState_beginStep = StateBeginStep_closed;
