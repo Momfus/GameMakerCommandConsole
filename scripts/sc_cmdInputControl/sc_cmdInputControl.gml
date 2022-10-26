@@ -32,15 +32,15 @@ function objCommand(p_title, p_shortTitle, p_description, p_useCleanDescription 
 function fn_CMDControl_getCommands() {
 	
 	#region Command List
-	
+	show_debug_message("TEST >>>>>>>>>>>>>>>>>>");
 	var l_commandList = [
 	
 		// Header
-		new objCommand("TITLE", "SHORT", "DESCRIPTION", undefined, ["ARGUMENT"], ["DESCRIPTION"]),
+		new objCommand("TITLE", "SHORT", "DESCRIPTION", undefined, undefined, ["ARGUMENT"], ["DESCRIPTION"]),
 		
 		// Help
 		new objCommand("help", "h", 
-			"Show all the help about commands",
+			"Show all the help about commands", undefined,
 			fn_CMDControl_showHelp,
 			["command"],
 			["It shows more details description about an specific command"]
@@ -48,19 +48,19 @@ function fn_CMDControl_getCommands() {
 		
 		// Version
 		new objCommand("version", "v", 
-			"Show the current gms2CMD version",
+			"Show the current gms2CMD version", undefined,
 			fn_CMDControl_inputGetStringVersion
 		),
 		
 		// Clear
 		new objCommand("clear", "-",
-			"Clear the current console log (it also reset the command history)",
+			"Clear the current console log (it also reset the command history)", undefined,
 			fn_CMDControl_clearLog
 		),
 
 		// Game
 		new objCommand("game", "g",
-			"Choose to restart or exit the game",
+			"Choose to restart or exit the game", undefined,
 			fn_CMDControl_game,
 			["status"],
 			[ "Can take the values 'exit' or 'restart'" ]
@@ -68,7 +68,7 @@ function fn_CMDControl_getCommands() {
 			
 		// Fullscreen on-off
 		new objCommand("fullscreen", "fs",
-			"Change to fullscreen (on) or windowed mode (off)",
+			"Change to fullscreen (on) or windowed mode (off)", undefined,
 			fn_CMDControl_fullscreenMode,
 			["activate"],
 			[ "Can take the values 'on'(1) or 'off'(0)" ]
@@ -76,7 +76,7 @@ function fn_CMDControl_getCommands() {
 			
 		// Change resolution based on an array
 		new objCommand("resolution", "res",
-			"Change window size or resolution GUI or test resolution information",
+			"Change window size or resolution GUI or test resolution information", undefined,
 			fn_CMDControl_resolution,
 			["subcommand", "arg1", "arg2"],
 			[	"Could be... \n\\T[16]- window/w (change window size). \n\T[16]- info/i (to show or hide resolution information).\n\\T[16]- gui/g (change GUI surface resolution)", 
@@ -87,7 +87,7 @@ function fn_CMDControl_getCommands() {
 		
 		// Execute scripts or object functions
 		new objCommand("function", "fn",
-			"Execute an object function or script",
+			"Execute an object function or script", undefined,
 			fn_CMDControl_functionExecute,
 			["args..."],
 			[	"All the arguments needed to execute the script"
@@ -389,7 +389,9 @@ function fn_CMDControl_showHelp(p_args) {
 					
 					if( is_array(l_cmdArgs) ) {
 						
-				
+						var l_test = is_array(__cmdLogArrayMsg);
+						
+						
 						// Headers
 						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(l_cmdCommands[0].__cmdArgs[0], 10)
 							+ fn_stringAddPad("", 4) + l_cmdCommands[0].__cmdArgDesc[0]);
