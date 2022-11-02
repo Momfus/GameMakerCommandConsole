@@ -1,7 +1,7 @@
-/// @desc Methods - Begin Step
+///@desc Methods - Begin Step
 
-/// @function StateBeginStep_closed();
-/// @desc Set the begin state when the cmd is closed
+///@func	StateBeginStep_closed()
+///@desc	Set the begin state when the cmd is closed
 function StateBeginStep_closed() {
 	  
 	fn_CMDControl_checkSpecilKeyInput();
@@ -11,8 +11,8 @@ function StateBeginStep_closed() {
 	
 }
 
-/// @function StateBeginStep_opened();
-/// @desc Set the begin state when the cmd is opened
+///@func	StateBeginStep_opened()
+///@desc	Set the begin state when the cmd is opened
 function StateBeginStep_opened() {
 	
 	if ( __currentState == e_cmdState.opened ) {
@@ -41,8 +41,8 @@ function StateBeginStep_opened() {
 			
 }
 
-/// @function fn_CMDControl_windowClose();
-/// @desc Set the attributes necessary to close
+///@func	fn_CMDControl_windowClose()
+///@desc	Set the attributes necessary to close
 function fn_CMDControl_windowClose() {
 	__currentState = e_cmdState.closed;
 	__currentState_beginStep = StateBeginStep_closed;
@@ -53,8 +53,8 @@ function fn_CMDControl_windowClose() {
 	}
 }
 
-/// @function fn_CMDControl_windowOpen();
-/// @desc Set the attributes necessary to close
+///@func	fn_CMDControl_windowOpen()
+///@desc	Set the attributes necessary to close
 function fn_CMDControl_windowOpen() {
 	__currentState = e_cmdState.opened;
 	__currentState_beginStep = StateBeginStep_opened;

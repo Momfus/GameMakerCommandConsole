@@ -1,4 +1,4 @@
-/// @desc Get input
+///@desc Get input
 
 if( global.gCMDOpen ) { return;	} // Skip the next lines if cmd is open
 

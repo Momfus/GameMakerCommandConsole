@@ -1,4 +1,4 @@
-/// @desc Methods - Commit Input
+///@desc Methods - Commit Input
 
 sc_cmdInputControl();
 

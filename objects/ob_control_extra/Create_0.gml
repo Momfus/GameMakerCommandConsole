@@ -1,4 +1,4 @@
-/// @desc Set Attributes
+///@desc Set Attributes
 
 // Intrucction text
 __instructionMain = "Press 'º' key to show/hide command console";
@@ -12,7 +12,7 @@ __instructionMainWidthHalf = string_width(__instructionMain) * 0.5;
 
 
 // Test
-//function fn_myTestFunction() {
+//func	fn_myTestFunction()
 function fn_cmdExtraTest() {
 
 	fn_cmdArrayPushFIFO(ob_control_cmd.__cmdLogArrayMsg, "My test function from ob_control_extra");

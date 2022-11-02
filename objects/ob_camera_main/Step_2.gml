@@ -1,4 +1,4 @@
-/// @desc Follow Target
+///@desc Follow Target
 
 if( __objectTarget != undefined and instance_exists(__objectTarget) ) {
 	

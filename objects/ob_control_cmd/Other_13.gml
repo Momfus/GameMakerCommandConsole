@@ -1,10 +1,10 @@
-/// @description Methods - GUI & Surface
+///@description Methods - GUI & Surface
 
 
-/// @function fn_CMDWindow_updateSurface( updateMsgTop )
-/// @param updateMsgTop: bool - Not everytime is necesary, only 
-/// @return void
-/// @desc Draw all the elements needed in the surface for the CMD Window
+///@func	fn_CMDWindow_updateSurface( updateMsgTop )
+///@param	{bool}	updateMsgTop
+///@return	void
+///@desc	Draw all the elements needed in the surface for the CMD Window
 function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 		
 	if !( surface_exists(__surfCmdWindow) ) {
@@ -59,9 +59,9 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 
 }
 
-/// @function fn_CMDWindow_drawCommandInput()
-/// @return void
-/// @desc Draw the line command input for the user
+///@func	fn_CMDWindow_drawCommandInput()
+///@return	void
+///@desc	Draw the line command input for the user
 function fn_CMDWindow_drawCommandInput() {
 		
 	draw_set_color(c_orange);
@@ -95,9 +95,9 @@ function fn_CMDWindow_drawCommandInput() {
 	
 }
 
-/// @function fn_CMDWindow_drawScrollbar()
-/// @return void
-/// @desc Draw the scrollbar for the cmd window
+///@func	fn_CMDWindow_drawScrollbar()
+///@return	void
+///@desc	Draw the scrollbar for the cmd window
 function fn_CMDWindow_drawScrollbar() {
 
 	if ( __cmdMsgTop < 0 ) {

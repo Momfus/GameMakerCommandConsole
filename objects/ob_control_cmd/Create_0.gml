@@ -1,4 +1,4 @@
-/// @desc Attributes
+///@desc Attributes
 
 
 #macro CMD_CURRENT_VERSION "0.7.2"
@@ -155,10 +155,10 @@ __currentState_beginStep = StateBeginStep_closed;
 show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
 
 
-/// @function fn_resizeWindow(guiOffsetMultiplier)
-/// @param guiOffsetMultiplier: real
-/// @return void
-/// @desc Change the necesary attributes when the resolution is different.
+///@func fn_resizeWindow(guiOffsetMultiplier)
+///@param guiOffsetMultiplier: real
+///@return void
+///@desc Change the necesary attributes when the resolution is different.
 function fn_resizeWindow(p_guiOffsetMultiplier) {
 	
 	// Visual
@@ -174,12 +174,12 @@ function fn_resizeWindow(p_guiOffsetMultiplier) {
 	
 }
 
-/// @function fn_CMDTriggerResolutionChange()
-/// @param windowWidth : int
-/// @param windowHeight : int
-/// @param isOnlyResizeGUI : boolean
-/// @return void
-/// @desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
+///@func fn_CMDTriggerResolutionChange()
+///@param windowWidth : int
+///@param windowHeight : int
+///@param isOnlyResizeGUI : boolean
+///@return void
+///@desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
 function fn_CMDTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
 
 	if ( p_isOnlyResizeGUI ) {

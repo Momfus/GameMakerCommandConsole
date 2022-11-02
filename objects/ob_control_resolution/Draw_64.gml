@@ -1,4 +1,4 @@
-/// @desc Show info
+///@desc Show info
 
 if(__isNewWindowSizeSetted and __resShowInfo ) {
 	

@@ -1,21 +1,21 @@
-/// @function sc_cmdInputControl()
-/// @return void
+///@func sc_cmdInputControl()
+///@return void
 function sc_cmdInputControl() {	
 
 /// General variables for this functions
 __currentCommandExecute = undefined;
 
 
-/// @function objCommand(title, shortTitle, description, useCleanDescription*, function*, arguments*, argsDescription*)
-/// @param title: string
-/// @param shortTitle: string
-/// @param description: string
-/// @param useCleanDescription: boolean
-/// @param function: id<function>
-/// @param arguments: Array<string>
-/// @param argsDescription: Array<string>
-/// @return newCommand: ligthObject
-/// @desc Create a command object
+///@func	objCommand(title, shortTitle, description, useCleanDescription, function, arguments, argsDescription)
+///@param	{string}		title
+///@param	{string}		shortTitle
+///@param	{string}		description
+///@param	{bool}			[useCleanDescription]
+///@param	{id.func}		[function]
+///@param	{Array.string}	[arguments]
+///@param	{Array.string}	[argsDescription]
+///@return	{struct}		[newCommand]
+///@desc	Create a command object
 function objCommand(p_title, p_shortTitle, p_description, p_useCleanDescription = false, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
 	__cmdTitle = p_title;
 	__cmdShort = p_shortTitle;
@@ -26,9 +26,9 @@ function objCommand(p_title, p_shortTitle, p_description, p_useCleanDescription 
 	__cmdArgDesc = p_argsDescription;
 }
 
-/// @function fn_CMDControl_commandListCreate()
-/// @return commandList: [ligthObject]
-/// @desc This must be call in the begining
+///@func	fn_CMDControl_commandListCreate()
+///@return	[struct]	commandList
+///@desc	This must be call in the begining
 function fn_CMDControl_commandListCreate() {
 	
 	#region Command List
@@ -101,11 +101,11 @@ function fn_CMDControl_commandListCreate() {
 	
 }
 
-/// @function fn_CMDControl_updateInputText(textToInsert, positionCountToAdd)
-/// @param textToInsert: string
-/// @param positionCountToAdd*: Int
-/// @return void
-/// @desc Update the text that the user is writing in the console, it will insert the text after the cursor position
+///@func	fn_CMDControl_updateInputText(textToInsert, positionCountToAdd)
+///@param	{string}	textToInsert
+///@param	{real}		[positionCountToAdd]
+///@return	void
+///@desc	Update the text that the user is writing in the console, it will insert the text after the cursor position
 function fn_CMDControl_updateInputText(l_textToInsert, l_positionCountToAdd = 1) {
 	
 	__cmdText[e_cmdTextInput.leftSide] = string_insert(l_textToInsert, __cmdText[e_cmdTextInput.leftSide], __cmdCursorPosition + 1);
@@ -114,10 +114,10 @@ function fn_CMDControl_updateInputText(l_textToInsert, l_positionCountToAdd = 1)
 					
 }
 
-/// @function fn_CMDControl_commitInput( commitInput )
-/// @param commitInput: String
-/// @return void
-/// @desc Control the input to commit
+///@func	fn_CMDControl_commitInput( commitInput )
+///@param	{string}	commitInput
+///@return	void
+///@desc	Control the input to commit
 function fn_CMDControl_commitInput(p_commitInput) {
 
 	if( p_commitInput == "" || p_commitInput == noone || p_commitInput == undefined ) {
@@ -163,11 +163,11 @@ function fn_CMDControl_commitInput(p_commitInput) {
 }
 
 
-/// @function fn_CMDControl_updateScrollbarProperties(updatePositionX, updateHeight)
-/// @param updatePositionX: boolean
-/// @param updateHeight: boolean
-/// @return void
-/// @desc Update the visual properties to show the scrollbar (sometimes there is no need to update the X position or the height)
+///@func	fn_CMDControl_updateScrollbarProperties(updatePositionX, updateHeight)
+///@param	{bool}	updatePositionX
+///@param	{bool}	updateHeight
+///@return	void
+///@desc	Update the visual properties to show the scrollbar (sometimes there is no need to update the X position or the height)
 function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHeight) {
 		
 	if( p_updatePositionX ) {
@@ -186,9 +186,9 @@ function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHei
 	
 }
 
-/// @function fn_CMDControl_parseCommand()
-/// @return void
-/// @desc Check the command type added and resolve the input
+///@func	fn_CMDControl_parseCommand()
+///@return	void
+///@desc	Check the command type added and resolve the input
 function fn_CMDControl_parseCommand() {
 	
 	var l_mainCommand = string_lower(__cmdTextPartArray[0]),
@@ -212,12 +212,12 @@ function fn_CMDControl_parseCommand() {
 	
 }
 
-/// @function fn_CMDControl_generalCommand_argumentControl(gameCMD, argMin, argMax)
-/// @param gameCMD: Array<String>
-/// @param argMin: int
-/// @param argMax: int
-/// @return void
-/// @desc Used for commands that have the general error with the given parameters, and minimum and maximum argument number to check
+///@func	fn_CMDControl_generalCommand_argumentControl(gameCMD, argMin, argMax)
+///@param	{Array.string}	gameCMD
+///@param	{real}			argMin
+///@param	{real}			argMax
+///@return	void
+///@desc	Used for commands that have the general error with the given parameters, and minimum and maximum argument number to check
 function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_argMax = noone) {
 	
 	var p_argsLength = array_length(p_gameCMD);
@@ -244,9 +244,9 @@ function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_arg
 	
 }
 
-/// @function fn_CMDControl_clipboardPaste()
-/// @return void
-/// @desc Check if there is text in the clipboard and paste it in the cmd line (this must use when the console is open)
+///@func	fn_CMDControl_clipboardPaste()
+///@return	void
+///@desc	Check if there is text in the clipboard and paste it in the cmd line (this must use when the console is open)
 function fn_CMDControl_clipboardPaste() {
 	
 	if( clipboard_has_text() ) {
@@ -266,17 +266,17 @@ function fn_CMDControl_clipboardPaste() {
 
 #region Commands action list
 
-/// @function fn_CMDControl_clearLog()
-/// @return void
-/// @desc Clear the current console log (it also reset the command history)
+///@func	fn_CMDControl_clearLog()
+///@return	void
+///@desc	Clear the current console log (it also reset the command history)
 function fn_CMDControl_clearLog() {
 	__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
 	__cmdLogMsgCountCurrent = 0;
 }
 
-/// @function fn_CMDControl_inputGetStringVersion()
-/// @return void
-/// @desc Show in the console the current version
+///@func	fn_CMDControl_inputGetStringVersion()
+///@return	void
+///@desc	Show in the console the current version
 function fn_CMDControl_inputGetStringVersion() {
 	var l_versionText = 
 	@"==============================
@@ -289,10 +289,10 @@ function fn_CMDControl_inputGetStringVersion() {
 	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_versionText);
 }
 
-/// @function fn_CMDControl_showHelp(args)
-/// @param args: Array[any]
-/// @return void
-/// @desc Show the help information of the given command
+///@func	fn_CMDControl_showHelp(args)
+///@param	{Array.any}	args
+///@return	void
+///@desc	Show the help information of the given command
 function fn_CMDControl_showHelp(p_args) {
 	
 	var p_argsLength = array_length(p_args),
@@ -432,10 +432,10 @@ function fn_CMDControl_showHelp(p_args) {
 }
 
 	
-/// @function fn_CMDControl_game(status)
-/// @param gameCMD: Array<String>
-/// @return void
-/// @desc Select the function to execute a game command
+///@func	fn_CMDControl_game(status)
+///@param	{Array.string}	gameCMD
+///@return	void
+///@desc	Select the function to execute a game command
 function fn_CMDControl_game(p_gameCMD) {
 
 	__myMethod = function(p_gameCMD) {
@@ -468,10 +468,10 @@ function fn_CMDControl_game(p_gameCMD) {
 	
 }
 
-/// @function fn_CMDControl_fullscreenMode(activate)
-/// @param activate: Array<String> (boolean)
-/// @return void
-/// @desc Select the function to execute a game command
+///@func	fn_CMDControl_fullscreenMode(activate)
+///@param	{Array.string}	activate - the string inside is a boolean or ON/OFF value or 1/0.
+///@return	void
+///@desc	Select the function to execute a game command
 function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 
 	__myMethod = function(p_fullscreenCMD) {
@@ -535,10 +535,10 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 }	
 
 
-/// @function fn_CMDControl_resolution(argToUse)
-/// @param argToUse: Array<String>
-/// @return void
-/// @desc Select the function to execute a game command
+///@func	fn_CMDControl_resolution(argToUse)
+///@param	{Array.string}	argToUse
+///@return	void
+///@desc	Select the function to execute a game command
 function fn_CMDControl_resolution(p_argsToUse) {
 
 	
@@ -591,10 +591,10 @@ function fn_CMDControl_resolution(p_argsToUse) {
 
 }
 
-///@function fn_CMDControl_resolutionSetWindowSize(argToUse)
-///@param argToUse: Array<String> (int)
-///@return void
-///@desc Set the windows size with a width and heigth, or use an index input with the array base to test.
+///@func	fn_CMDControl_resolutionSetWindowSize(argToUse)
+///@param	{Array.string}	argToUse - the string inside is integer(real)
+///@return	void
+///@desc	Set the windows size with a width and heigth, or use an index input with the array base to test.
 function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 	
 	__myMethod = function(p_argsToUse) { 
@@ -659,10 +659,10 @@ function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 	
 }
 
-///@function fn_CMDControl_resolutionSetGUISize(argToUse)
-///@param argToUse: Array<String> (int)
-///@return void
-///@desc Set the GUI size with a width and heigth.
+///@func	fn_CMDControl_resolutionSetGUISize(argToUse)
+///@param	{Array.string} argToUse - the string inside is integer(real).
+///@return	void
+///@desc	Set the GUI size with a width and heigth.
 function fn_CMDControl_resolutionSetGUISize(p_argsToUse) {
 	
 	__myMethod = function(p_argsToUse) { 
@@ -694,10 +694,10 @@ function fn_CMDControl_resolutionSetGUISize(p_argsToUse) {
 	
 }
 
-/// @function fn_CMDControl_functionExecute(argToUse)
-/// @param gameCMD: Array<String>
-/// @return void
-/// @desc Execute an object function or script with the arguments needed. At least one object need to exists to execute the function.
+///@func	fn_CMDControl_functionExecute(argToUse)
+///@param	{Array.string}	gameCMD
+///@return	void
+///@desc	Execute an object function or script with the arguments needed. At least one object need to exists to execute the function.
 function fn_CMDControl_functionExecute(p_gameCMD) {
 
 	__myMethod = function(p_gameCMD) {

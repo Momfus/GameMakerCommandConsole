@@ -1,4 +1,4 @@
-/// @desc Camera attributes
+///@desc Camera attributes
 
 fn_isSingleton();
 
@@ -8,9 +8,9 @@ __objectTarget = ob_playerExample;
 __cameraViewWidth = 0;
 __cameraViewHeight = 0;
 
-/// @function fn_resizeWindow()
-/// @return void
-/// @desc Change the necesary attributes when the resolution is different.
+///@func	fn_resizeWindow()
+///@return	void
+///@desc	Change the necesary attributes when the resolution is different.
 function fn_resizeWindow() {
 	
 	__cameraViewWidth = ob_control_resolution.__resIdealWidth;

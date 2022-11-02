@@ -1,4 +1,4 @@
-/// @desc Attributes init
+///@desc Attributes init
 
 application_surface_draw_enable(false);
 
@@ -35,13 +35,13 @@ window_set_size(__resBaseWidth, __resBaseHeight);
 
 #region Functions
 
-/// @function fn_controlResolutionResizeAll()
-/// @param isFirsTimeStart: boolean
-/// @param newWindowWidth: int
-/// @param newWindowHeight: int
-/// @param p_isPortrait : boolean
-/// @return void
-/// @desc Change the necesary attributes when the resolution is different.
+///@func	fn_controlResolutionResizeAll()
+///@param	{bool}	isFirsTimeStart
+///@param	{real}	newWindowWidth
+///@param	{real}	newWindowHeight
+///@param	{bool}	isPortrait
+///@return	void
+///@desc	Change the necesary attributes when the resolution is different.
 function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = __resBaseWidth, p_newWindowHeight = __resIdealHeight,  p_isPortrait = false) {
 	
 	__isNewWindowSizeSetted = false;
@@ -124,10 +124,10 @@ function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWi
 	
 }
 
-/// @function fn_controlResolutionResizeGUI()
-/// @param newGUIWidth: int
-/// @param newGUIHeight: int
-/// @return void
+///@func	fn_controlResolutionResizeGUI()
+///@param	{real}	newGUIWidth
+///@param	{real}	newGUIHeight
+///@return	void
 function fn_controlResolutionResizeGUI(p_newGUIWidth, p_newGUIHeight) {
 	
 	__resGUIWidthOld = display_get_gui_width();
