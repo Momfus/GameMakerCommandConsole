@@ -15,7 +15,7 @@ function StateBeginStep_closed() {
 ///@desc	Set the begin state when the cmd is opened
 function StateBeginStep_opened() {
 	
-	if ( __currentState == e_cmdState.opened ) {
+	if ( __currentState == enum_cmdState.opened ) {
   
 		// Check first if the user want to close the cmd panel
 		fn_CMDControl_checkSpecilKeyInput();
@@ -44,7 +44,7 @@ function StateBeginStep_opened() {
 ///@func	fn_CMDControl_windowClose()
 ///@desc	Set the attributes necessary to close
 function fn_CMDControl_windowClose() {
-	__currentState = e_cmdState.closed;
+	__currentState = enum_cmdState.closed;
 	__currentState_beginStep = StateBeginStep_closed;
 	global.gCMDOpen = false;
 	
@@ -56,7 +56,7 @@ function fn_CMDControl_windowClose() {
 ///@func	fn_CMDControl_windowOpen()
 ///@desc	Set the attributes necessary to close
 function fn_CMDControl_windowOpen() {
-	__currentState = e_cmdState.opened;
+	__currentState = enum_cmdState.opened;
 	__currentState_beginStep = StateBeginStep_opened;
 	global.gCMDOpen = true;
 }

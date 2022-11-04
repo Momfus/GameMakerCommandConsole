@@ -72,11 +72,11 @@ function fn_CMDWindow_drawCommandInput() {
 		
 	#region Input Text
 		
-		var l_textLeftCursorWidth = string_width( __cmdText[e_cmdTextInput.leftSide]);
+		var l_textLeftCursorWidth = string_width( __cmdText[enum_cmdTextInput.leftSide]);
 		
 		// Text Left
 		draw_set_color(c_white);
-		draw_text(__posTextStartX, __posTextY, __cmdText[e_cmdTextInput.leftSide]);
+		draw_text(__posTextStartX, __posTextY, __cmdText[enum_cmdTextInput.leftSide]);
 		
 		// Cursor
 		draw_set_color(c_orange);
@@ -86,7 +86,7 @@ function fn_CMDWindow_drawCommandInput() {
 			
 		// Test Right
 		draw_set_color(c_white);
-		draw_text(__posTextStartX + l_textLeftCursorWidth + string_length("|"), __posTextY, __cmdText[e_cmdTextInput.rightSide]);
+		draw_text(__posTextStartX + l_textLeftCursorWidth + string_length("|"), __posTextY, __cmdText[enum_cmdTextInput.rightSide]);
 			
 
 	#endregion

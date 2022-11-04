@@ -6,7 +6,7 @@ draw_set_valign(fa_top);
 
 if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
-	if ( __currentState == e_cmdState.opened ) {
+	if ( __currentState == enum_cmdState.opened ) {
 	
 		#region Background
 	

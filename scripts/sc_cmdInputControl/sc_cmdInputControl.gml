@@ -108,7 +108,7 @@ function fn_CMDControl_commandListCreate() {
 ///@desc	Update the text that the user is writing in the console, it will insert the text after the cursor position
 function fn_CMDControl_updateInputText(l_textToInsert, l_positionCountToAdd = 1) {
 	
-	__cmdText[e_cmdTextInput.leftSide] = string_insert(l_textToInsert, __cmdText[e_cmdTextInput.leftSide], __cmdCursorPosition + 1);
+	__cmdText[enum_cmdTextInput.leftSide] = string_insert(l_textToInsert, __cmdText[enum_cmdTextInput.leftSide], __cmdCursorPosition + 1);
 	__cmdCursorPosition += l_positionCountToAdd;
 
 					
@@ -144,8 +144,8 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	}
 	
 	// Clean old message input
-	__cmdText[e_cmdTextInput.leftSide] = "";
-	__cmdText[e_cmdTextInput.rightSide] = "";
+	__cmdText[enum_cmdTextInput.leftSide] = "";
+	__cmdText[enum_cmdTextInput.rightSide] = "";
 	__cmdCursorPosition = 0;
 	
 	// Reset the text part array
@@ -230,12 +230,12 @@ function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_arg
 		
 		if( p_argsLength < p_argMin ) {
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_less_min, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
+				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_less_min, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
 			);
 		} else {
 			
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
+				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
 			);
 			
 		}
@@ -342,7 +342,7 @@ function fn_CMDControl_showHelp(p_args) {
 				// If the command doesnt exists
 				if !( l_cmdArgumentExists ) {
 			    
-					var l_errorMsgCommandNoExists = fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, p_args[0]);
+					var l_errorMsgCommandNoExists = fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, p_args[0]);
 					fn_CMDControl_MsgShowError(l_errorMsgCommandNoExists);
 				
 					return -1; // exit the function
@@ -419,7 +419,7 @@ function fn_CMDControl_showHelp(p_args) {
 		// Too much arguments
 		default: {
 		
-			fn_CMDControl_MsgShowError(fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.params_more_max, "help", p_argsLength, 0, 1) );
+			fn_CMDControl_MsgShowError(fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_more_max, "help", p_argsLength, 0, 1) );
 			return -1;
 			
 			break;
@@ -455,7 +455,7 @@ function fn_CMDControl_game(p_gameCMD) {
 			default: {
 
 				fn_CMDControl_MsgShowError( 
-					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
 				);
 				break;
 				
@@ -522,7 +522,7 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 			
 			default: {
 				fn_CMDControl_MsgShowError(
-					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
 				);
 				break;
 			}
@@ -578,7 +578,7 @@ function fn_CMDControl_resolution(p_argsToUse) {
 			
 			default: {
 				fn_CMDControl_MsgShowError(
-					fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
 				);
 				break;
 			}

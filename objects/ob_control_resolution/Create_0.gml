@@ -115,7 +115,7 @@ function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWi
 	
 	// This is just to not generate a loop when the object is created (start with the base and if needed, call it again)
 	if not( p_isFirstTimeStart) {
-		alarm[1] = room_speed * 0.1; // It need at least one time after the rescale is made
+		alarm[1] = room_speed * 0.1; // It need at least one step after the rescale is made
 	} else {
 		__isNewWindowSizeSetted = true;
 		room_goto_next();	
@@ -142,6 +142,17 @@ function fn_controlResolutionResizeGUI(p_newGUIWidth, p_newGUIHeight) {
 	}
 
 		
+}
+
+///@function fn_resizeResolutionToObjects(guiOffsetMultiplier)
+///@param {real}	guiOffsetMultiplier
+///@return void
+///@desc	It used to resize all the objets that depend on the resolution size (like camera and gui elements) 
+function fn_resizeResolutionToObjects() {
+
+	ob_camera_main.fn_resizeWindow();
+	ob_control_cmd.fn_resizeWindow(__resGUIAspectOffset);
+	
 }
 
 #endregion

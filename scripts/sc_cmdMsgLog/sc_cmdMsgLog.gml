@@ -1,5 +1,5 @@
 
-enum e_cmdTypeMessage {
+enum enum_cmdTypeMessage {
 
 	params_less_min,
 	params_more_max,
@@ -24,30 +24,30 @@ function fn_CMDControl_MsgShowError(p_message, p_objectArrayMsgOwned = undefined
 
 
 ///@func	fn_CMDControl_MsgGetGenericMessage(type, command, paramTotalGiven, minParams, maxParams)
-///@param	{real.e_cmdTypeMessage}	type
-///@param	{string}				command
-///@param	{real}					paramTotalGiven
-///@param	{real}					minParams
-///@param	{real}					maxParams
-///@return	{string}				message
+///@param	{real.enum_cmdTypeMessage}	type
+///@param	{string}					command
+///@param	{real}						paramTotalGiven
+///@param	{real}						minParams
+///@param	{real}						maxParams
+///@return	{string}					message
 ///@desc	Get the correct message generic message with the given type
 function fn_CMDControl_MsgGetGenericMessage( p_type, p_command, p_paramTotalGiven = 0, p_minParams = 0, p_maxParams = 0 ) {
 	
 	switch( p_type ) {
 		
-		case e_cmdTypeMessage.command_not_exists: {
+		case enum_cmdTypeMessage.command_not_exists: {
 			
 			return "The \"" + p_command + "\" command isn't recognized";
 			break;
 		}
 		
-		case e_cmdTypeMessage.params_less_min: {
+		case enum_cmdTypeMessage.params_less_min: {
 			
 			return "\"" + p_command + "\" need at least " + string(p_minParams) + " argument/s, but " + string(p_paramTotalGiven) + " were given";
 			break;
 		}
 		
-		case e_cmdTypeMessage.params_more_max: {
+		case enum_cmdTypeMessage.params_more_max: {
 			
 			return "\"" + p_command + "\" must recieve no more than " + string(p_maxParams) + " argument/s, but " + string(p_paramTotalGiven) + " were given";
 			break;

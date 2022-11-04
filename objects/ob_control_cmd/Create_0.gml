@@ -1,7 +1,7 @@
 ///@desc Attributes
 
 
-#macro CMD_CURRENT_VERSION "0.7.2"
+#macro CMD_CURRENT_VERSION "0.7.3"
 
 // This was intended to be used only on PC, so I'm aiming for a single mouse/touch device
 #macro MOUSE_GUI_X  device_mouse_x_to_gui(0)
@@ -11,29 +11,29 @@
 fn_isSingleton(); 
 
 // States
-enum e_cmdState {
+enum enum_cmdState {
 
 	opened,
 	closed
 
 }
 
-__currentState = e_cmdState.closed;
+__currentState = enum_cmdState.closed;
 __currentState_beginStep = undefined;
 
 global.gCMDOpen = false; // Not tottally necesary, but is more quickly to use.
 
 
 // Text Attributes
-enum e_cmdTextInput {
+enum enum_cmdTextInput {
 
 	leftSide,
 	rightSide,
 	
 }
 
-__cmdText[e_cmdTextInput.leftSide] = "";
-__cmdText[e_cmdTextInput.rightSide] = "";
+__cmdText[enum_cmdTextInput.leftSide] = "";
+__cmdText[enum_cmdTextInput.rightSide] = "";
 
 
 __cmdCursorPosition = 0; // Where the text is focus
@@ -156,7 +156,7 @@ show_debug_message("[gms2-consoleCommand] You are using gms2-consoleCommand by @
 
 
 ///@func fn_resizeWindow(guiOffsetMultiplier)
-///@param guiOffsetMultiplier: real
+///@param {real}	guiOffsetMultiplier
 ///@return void
 ///@desc Change the necesary attributes when the resolution is different.
 function fn_resizeWindow(p_guiOffsetMultiplier) {
@@ -174,10 +174,10 @@ function fn_resizeWindow(p_guiOffsetMultiplier) {
 	
 }
 
-///@func fn_CMDTriggerResolutionChange()
-///@param windowWidth : int
-///@param windowHeight : int
-///@param isOnlyResizeGUI : boolean
+///@func fn_CMDTriggerResolutionChange(windowWidth, windowHeight, isOnlyresizeGUI)
+///@param {int}		windowWidth
+///@param {int}		windowHeight
+///@param {bool}	[isOnlyResizeGUI]
 ///@return void
 ///@desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
 function fn_CMDTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
@@ -189,4 +189,3 @@ function fn_CMDTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyRe
 	}
 
 }
-	
