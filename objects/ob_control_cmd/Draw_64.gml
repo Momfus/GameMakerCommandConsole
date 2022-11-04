@@ -1,4 +1,4 @@
-/// @desc Draw console
+///@desc Draw console
 
 draw_set_color(c_white);
 draw_set_halign(fa_left);
@@ -6,7 +6,7 @@ draw_set_valign(fa_top);
 
 if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
-	if ( __currentState == e_cmdState.opened ) {
+	if ( __currentState == enum_cmdState.opened ) {
 	
 		#region Background
 	
@@ -23,10 +23,7 @@ if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
 		#endregion
 	
-		if !( surface_exists(__surfCmdWindow) ) {
-			__surfCmdWindow = surface_create( __width, __heightLog);
-			fn_CMDWindow_updateSurface(false);
-		}
+		fn_CMDWindow_updateSurface(false);
 	
 		
 		draw_surface(__surfCmdWindow, __xx, __yy);

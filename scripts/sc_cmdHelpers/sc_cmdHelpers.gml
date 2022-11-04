@@ -1,8 +1,8 @@
-/// @function fn_cmdArrayPushFIFO( array, newElement )
-/// @param array: [any]
-/// @param newElement: any
-/// @return oldElement: any
-/// @desc Remove the old element and add a new one in the top
+///@func	fn_cmdArrayPushFIFO( array, newElement )
+///@param	{Array.any}	array
+///@param	{any}		newElement
+///@return	{any}		oldElement
+///@desc	Remove the old element and add a new one in the top
 function fn_cmdArrayPushFIFO(p_array, p_elementToInsert){
 	
 	var l_oldElement = array_pop(p_array);
@@ -12,10 +12,10 @@ function fn_cmdArrayPushFIFO(p_array, p_elementToInsert){
 
 }
 
-///@function fn_cmdGUICheckMouseIsHoverThisObject(stateMouseHover)
-///@param stateMouseHover : boolean
-///@return isHover : boolean
-///@desc Check if the mouse enter or leave the object using the gui layer
+///@func	fn_cmdGUICheckMouseIsHoverThisObject(stateMouseHover)
+///@param	{bool}	stateMouseHover
+///@return	{bool}	isHover
+///@desc	Check if the mouse enter or leave the object using the gui layer
 function fn_cmdGUICheckMouseIsHoverThisObject(p_stateMouseHover) {
 	var l_mouseMeetingCMD = position_meeting(MOUSE_GUI_X, MOUSE_GUI_Y, id);
 	
@@ -33,10 +33,10 @@ function fn_cmdGUICheckMouseIsHoverThisObject(p_stateMouseHover) {
 
 }
 
-/// @function fn_cmdGetArrayStringSizeNoEmpty( array )
-/// @param array: [string]
-/// @return arraSize: int
-/// @desc Check for a string array size, this check to their values until there is an empty string (o no valid) value. Using this for long arrays is not recommended
+///@func	fn_cmdGetArrayStringSizeNoEmpty( array )
+///@param	{Array.string}	array
+///@return	{real}			arraSize
+///@desc	Check for a string array size, this check to their values until there is an empty string (o no valid) value. Using this for long arrays is not recommended
 function fn_cmdGetArrayStringSizeNoEmpty(p_array){
 	
 	var l_arrayRealSize = array_length(p_array),
@@ -54,11 +54,11 @@ function fn_cmdGetArrayStringSizeNoEmpty(p_array){
 	return ( ( i - 1 ) >= 0 ? i : 0); // (i - 1 ) is needed to know if the first element is already empty. 
 }
 
-/// @function fn_cmdInputArrayCheckPressed( arrayToCheck, arrayLength )
-/// @param arrayToCheck: [keyCode]
-/// @param arrayLength: int
-/// @return IsAnyKeyReleased: bool
-/// @desc Check if any key in the array given was just pressed.
+///@func	fn_cmdInputArrayCheckPressed( arrayToCheck, arrayLength )
+///@param	{Array.real}	arrayToCheck	-	It use the key codes from the GM key list
+///@param	{Array.real}	arrayLength
+///@return	{bool}			isAnyKeyReleased
+///@desc	Check if any key in the array given was just pressed.
 function fn_cmdInputArrayCheckPressed(p_arrayToCheck, p_arrayLength){
 	
 	for( var i = 0; i < p_arrayLength; i++ ) {
@@ -73,12 +73,12 @@ function fn_cmdInputArrayCheckPressed(p_arrayToCheck, p_arrayLength){
 
 }
 
-/// @function fn_wrapValue( valueToWrap, newElement )
-/// @param valueToWrap: int
-/// @param min: int
-/// @param max: int
-/// @return newValue: int
-/// @desc Return a value wrapper between [min, max]
+///@func	fn_wrapValue( valueToWrap, newElement )
+///@param	{real}	valueToWrap
+///@param	{real}	min
+///@param	{real}	max
+///@return	{real}	newValue
+///@desc	Return a value wrapper between [min, max]
 function fn_wrapValue(p_valueToWrap, p_min, p_max) {
 	
 	// Forst to be int values (with real numbers sometimes hººave wrong returns)
@@ -93,12 +93,12 @@ function fn_wrapValue(p_valueToWrap, p_min, p_max) {
 	return l_newValue;
 }
 
-//@function fn_stringSplit(stringToSplit, delimiter, ignoreConsecutiveDelimiter)
-//@param stringToSplit: string
-//@param delimiter: string
-//@param ignoreConsectuvieDelimite: boolean
-//@return stringSplitted: [string]
-//@desc Return an string array from an string with the given delimiter (example: "Hello Word" with the space delimiter " " give an two element array ["Hello", "World"]
+///@func	fn_stringSplit(stringToSplit, delimiter, ignoreConsecutiveDelimiter)
+///@param	{string}		stringToSplit
+///@param	{string}		delimiter
+///@param	{bool}			ignoreConsectuvieDelimite
+///@return	{Array.string}	stringSplitted
+///@desc	Return an string from an string with the given delimiter (example: "Hello Word" with the space delimiter " " give an two element array ["Hello", "World"]
 function fn_stringSplit(p_strToSplit, p_delimiter, p_ignoreEmptyString) {
 	
 	p_strToSplit += p_delimiter; // Add the delimiter to the end to finish the loop;
@@ -132,11 +132,11 @@ function fn_stringSplit(p_strToSplit, p_delimiter, p_ignoreEmptyString) {
 	
 }
 
-//@function fn_stringAddPad(text, spaces)
-//@param text: string
-//@param spaces: real
-//@return textWithPadding: string
-//@desc Return a string with a padding space if the text is smaller than the space number.
+///@func	fn_stringAddPad(text, spaces)
+///@param	{string}	text
+///@param	{real}		spaces
+///@return	{string}	textWithPadding
+///@desc	Return a string with a padding space if the text is smaller than the space number.
 function fn_stringAddPad(p_text, p_spaces) {
 
 	var l_padToAdd = "",
@@ -150,12 +150,12 @@ function fn_stringAddPad(p_text, p_spaces) {
 
 }
 
-///@function fn_stringFromatTab(stringToFormat, separator)
-///@param stringArray : string
-///@param separator : string
-///@return stringFormatted : string
-///@desc Return the given string with a new formated with tab space (that is the number of spaces given between [..] )
-function fn_stringFromatTab(p_stringToFormat, p_separator = "\T") { // the T is important that is uppercase
+///@func	fn_stringFormatTab(stringToFormat, separator)
+///@param	{string}	stringArray
+///@param	{string}	separator
+///@return	{string}	stringFormatted
+///@desc	Return the given string with a new formated with tab space (that is the number of spaces given between [..] )
+function fn_stringFormatTab(p_stringToFormat, p_separator = "\\T") { // the T is important that is uppercase and two \ (GameMaker ignore the first one)
 
 	var l_arrayStringSplit = fn_stringSplit(p_stringToFormat, p_separator, true),
 		l_arrayStringSplitLength = array_length(l_arrayStringSplit),
@@ -193,9 +193,65 @@ function fn_stringFromatTab(p_stringToFormat, p_separator = "\T") { // the T is 
 
 }
 
+///@func	fn_stringFormatClean(stringToFormat, removeNewLine*, removeSpecialTabSpace*)
+///@param	{string}	stringToFormat
+///@param	{bool}		removeNewLine
+///@param	{bool}		removeSpecialTabSpace
+///@return	{string}	stringFormatted
+///@desc	Return the given string with a new formated without the some special characters that give format specified in the parameters (like \n or \\T in this case)
+function fn_stringFormatClean(p_stringToFormat, p_removeNewLine = false, p_removeSpecialTabSpace = false) {
+	
+	// Remove New lines
+	if( p_removeNewLine ) {
+		p_stringToFormat = string_replace_all(p_stringToFormat, "\n", " ");
+	}
+	
+	#region Remove the tab space
+	
+	// Note: this will remove the special substring "\\T" to remove the tab space specified between the "[...]". Take note of this with the fn_stringFormatTab function (that could be differente)
+	if (p_removeSpecialTabSpace) {
+	    
+		// String variables
+		var l_specialTabStr = "\\T",
+			l_stringToFormatLength = string_length(p_stringToFormat),
+			l_stringAux = "";
+		
+		// Position variables
+		var l_posCharArgOpen = undefined,
+			l_posCharArgClose = undefined,
+			l_posStartAux = 1; // GM use position in string from "1" (instead zero like in length)
+		
+		l_specialTabStr += "[";
+		var l_specialTabStrArgClose = "]";
+	
+		while( true ) {
+			
+			l_posCharArgOpen = string_pos_ext(l_specialTabStr, p_stringToFormat, l_posStartAux);
+			
+			if( l_posCharArgOpen == 0) { // This exit the loop when there isn't more open character/substring open to find
+				l_stringAux += string_copy(p_stringToFormat, l_posStartAux, l_stringToFormatLength - l_posStartAux + 1);
+				break; 
+			}
+			
+			l_posCharArgClose = string_pos_ext(l_specialTabStrArgClose, p_stringToFormat, l_posCharArgOpen) + 1;
+			l_stringAux += string_copy(p_stringToFormat, l_posStartAux, l_posCharArgOpen - l_posStartAux);
+			
+			l_posStartAux = l_posCharArgClose;
+			
+		}
+				
+		p_stringToFormat = l_stringAux;
+	}
+	
+	
+	#endregion
 
+	return p_stringToFormat;
+}
 
-///@function fn_isSingleton()
+///@func	fn_isSingleton()
+///@return	{bool}	isSingleton
+///@desc	Check if the object that call this function is the only one created
 function fn_isSingleton() {
 
 	var l_instNumber = instance_number(self.object_index);
@@ -206,17 +262,10 @@ function fn_isSingleton() {
 		var l_objectName = object_get_name(self.object_index)
 		show_debug_message("WARNING >>> Instance from object " + l_objectName + " already exists and is a singleton (id: "+ string(id) + ")" );
 		
+		return false;
 	}
 	
-}
-
-
-///@function fs_resizeResolutionToObjects(guiOffsetMultiplier)
-///@param guiOffsetMultiplier : real
-///@return void
-function fs_resizeResolutionToObjects(p_guiOffsetMultiplier) {
-
-	ob_camera_main.fn_resizeWindow();
-	ob_control_cmd.fn_resizeWindow(p_guiOffsetMultiplier);
+	return true;
 	
 }
+

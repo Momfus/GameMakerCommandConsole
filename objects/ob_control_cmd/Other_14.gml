@@ -1,9 +1,9 @@
-/// @description Methods - Mouse and scroll
+///@description Methods - Mouse and scroll
 
 
-///@function fn_CMDControl_inputMouse()
-///@return void
-///@desc Check all the inputs from the mouse
+///@func	fn_CMDControl_inputMouse()
+///@return	void
+///@desc	Check all the inputs from the mouse
 function fn_CMDControl_inputMouse() {
 	
 	#region Scrollbar move
@@ -16,10 +16,10 @@ function fn_CMDControl_inputMouse() {
 	
 }
 
-/// @function fn_CMDControl_scrollWindow(scrollDirection)
-/// @param scrollDirection : int
-/// @return void
-/// @desc Check and calculate the scroll up with mouse or keyboard input
+///@func	fn_CMDControl_scrollWindow(scrollDirection)
+///@param	{real}	scrollDirection
+///@return	void
+///@desc	Check and calculate the scroll up with mouse or keyboard input
 function fn_CMDControl_scrollWindow(p_scrollDirection) {
 
 	__cmdWindowSurfaceYoffset += __cmdScrollSpeed * p_scrollDirection ;
@@ -30,9 +30,9 @@ function fn_CMDControl_scrollWindow(p_scrollDirection) {
 	
 }
 
-/// @function fn_CMDControl_checkMouseEvent(scrollDirection)
-/// @return void
-/// @desc Check for mouse inputs when the CMD is open
+///@func	fn_CMDControl_checkMouseEvent(scrollDirection)
+///@return	void
+///@desc	Check for mouse inputs when the CMD is open
 function fn_CMDControl_checkMouseEvent() {
 	
 	__cmdMouseWheelDown = mouse_wheel_down();

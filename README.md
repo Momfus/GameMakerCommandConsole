@@ -1,6 +1,6 @@
 ## gms2-consoleCommand
  
-### Current Version: 0.7.0
+### Current Version: 0.7.2
 
 ### Description:
 

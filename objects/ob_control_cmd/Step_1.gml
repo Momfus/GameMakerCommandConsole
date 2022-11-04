@@ -1,4 +1,4 @@
-/// @desc Get keys status
+///@desc Get keys status
 
 
 __currentState_beginStep();

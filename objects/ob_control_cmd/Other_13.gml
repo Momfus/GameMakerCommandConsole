@@ -1,18 +1,22 @@
-/// @description Methods - GUI & Surface
+///@description Methods - GUI & Surface
 
 
-/// @function fn_CMDWindow_updateSurface( updateMsgTop )
-/// @param updateMsgTop: bool - Not everytime is necesary, only 
-/// @return void
-/// @desc Draw all the elements needed in the surface for the CMD Window
+///@func	fn_CMDWindow_updateSurface( updateMsgTop )
+///@param	{bool}	updateMsgTop
+///@return	void
+///@desc	Draw all the elements needed in the surface for the CMD Window
 function fn_CMDWindow_updateSurface(p_updateMsgeTop){
+		
+	if !( surface_exists(__surfCmdWindow) ) {
+		__surfCmdWindow = surface_create( __width, __heightLog);
+	}
 	
 	// Draw text on surface
 	surface_set_target(__surfCmdWindow);
 	draw_clear_alpha(c_black, 0);
 	gpu_set_blendenable(false);
 	
-	draw_set_font(ft_consolas_9);
+	draw_set_font(ft_console_9);
 	draw_set_halign(fa_left);
 	
 	#region Log text cmd
@@ -29,10 +33,13 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 				continue;
 			}
 			
-			draw_text(__posTextStartX, __heightLog - (i * __cmdMsgSep) 
-										- l_yyMsgPositionAux - __cmdWindowSurfaceYoffset, 
-						__cmdLogArrayMsg[i]);
-			l_yyMsgPositionAux += string_height(__cmdLogArrayMsg[i])
+				
+			draw_text_ext(	__posTextStartX, __heightLog - (i * __cmdMsgSep) - l_yyMsgPositionAux - __cmdWindowSurfaceYoffset, 
+							__cmdLogArrayMsg[i], -1, __width);
+							
+			l_yyMsgPositionAux +=  string_height_ext(__cmdLogArrayMsg[i], -1, __width);	
+
+			
 		};
 		
 			
@@ -52,9 +59,9 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 
 }
 
-/// @function fn_CMDWindow_drawCommandInput()
-/// @return void
-/// @desc Draw the line command input for the user
+///@func	fn_CMDWindow_drawCommandInput()
+///@return	void
+///@desc	Draw the line command input for the user
 function fn_CMDWindow_drawCommandInput() {
 		
 	draw_set_color(c_orange);
@@ -65,11 +72,11 @@ function fn_CMDWindow_drawCommandInput() {
 		
 	#region Input Text
 		
-		var l_textLeftCursorWidth = string_width( __cmdText[e_cmdTextInput.leftSide]);
+		var l_textLeftCursorWidth = string_width( __cmdText[enum_cmdTextInput.leftSide]);
 		
 		// Text Left
 		draw_set_color(c_white);
-		draw_text(__posTextStartX, __posTextY, __cmdText[e_cmdTextInput.leftSide]);
+		draw_text(__posTextStartX, __posTextY, __cmdText[enum_cmdTextInput.leftSide]);
 		
 		// Cursor
 		draw_set_color(c_orange);
@@ -79,7 +86,7 @@ function fn_CMDWindow_drawCommandInput() {
 			
 		// Test Right
 		draw_set_color(c_white);
-		draw_text(__posTextStartX + l_textLeftCursorWidth + string_length("|"), __posTextY, __cmdText[e_cmdTextInput.rightSide]);
+		draw_text(__posTextStartX + l_textLeftCursorWidth + string_length("|"), __posTextY, __cmdText[enum_cmdTextInput.rightSide]);
 			
 
 	#endregion
@@ -88,9 +95,9 @@ function fn_CMDWindow_drawCommandInput() {
 	
 }
 
-/// @function fn_CMDWindow_drawScrollbar()
-/// @return void
-/// @desc Draw the scrollbar for the cmd window
+///@func	fn_CMDWindow_drawScrollbar()
+///@return	void
+///@desc	Draw the scrollbar for the cmd window
 function fn_CMDWindow_drawScrollbar() {
 
 	if ( __cmdMsgTop < 0 ) {

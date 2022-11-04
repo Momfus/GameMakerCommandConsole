@@ -1,4 +1,4 @@
-/// @desc Attributes init
+///@desc Attributes init
 
 application_surface_draw_enable(false);
 
@@ -35,13 +35,13 @@ window_set_size(__resBaseWidth, __resBaseHeight);
 
 #region Functions
 
-/// @function fn_controlResolutionResizeAll()
-/// @param isFirsTimeStart: boolean
-/// @param newWindowWidth: int
-/// @param newWindowHeight: int
-/// @param p_isPortrait : boolean
-/// @return void
-/// @desc Change the necesary attributes when the resolution is different.
+///@func	fn_controlResolutionResizeAll()
+///@param	{bool}	isFirsTimeStart
+///@param	{real}	newWindowWidth
+///@param	{real}	newWindowHeight
+///@param	{bool}	isPortrait
+///@return	void
+///@desc	Change the necesary attributes when the resolution is different.
 function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = __resBaseWidth, p_newWindowHeight = __resIdealHeight,  p_isPortrait = false) {
 	
 	__isNewWindowSizeSetted = false;
@@ -115,7 +115,7 @@ function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWi
 	
 	// This is just to not generate a loop when the object is created (start with the base and if needed, call it again)
 	if not( p_isFirstTimeStart) {
-		alarm[1] = room_speed * 0.1; // It need at least one time after the rescale is made
+		alarm[1] = room_speed * 0.1; // It need at least one step after the rescale is made
 	} else {
 		__isNewWindowSizeSetted = true;
 		room_goto_next();	
@@ -124,10 +124,10 @@ function fn_controlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWi
 	
 }
 
-/// @function fn_controlResolutionResizeGUI()
-/// @param newGUIWidth: int
-/// @param newGUIHeight: int
-/// @return void
+///@func	fn_controlResolutionResizeGUI()
+///@param	{real}	newGUIWidth
+///@param	{real}	newGUIHeight
+///@return	void
 function fn_controlResolutionResizeGUI(p_newGUIWidth, p_newGUIHeight) {
 	
 	__resGUIWidthOld = display_get_gui_width();
@@ -142,6 +142,17 @@ function fn_controlResolutionResizeGUI(p_newGUIWidth, p_newGUIHeight) {
 	}
 
 		
+}
+
+///@function fn_resizeResolutionToObjects(guiOffsetMultiplier)
+///@param {real}	guiOffsetMultiplier
+///@return void
+///@desc	It used to resize all the objets that depend on the resolution size (like camera and gui elements) 
+function fn_resizeResolutionToObjects() {
+
+	ob_camera_main.fn_resizeWindow();
+	ob_control_cmd.fn_resizeWindow(__resGUIAspectOffset);
+	
 }
 
 #endregion

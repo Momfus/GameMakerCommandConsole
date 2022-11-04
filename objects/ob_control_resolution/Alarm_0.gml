@@ -1,3 +1,3 @@
-/// @desc Center window
+///@desc Center window
 
 window_center();

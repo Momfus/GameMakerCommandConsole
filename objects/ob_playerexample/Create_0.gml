@@ -1,4 +1,4 @@
-/// @desc Attributes
+///@desc Attributes
 
 __moveLeft = false;
 __moveRigth = false;

@@ -1,4 +1,4 @@
-/// @description Test variable area
+///@description Test variable area
 
 //TODO: Delete this (its just a temporal test field
 //var l_guiHeight = display_get_gui_height(),

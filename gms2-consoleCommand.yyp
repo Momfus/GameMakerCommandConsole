@@ -6,7 +6,7 @@
     {"id":{"name":"sp_playerExample","path":"sprites/sp_playerExample/sp_playerExample.yy",},"order":1,},
     {"id":{"name":"sc_scriptExamplesToUse","path":"scripts/sc_scriptExamplesToUse/sc_scriptExamplesToUse.yy",},"order":0,},
     {"id":{"name":"sc_cmdHelpers","path":"scripts/sc_cmdHelpers/sc_cmdHelpers.yy",},"order":1,},
-    {"id":{"name":"ft_consolas_9","path":"fonts/ft_consolas_9/ft_consolas_9.yy",},"order":0,},
+    {"id":{"name":"ft_console_9","path":"fonts/ft_console_9/ft_console_9.yy",},"order":0,},
     {"id":{"name":"ob_control_resolution","path":"objects/ob_control_resolution/ob_control_resolution.yy",},"order":1,},
     {"id":{"name":"sp_resolution_960x540","path":"sprites/sp_resolution_960x540/sp_resolution_960x540.yy",},"order":5,},
     {"id":{"name":"sc_cmdInputControl","path":"scripts/sc_cmdInputControl/sc_cmdInputControl.yy",},"order":0,},
@@ -60,10 +60,10 @@
     {"resourceType":"GMAudioGroup","resourceVersion":"1.3","name":"audiogroup_default","targets":-1,},
   ],
   "TextureGroups": [
-    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","isScaled":true,"compressFormat":"bz2","autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,},
+    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","isScaled":true,"compressFormat":"bz2","loadType":"default","directory":"","autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,},
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "2022.8.1.37",
+    "IDEVersion": "2022.9.1.51",
   },
 }

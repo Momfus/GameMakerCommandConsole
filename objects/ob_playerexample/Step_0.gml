@@ -1,4 +1,4 @@
-/// @desc
+///@desc
 
 x += __movH * __speed;
 y += __movV * __speed;

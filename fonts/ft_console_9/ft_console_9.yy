@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMFont",
+  "resourceVersion": "1.0",
+  "name": "ft_console_9",
   "hinting": 0,
   "glyphOperations": 0,
   "interpreter": 0,
@@ -226,8 +229,4 @@
     "name": "Extra",
     "path": "folders/gm2-consoleCommand/Fonts/Extra.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "ft_consolas_9",
-  "tags": [],
-  "resourceType": "GMFont",
 }

@@ -1,17 +1,17 @@
-/// @function fn_cmdSumNumber()
-/// @param n1
-/// @param n2
-/// return void
+///@func	fn_cmdSumNumber()
+///@param	{real}	n1
+///@param	{real}	n2
+///return	void
 function fn_cmdSumNumber(n1, n2){
 
 	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, string(n1) + " + " + string(n2) + " = " + string(n1 + n2) );
 }
 
-/// @function fn_cmdTestSum
-/// @param n1
-/// @param n2
-/// @return void
-/// @desc Add two numbers and show the result. This function was created to show how to use in a real project
+///@func	fn_cmdTestSum
+///@param	{any}	n1
+///@param	{any}	n2
+///@return	void
+///@desc	Add two numbers and show the result. This function was created to show how to use in a real project
 function fn_cmdTestSum(n1, n2){
 
 	// One solution is just make all the parameter control inside the direct function
