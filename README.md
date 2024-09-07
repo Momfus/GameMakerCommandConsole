@@ -4,7 +4,7 @@
 
 ### Description:
 
-A developer console command tool designed to test projects made with GameMaker Studio 2.3 and above. Inspired by the console commands in Elder Scrolls/Fallout, it offers an intuitive interface and commands to test projects without needing the project's editable files.
+A developer console command tool designed to test projects made with GameMaker 2.3 and above. Inspired by the console commands in Elder Scrolls/Fallout, it offers an intuitive interface and commands to test projects without needing the project's editable files.
 
 - **Project goals**:
   * Easy to import into any GameMaker 2.3+ project.
@@ -22,6 +22,6 @@ A developer console command tool designed to test projects made with GameMaker S
 
 ### Requirements:
 
-- GameMaker Studio 2.3 or above.
+- GameMaker 2.3 or above.
 - Download or clone this project.
 - Import the assets into your project.
