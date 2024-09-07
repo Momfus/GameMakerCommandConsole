@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "sc_scriptExamplesToUse",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Extra",
-    "path": "folders/gm2-consoleCommand/Scripts/Extra.yy",
+  "$GMScript":"v1",
+  "%Name":"sc_scriptExamplesToUse",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sc_scriptExamplesToUse",
+  "parent":{
+    "name":"Extra",
+    "path":"folders/gm2-consoleCommand/Scripts/Extra.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

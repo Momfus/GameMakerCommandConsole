@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "sc_cmdHelpers",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Scripts",
-    "path": "folders/gm2-consoleCommand/Scripts.yy",
+  "$GMScript":"v1",
+  "%Name":"sc_cmdHelpers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sc_cmdHelpers",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/gm2-consoleCommand/Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
