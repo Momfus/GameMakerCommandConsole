@@ -18,8 +18,8 @@
   "name":"ob_control_cmd",
   "overriddenProperties":[],
   "parent":{
-    "name":"GMCP",
-    "path":"GMCP.yyp",
+    "name":"CommandConsole",
+    "path":"folders/gmcp/Objects/CommandConsole.yy",
   },
   "parentObjectId":null,
   "persistent":true,

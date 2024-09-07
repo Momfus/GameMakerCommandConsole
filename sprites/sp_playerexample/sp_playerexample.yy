@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"GMCP",
-    "path":"GMCP.yyp",
+    "name":"Sprites",
+    "path":"folders/gmcp/Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

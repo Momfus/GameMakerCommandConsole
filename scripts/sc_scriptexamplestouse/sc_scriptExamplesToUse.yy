@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"sc_scriptExamplesToUse",
   "parent":{
-    "name":"GMCP",
-    "path":"GMCP.yyp",
+    "name":"Extra",
+    "path":"folders/gmcp/Scripts/Extra.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

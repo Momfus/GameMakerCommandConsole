@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"sc_cmdMsgLog",
   "parent":{
-    "name":"GMCP",
-    "path":"GMCP.yyp",
+    "name":"Scripts",
+    "path":"folders/gmcp/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

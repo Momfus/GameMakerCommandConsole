@@ -10,8 +10,8 @@
   "name":"ob_control_extra",
   "overriddenProperties":[],
   "parent":{
-    "name":"GMCP",
-    "path":"GMCP.yyp",
+    "name":"Extra",
+    "path":"folders/gmcp/Objects/Extra.yy",
   },
   "parentObjectId":null,
   "persistent":false,

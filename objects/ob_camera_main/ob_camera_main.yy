@@ -10,8 +10,8 @@
   "name":"ob_camera_main",
   "overriddenProperties":[],
   "parent":{
-    "name":"Extra",
-    "path":"folders/gmcp/Objects/Extra.yy",
+    "name":"CommandConsole",
+    "path":"folders/gmcp/Objects/CommandConsole.yy",
   },
   "parentObjectId":null,
   "persistent":true,
