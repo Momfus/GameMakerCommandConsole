@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"Sprites",
-    "path":"folders/gm2-consoleCommand/Sprites.yy",
+    "path":"folders/gmcp/Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

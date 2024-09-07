@@ -6,7 +6,7 @@
   "name":"sc_cmdHelpers",
   "parent":{
     "name":"Scripts",
-    "path":"folders/gm2-consoleCommand/Scripts.yy",
+    "path":"folders/gmcp/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

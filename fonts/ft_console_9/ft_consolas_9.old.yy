@@ -224,7 +224,7 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "Extra",
-    "path": "folders/gm2-consoleCommand/Fonts/Extra.yy",
+    "path": "folders/gmcp/Fonts/Extra.yy",
   },
   "resourceVersion": "1.0",
   "name": "ft_consolas_9",

@@ -6,7 +6,7 @@
   "name":"sc_scriptExamplesToUse",
   "parent":{
     "name":"Extra",
-    "path":"folders/gm2-consoleCommand/Scripts/Extra.yy",
+    "path":"folders/gmcp/Scripts/Extra.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

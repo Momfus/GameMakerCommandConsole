@@ -215,7 +215,7 @@
   "name":"ft_console_9",
   "parent":{
     "name":"Extra",
-    "path":"folders/gm2-consoleCommand/Fonts/Extra.yy",
+    "path":"folders/gmcp/Fonts/Extra.yy",
   },
   "pointRounding":0,
   "ranges":[

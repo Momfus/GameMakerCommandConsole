@@ -19,7 +19,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"CommandConsole",
-    "path":"folders/gm2-consoleCommand/Objects/CommandConsole.yy",
+    "path":"folders/gmcp/Objects/CommandConsole.yy",
   },
   "parentObjectId":null,
   "persistent":true,

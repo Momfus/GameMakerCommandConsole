@@ -1,6 +1,6 @@
 {
   "$GMProject":"",
-  "%Name":"gms2-consoleCommand",
+  "%Name":"gmcp",
   "AudioGroups":[
     {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
@@ -10,15 +10,15 @@
   },
   "defaultScriptType":1,
   "Folders":[
-    {"$GMFolder":"","%Name":"gm2-consoleCommand","folderPath":"folders/gm2-consoleCommand.yy","name":"gm2-consoleCommand","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Fonts","folderPath":"folders/gm2-consoleCommand/Fonts.yy","name":"Fonts","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Extra","folderPath":"folders/gm2-consoleCommand/Fonts/Extra.yy","name":"Extra","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Objects","folderPath":"folders/gm2-consoleCommand/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"CommandConsole","folderPath":"folders/gm2-consoleCommand/Objects/CommandConsole.yy","name":"CommandConsole","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Extra","folderPath":"folders/gm2-consoleCommand/Objects/Extra.yy","name":"Extra","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/gm2-consoleCommand/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Extra","folderPath":"folders/gm2-consoleCommand/Scripts/Extra.yy","name":"Extra","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/gm2-consoleCommand/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"gmcp","folderPath":"folders/gmcp.yy","name":"gmcp","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Fonts","folderPath":"folders/gmcp/Fonts.yy","name":"Fonts","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Extra","folderPath":"folders/gmcp/Fonts/Extra.yy","name":"Extra","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Objects","folderPath":"folders/gmcp/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"CommandConsole","folderPath":"folders/gmcp/Objects/CommandConsole.yy","name":"CommandConsole","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Extra","folderPath":"folders/gmcp/Objects/Extra.yy","name":"Extra","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/gmcp/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Extra","folderPath":"folders/gmcp/Scripts/Extra.yy","name":"Extra","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/gmcp/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Rooms","folderPath":"folders/Rooms.yy","name":"Rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[],
@@ -27,7 +27,7 @@
   "MetaData":{
     "IDEVersion":"2023.11.1.129",
   },
-  "name":"gms2-consoleCommand",
+  "name":"gmcp",
   "resources":[
     {"id":{"name":"ft_console_9","path":"fonts/ft_console_9/ft_console_9.yy",},},
     {"id":{"name":"ob_camera_main","path":"objects/ob_camera_main/ob_camera_main.yy",},},
