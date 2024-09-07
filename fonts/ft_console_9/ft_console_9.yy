@@ -214,8 +214,8 @@
   "maintainGms1Font":false,
   "name":"ft_console_9",
   "parent":{
-    "name":"GMCP",
-    "path":"GMCP.yyp",
+    "name":"Extra",
+    "path":"folders/gmcp/Fonts/Extra.yy",
   },
   "pointRounding":0,
   "ranges":[

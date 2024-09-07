@@ -1,7 +1,6 @@
 {
   "FolderOrderSettings":[],
   "ResourceOrderSettings":[
-    {"name":"ob_camera_main","order":2,"path":"objects/ob_camera_main/ob_camera_main.yy",},
     {"name":"ob_control_resolution","order":1,"path":"objects/ob_control_resolution/ob_control_resolution.yy",},
     {"name":"ob_playerExample","order":3,"path":"objects/ob_playerExample/ob_playerExample.yy",},
     {"name":"rm_main","order":1,"path":"rooms/rm_main/rm_main.yy",},
