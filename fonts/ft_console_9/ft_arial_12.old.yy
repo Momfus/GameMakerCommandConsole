@@ -299,7 +299,7 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "Extra",
-    "path": "folders/gmcp/Fonts/Extra.yy",
+    "path": "folders/gmcc/Fonts/Extra.yy",
   },
   "resourceVersion": "1.0",
   "name": "ft_arial_12",

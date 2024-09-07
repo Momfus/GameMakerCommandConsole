@@ -1,4 +1,4 @@
-# GMCP - GameMaker Command Prompt
+# gmcc - GameMaker Command Console
 
 ### Current Version: 0.7.3
 
