@@ -6,7 +6,7 @@
   "name":"sc_cmdInputControl",
   "parent":{
     "name":"Scripts",
-    "path":"folders/gmcp/Scripts.yy",
+    "path":"folders/gmcc/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

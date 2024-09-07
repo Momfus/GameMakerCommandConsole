@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Extra",
-    "path":"folders/gmcp/Objects/Extra.yy",
+    "path":"folders/gmcc/Objects/Extra.yy",
   },
   "parentObjectId":null,
   "persistent":false,

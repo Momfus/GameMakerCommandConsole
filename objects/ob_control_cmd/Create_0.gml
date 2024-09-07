@@ -152,7 +152,7 @@ __cmdArrayCommandsLength = array_length(__cmdArrayCommands);
 // Set states
 __currentState_beginStep = StateBeginStep_closed;
 
-show_debug_message("[GMCP] You are using GameMaker Command Prompt by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
+show_debug_message("[GMCC] You are using GameMaker Command Console by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
 
 
 ///@func fn_resizeWindow(guiOffsetMultiplier)
