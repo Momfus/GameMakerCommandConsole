@@ -19,13 +19,14 @@
     {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/gmcc/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Extra","folderPath":"folders/gmcc/Scripts/Extra.yy","name":"Extra","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/gmcc/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Templates-Resolution","folderPath":"folders/gmcc/Sprites/Templates-Resolution.yy","name":"Templates-Resolution","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Rooms","folderPath":"folders/Rooms.yy","name":"Rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2023.11.1.129",
+    "IDEVersion":"2024.8.0.169",
   },
   "name":"gmcc",
   "resources":[

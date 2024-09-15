@@ -155,11 +155,11 @@ __currentState_beginStep = StateBeginStep_closed;
 show_debug_message("[GMCC] You are using GameMaker Command Console by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
 
 
-///@func fn_resizeWindow(guiOffsetMultiplier)
+///@func fn_ResizeWindow(guiOffsetMultiplier)
 ///@param {real}	guiOffsetMultiplier
 ///@return void
 ///@desc Change the necesary attributes when the resolution is different.
-function fn_resizeWindow(p_guiOffsetMultiplier) {
+function fn_ResizeWindow(p_guiOffsetMultiplier) {
 	
 	// Visual
 	__width	*= p_guiOffsetMultiplier;
