@@ -156,7 +156,7 @@ show_debug_message("[GMCC] You are using GameMaker Command Console by @Momfus (V
 
 
 ///@func fn_ResizeWindow(guiOffsetMultiplier)
-///@param {real}	guiOffsetMultiplier
+///@param {real}	p_guiOffsetMultiplier
 ///@return void
 ///@desc Change the necesary attributes when the resolution is different.
 function fn_ResizeWindow(p_guiOffsetMultiplier) {
