@@ -4,7 +4,7 @@ fn_isSingleton();
 
 #macro MAIN_VIEW view_camera[0]
 
-objectTarget = ob_playerExample;
+objectTarget = ob_player_example;
 cameraViewWidth = 0;
 cameraViewHeight = 0;
 

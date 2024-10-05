@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sc_cmd_control_example",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sc_cmd_control_example",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/gmcc/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
