@@ -38,7 +38,6 @@
     {"id":{"name":"ob_player_example","path":"objects/ob_player_example/ob_player_example.yy",},},
     {"id":{"name":"rm_init","path":"rooms/rm_init/rm_init.yy",},},
     {"id":{"name":"rm_main","path":"rooms/rm_main/rm_main.yy",},},
-    {"id":{"name":"sc_cmd_control_example","path":"scripts/sc_cmd_control_example/sc_cmd_control_example.yy",},},
     {"id":{"name":"sc_cmd_helpers","path":"scripts/sc_cmd_helpers/sc_cmd_helpers.yy",},},
     {"id":{"name":"sc_cmd_msg_log","path":"scripts/sc_cmd_msg_log/sc_cmd_msg_log.yy",},},
     {"id":{"name":"sc_script_examples","path":"scripts/sc_script_examples/sc_script_examples.yy",},},
