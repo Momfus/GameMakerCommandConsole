@@ -9,7 +9,7 @@ function fn_CMDControl_inputKeyboardUser() {
 		// Check special keyboard commands before
 		if ( __cmdKeyPressedCommitInput ) {
 			
-			fn_CMDControl_commitInput( __cmdText[enum_cmdTextInput.leftSide] + __cmdText[enum_cmdTextInput.rightSide] );
+			fn_CMDControl_commitInput( _cmdTextArray[e_cmdTextInput.leftSide] + _cmdTextArray[e_cmdTextInput.rightSide] );
 			
 		} else if(__cmdKeyMoveArrowKeyLeft) {
 			
@@ -45,8 +45,8 @@ function fn_CMDControl_inputKeyboardUser() {
 					fn_CMDControl_updateInputText(keyboard_lastchar);
 					
 					// Reset log input history
-					if( __cmdLogHistoryPosition != -1 ) {
-						__cmdLogHistoryPosition	= -1;
+					if( _cmdLogHistoryPosition != -1 ) {
+						_cmdLogHistoryPosition	= -1;
 					}
 					
 				}
@@ -80,7 +80,7 @@ function fn_CMDControl_checkKeyboardKey() {
 ///@desc	Check for the special keys when the CMD is open (there many of keys that are not used when is close)
 function fn_CMDControl_checkSpecilKeyInput() {
 	
-	__cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( __cmdInputOpenCloseKeyArray, __cmdInputOpenCloseLength );
+	__cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( _cmdInputOpenCloseKeyArray, _cmdInputOpenCloseArrayLength );
 	
 	__cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
 	
@@ -100,15 +100,15 @@ function fn_CMDControl_checkSpecilKeyInput() {
 ///@desc	Move the cursor to the left in the input string
 function fn_CMDControl_cursorMoveLeft(p_deleteChar) {
 	
-	if (__cmdCursorPosition == 0) { exit; }
+	if (_cmdCursorPosition == 0) { exit; }
 				
-	var l_auxText = __cmdText[enum_cmdTextInput.leftSide],
-		l_charToMove = p_deleteChar ? "" : string_char_at(l_auxText, __cmdCursorPosition);
+	var l_auxText = _cmdTextArray[e_cmdTextInput.leftSide],
+		l_charToMove = p_deleteChar ? "" : string_char_at(l_auxText, _cmdCursorPosition);
 				
-	__cmdText[enum_cmdTextInput.leftSide] = string_delete(l_auxText, __cmdCursorPosition, 1)
-	__cmdText[enum_cmdTextInput.rightSide] = l_charToMove + __cmdText[enum_cmdTextInput.rightSide]
+	_cmdTextArray[e_cmdTextInput.leftSide] = string_delete(l_auxText, _cmdCursorPosition, 1)
+	_cmdTextArray[e_cmdTextInput.rightSide] = l_charToMove + _cmdTextArray[e_cmdTextInput.rightSide]
 				
-	__cmdCursorPosition--;
+	_cmdCursorPosition--;
 	
 }
 
@@ -117,16 +117,16 @@ function fn_CMDControl_cursorMoveLeft(p_deleteChar) {
 ///@desc	Move the cursor to the right in the input string
 function fn_CMDControl_cursorMoveRigth(p_deleteChar) {
 	
-	if ( __cmdText[enum_cmdTextInput.rightSide] == "") { exit; }
+	if ( _cmdTextArray[e_cmdTextInput.rightSide] == "") { exit; }
 				
-	var l_auxText = __cmdText[enum_cmdTextInput.rightSide],
+	var l_auxText = _cmdTextArray[e_cmdTextInput.rightSide],
 		l_charToMove = p_deleteChar ? "" : string_char_at(l_auxText, 0);
 				
-	__cmdText[enum_cmdTextInput.leftSide] = __cmdText[enum_cmdTextInput.leftSide] + l_charToMove;
-	__cmdText[enum_cmdTextInput.rightSide] = string_delete(l_auxText, 1, 1)
+	_cmdTextArray[e_cmdTextInput.leftSide] = _cmdTextArray[e_cmdTextInput.leftSide] + l_charToMove;
+	_cmdTextArray[e_cmdTextInput.rightSide] = string_delete(l_auxText, 1, 1)
 				
 	if( !p_deleteChar ) {
-		__cmdCursorPosition++
+		_cmdCursorPosition++
 	};
 				
 }
@@ -137,12 +137,12 @@ function fn_CMDControl_cursorMoveRigth(p_deleteChar) {
 function fn_CMDControl_cursorMoveInputLog( p_historyDirection ) {
 	
 	// Check for the current input text
-	if (__cmdLogHistoryPosition == -1 ) {
-	    __cmdLogLastText = __cmdText[enum_cmdTextInput.leftSide] + __cmdText[enum_cmdTextInput.rightSide];
+	if (_cmdLogHistoryPosition == -1 ) {
+	    _cmdLogLastText = _cmdTextArray[e_cmdTextInput.leftSide] + _cmdTextArray[e_cmdTextInput.rightSide];
 	}
 	
-	var l_logPositionNewValue = __cmdLogHistoryPosition,
-		l_inputArrayNoEmptySize = fn_cmdGetArrayStringSizeNoEmpty(__cmdLogArrayInput);
+	var l_logPositionNewValue = _cmdLogHistoryPosition,
+		l_inputArrayNoEmptySize = fn_cmdGetArrayStringSizeNoEmpty(_cmdLogInputArray);
 	
 	l_logPositionNewValue = fn_wrapValue(l_logPositionNewValue + p_historyDirection, -1, l_inputArrayNoEmptySize - 1);
 	
@@ -150,9 +150,9 @@ function fn_CMDControl_cursorMoveInputLog( p_historyDirection ) {
 		
 		#region Current input / Input that the user was typing
 			
-			__cmdText[enum_cmdTextInput.leftSide] = __cmdLogLastText;
-			__cmdText[enum_cmdTextInput.rightSide] = "";
-			__cmdCursorPosition = string_length(__cmdLogLastText);
+			_cmdTextArray[e_cmdTextInput.leftSide] = _cmdLogLastText;
+			_cmdTextArray[e_cmdTextInput.rightSide] = "";
+			_cmdCursorPosition = string_length(_cmdLogLastText);
 		
 		#endregion
 		
@@ -160,21 +160,21 @@ function fn_CMDControl_cursorMoveInputLog( p_historyDirection ) {
 	
 		#region Check for input text history
 		
-			var l_inputTextHistory = __cmdLogArrayInput[l_logPositionNewValue];
+			var l_inputTextHistory = _cmdLogInputArray[l_logPositionNewValue];
 		
 			if( l_inputTextHistory == undefined || l_inputTextHistory == "" || l_inputTextHistory == noone ) {
 				exit;
 			} else {
-				__cmdText[enum_cmdTextInput.leftSide] = l_inputTextHistory;
-				__cmdText[enum_cmdTextInput.rightSide] = "";
-				__cmdCursorPosition = string_length(l_inputTextHistory);
+				_cmdTextArray[e_cmdTextInput.leftSide] = l_inputTextHistory;
+				_cmdTextArray[e_cmdTextInput.rightSide] = "";
+				_cmdCursorPosition = string_length(l_inputTextHistory);
 			}
 		
 		#endregion
 		
 	}
 
-	__cmdLogHistoryPosition = l_logPositionNewValue;
+	_cmdLogHistoryPosition = l_logPositionNewValue;
 	
 	
 	

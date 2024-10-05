@@ -4,21 +4,21 @@ fn_isSingleton();
 
 #macro MAIN_VIEW view_camera[0]
 
-objectTarget = ob_player_example;
-cameraViewWidth = 0;
-cameraViewHeight = 0;
+_objectTarget = ob_player_example;
+_cameraViewWidth = 0;
+_cameraViewHeight = 0;
 
-///@func	fn_ResizeWindow()
+///@func	_mtResizeWindow()
 ///@return	void
 ///@desc	Change the necesary attributes when the resolution is different.
-function fn_ResizeWindow() {
+function _mtResizeWindow() {
 	
-	cameraViewWidth = ob_control_resolution.__resIdealWidth;
-	cameraViewHeight = ob_control_resolution.__resIdealHeight;
+	_cameraViewWidth = ob_control_resolution.__resIdealWidth;
+	_cameraViewHeight = ob_control_resolution.__resIdealHeight;
 	
-	camera_set_view_size(MAIN_VIEW, cameraViewWidth, cameraViewHeight);
+	camera_set_view_size(MAIN_VIEW, _cameraViewWidth, _cameraViewHeight);
 
 }
 
 
-fn_ResizeWindow();
+_mtResizeWindow();

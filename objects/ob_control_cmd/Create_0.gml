@@ -10,127 +10,129 @@
 
 fn_isSingleton(); 
 
-// States
-enum enum_cmdState {
+#region States
 
-	opened,
-	closed
+	enum e_stateCmd {
 
-}
+		opened,
+		closed
 
-__currentState = enum_cmdState.closed;
-__currentState_beginStep = undefined;
+	}
 
-global.gCMDOpen = false; // Not tottally necesary, but is more quickly to use.
+	_stateCurrent = e_stateCmd.closed;
+	_stateCurrentBeginStep = undefined;
 
+	global._gCmdOpen = false; // Not tottally necesary, but is more quickly to use.
 
-// Text Attributes
-enum enum_cmdTextInput {
+#endregion
 
-	leftSide,
-	rightSide,
+#region Text Attributes
+
+	enum e_cmdTextInput {
+
+		leftSide,
+		rightSide,
 	
-}
+	}
 
-__cmdText[enum_cmdTextInput.leftSide] = "";
-__cmdText[enum_cmdTextInput.rightSide] = "";
+	_cmdTextArray[e_cmdTextInput.leftSide] = "";
+	_cmdTextArray[e_cmdTextInput.rightSide] = "";
 
 
-__cmdCursorPosition = 0; // Where the text is focus
+	_cmdCursorPosition = 0; // Where the text is focus
 
-__cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
+	_cmdTextPartArray[0] = ""; // This is use to check each string inside an input commited
 
+#endregion
 
 #region Log input
 
-	__cmdLogCountMax = 50;
-	__cmdLogHistoryPosition = -1; // Used to quick access the input log text with the arrow keys (up and down)
+	_cmdLogCountMax = 50;
+	_cmdLogHistoryPosition = -1; // Used to quick access the input log text with the arrow keys (up and down)
 	
-	__cmdLogLastText = ""; // Used to save the old value when user check log input text
+	_cmdLogLastText = ""; // Used to save the old value when user check log input text
 	
-	__cmdLogMsgCountCurrent = 0;
+	_cmdLogMsgCountCurrent = 0;
 	
 	// FIFO list to check Log cmd inputs
-	__cmdLogArrayInput = array_create(__cmdLogCountMax, "");
-	__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
+	_cmdLogInputArray = array_create(_cmdLogCountMax, "");
+	_cmdLogMsgArray = array_create(_cmdLogCountMax, "");
 
 	
 #endregion 
 
 // Keys - Inputs Arrays (here you can add or remove keys to show and hide cmd)
 
-__cmdInputOpenCloseKeyArray = [220, 112, 27] // [º, F1, Esc] 
-__cmdInputOpenCloseLength = array_length(__cmdInputOpenCloseKeyArray);
+_cmdInputOpenCloseKeyArray = [220, 112, 27] // Windows LATAM: [º, F1, Esc] 
+_cmdInputOpenCloseArrayLength = array_length(_cmdInputOpenCloseKeyArray);
 
 
 #region Visual Settings
 
-	__surfCmdWindow = noone;
+	_surfCmdWindow = noone;
 	
 	// Visual
-	__alphaLog = 0.5;
-	__alphaCmdInput = __alphaLog + 0.4;
+	_alphaLog = 0.5;
+	_alphaCmdInput = _alphaLog + 0.4;
 	
-	
-	__cmdMsgWindowHeight = 0;
-	__cmdMsgTop = 0;
-	__cmdMsgSep = 8;
+	_cmdMsgWindowHeight = 0;
+	_cmdMsgPositionTop = 0;
+	_cmdMsgSep = 8;
 
 	// Padding
-	__paddingInner = 10;
+	_paddingInner = 10;
 	
 	// Height and Width
-	__width = display_get_gui_width();
-	__heightLog = 200;
-	__heightCmdInput = 40;
+	_width = display_get_gui_width();
+	_heightLog = 200;
+	_heightCmdInput = 40;
 	
 	// Position
-	__xx = 0;
-	__yy = 0;
+	_xx = 0;
+	_yy = 0;
 	
-	__posCmdInputY1 = __heightLog;
-	__posCmdInputY2 = __posCmdInputY1 + __heightCmdInput;
+	_posCmdInputY1 = _heightLog;
+	_posCmdInputY2 = _posCmdInputY1 + _heightCmdInput;
 	
-	__posTextY = __posCmdInputY1 + floor( (__posCmdInputY2 - __posCmdInputY1) * 0.5);
-	__posTextStartX = __xx + __paddingInner + 16;
+	_posTextY = _posCmdInputY1 + floor( (_posCmdInputY2 - _posCmdInputY1) * 0.5);
+	_posTextStartX = _xx + _paddingInner + 16;
 	
 	// Cursor flash
-	__cmdCursorFlashTime = 20;
-	__cmdCursorVisible = true;
-	alarm[0] = __cmdCursorFlashTime;
+	_timeCmdCursorFlash = 20;
+	_isCmdCursorVisible = true;
+	alarm[0] = _timeCmdCursorFlash;
 
 #endregion
 
 #region Mouse variables
 
 	// Set collision mask that trigger witht mouse events 
-	image_xscale = __width;
-	image_yscale = __posCmdInputY1;
+	image_xscale = _width;
+	image_yscale = _posCmdInputY1;
 
-	__cmdMouseHover = false;
-	__cmdMouseWheelUp = false;
-	__cmdMouseWheelDown = false;
-	
+	_isCmdMouseHover = false;
+	_isCmdMouseWheelUp = false;
+	_isCmdMouseWheelDown = false;
 	
 	// Scroll
-	__cmdScrollSpeed = 40;
-	__cmdWindowSurfaceYoffset = 0;
+	_cmdScrollSpeed = 40;
+	_cmdWindowSurfaceYoffset = 0;
 	
 	// scrollbar tap
-	__cmdScrollBarTapHeight = 0;
-	__cmdScrollBarTapHeightMin = 4;
-	__cmdScrollBarTapWidth = 6;
+	_cmdScrollBarTapHeight = 0;
+	_cmdScrollBarTapHeightMin = 4;
+	_cmdScrollBarTapWidth = 6;
 	
-	__cmdScrollBarTapPositionX = 0;
-	__cmdScrollBarTapRelativeEmptySpace =  0;
-	__cmdScrollBarTapPositionOffset = 0;
+	_cmdScrollBarTapPositionX = 0;
+	_cmdScrollBarTapRelativeEmptySpace =  0;
+	_cmdScrollBarTapPositionOffset = 0;
 
 #endregion
 
 
 // Others
 
-__cmdWindowSizeArrayBase = [ // used to test windows size to use with the ob_control_resolution
+_cmdWindowSizeBaseArray = [ // used to test windows size to use with the ob_control_resolution
 
 	[960, 540], // base
 	[1024, 768],
@@ -139,48 +141,50 @@ __cmdWindowSizeArrayBase = [ // used to test windows size to use with the ob_con
 ];
 
 
-// Declare methods
-event_user(0); // Begin Step States
-event_user(1); // Declare keyboard cmd functions
-event_user(2); // Commit cmd functions
-event_user(3); // GUI and Surface functions
-event_user(4); // Declare mouse and scrollbar functions
+#region Declare methods
 
-__cmdArrayCommands = fn_CMDControl_commandListCreate(); // Use the CMD to call functions and parse them
-__cmdArrayCommandsLength = array_length(__cmdArrayCommands);
+	event_user(0); // Begin Step States
+	event_user(1); // Declare keyboard cmd functions
+	event_user(2); // Commit cmd functions
+	event_user(3); // GUI and Surface functions
+	event_user(4); // Declare mouse and scrollbar functions
 
-// Set states
-__currentState_beginStep = StateBeginStep_closed;
+#endregion
+
+// After methos declare sets
+_cmdCommandsArray = fn_CMDControl_commandListCreate(); // Use the CMD to call functions and parse them
+_cmdCommandsArrayLength = array_length(_cmdCommandsArray);
+
+_stateCurrentBeginStep = StateBeginStep_closed;
 
 show_debug_message("[GMCC] You are using GameMaker Command Console by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
 
 
-///@func fn_ResizeWindow(guiOffsetMultiplier)
-///@param {real}	p_guiOffsetMultiplier
-///@return void
-///@desc Change the necesary attributes when the resolution is different.
-function fn_ResizeWindow(p_guiOffsetMultiplier) {
+///@func	_mtResizeWindow(guiOffsetMultiplier)
+///@param	{real}	p_guiOffsetMultiplier
+///@return	void
+///@desc	Change the necesary attributes when the resolution is different.
+function _mtResizeWindow(p_guiOffsetMultiplier) {
 	
 	// Visual
-	__width	*= p_guiOffsetMultiplier;
-	if( __width > window_get_width() ) {
-		__width = window_get_width();
+	_width	*= p_guiOffsetMultiplier;
+	if( _width > window_get_width() ) {
+		_width = window_get_width();
 	}
 	
 	// Mouse collision
-	
 	image_xscale *= p_guiOffsetMultiplier;
 	fn_CMDControl_updateScrollbarProperties(true, true);
 	
 }
 
-///@func fn_CMDTriggerResolutionChange(windowWidth, windowHeight, isOnlyresizeGUI)
-///@param {int}		windowWidth
-///@param {int}		windowHeight
-///@param {bool}	[isOnlyResizeGUI]
+///@func _mtCmdTriggerResolutionChange(windowWidth, windowHeight, isOnlyresizeGUI)
+///@param {real}	p_windowWidth
+///@param {real}	p_windowHeight
+///@param {bool}	[p_isOnlyResizeGUI]
 ///@return void
 ///@desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
-function fn_CMDTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
+function _mtCmdTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
 
 	if ( p_isOnlyResizeGUI ) {
 		ob_control_resolution.fn_controlResolutionResizeGUI(p_windowWidth, p_windowHeight)

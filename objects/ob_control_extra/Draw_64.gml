@@ -12,12 +12,12 @@
 //draw_set_color(c_white);
 //draw_set_halign(fa_left);
 //draw_set_valign(fa_top);
-//draw_text(2, l_yy + 10, "__cmdWindowSurfaceYoffset: " + string(ob_control_cmd.__cmdWindowSurfaceYoffset) +
-//"\n__cmdMsgWindowHeight: " + string(ob_control_cmd.__cmdMsgWindowHeight)
+//draw_text(2, l_yy + 10, "_cmdWindowSurfaceYoffset: " + string(ob_control_cmd._cmdWindowSurfaceYoffset) +
+//"\n__cmdMsgWindowHeight: " + string(ob_control_cmd._cmdMsgWindowHeight)
 // + 
-// "\n__cmdMsgTop: " + string(ob_control_cmd.__cmdMsgTop)
+// "\n__cmdMsgTop: " + string(ob_control_cmd._cmdMsgPositionTop)
 // +
-// "\n__heightLog: " + string(ob_control_cmd.__heightLog)
+// "\n__heightLog: " + string(ob_control_cmd._heightLog)
 // +
 // "\n cmd.Y: " + string( ob_control_cmd.y));
 

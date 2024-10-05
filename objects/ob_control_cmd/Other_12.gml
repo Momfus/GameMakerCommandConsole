@@ -107,8 +107,8 @@ function fn_CMDControl_commandListCreate() {
 ///@desc	Update the text that the user is writing in the console, it will insert the text after the cursor position
 function fn_CMDControl_updateInputText(l_textToInsert, l_positionCountToAdd = 1) {
 
-	__cmdText[enum_cmdTextInput.leftSide] = string_insert(l_textToInsert, __cmdText[enum_cmdTextInput.leftSide], __cmdCursorPosition + 1);
-	__cmdCursorPosition += l_positionCountToAdd;
+	_cmdTextArray[e_cmdTextInput.leftSide] = string_insert(l_textToInsert, _cmdTextArray[e_cmdTextInput.leftSide], _cmdCursorPosition + 1);
+	_cmdCursorPosition += l_positionCountToAdd;
 
 					
 }
@@ -125,37 +125,37 @@ function fn_CMDControl_commitInput(p_commitInput) {
 	
 		
 	// Separate the input in an array command to check (ignore the spaces) and check if is valid
-	__cmdTextPartArray = fn_stringSplit(p_commitInput, " ", true);
+	_cmdTextPartArray = fn_stringSplit(p_commitInput, " ", true);
 	
-	if( array_length(__cmdTextPartArray) == undefined ) { 
+	if( array_length(_cmdTextPartArray) == undefined ) { 
 		
 		fn_CMDControl_MsgShowError("Empty command sent");
 		
 	} else {
 	
-		fn_cmdArrayPushFIFO(__cmdLogArrayInput, p_commitInput);
+		fn_cmdArrayPushFIFO(_cmdLogInputArray, p_commitInput);
 		fn_CMDControl_parseCommand();
 	
 	}
 	
-	if( __cmdLogMsgCountCurrent != __cmdLogCountMax ) {
-		__cmdLogMsgCountCurrent = fn_cmdGetArrayStringSizeNoEmpty(__cmdLogArrayMsg);
+	if( _cmdLogMsgCountCurrent != _cmdLogCountMax ) {
+		_cmdLogMsgCountCurrent = fn_cmdGetArrayStringSizeNoEmpty(_cmdLogMsgArray);
 	}
 	
 	// Clean old message input
-	__cmdText[enum_cmdTextInput.leftSide] = "";
-	__cmdText[enum_cmdTextInput.rightSide] = "";
-	__cmdCursorPosition = 0;
+	_cmdTextArray[e_cmdTextInput.leftSide] = "";
+	_cmdTextArray[e_cmdTextInput.rightSide] = "";
+	_cmdCursorPosition = 0;
 	
 	// Reset the text part array
-	__cmdTextPartArray = undefined;
-	__cmdTextPartArray[0] = "";
+	_cmdTextPartArray = undefined;
+	_cmdTextPartArray[0] = "";
 	
-	__cmdWindowSurfaceYoffset = 0; // Go to the bottom of the CMD log window
+	_cmdWindowSurfaceYoffset = 0; // Go to the bottom of the CMD log window
 	
 	fn_CMDWindow_updateSurface(true);
 	
-	if( __cmdMsgTop < 0 ) {
+	if( _cmdMsgPositionTop < 0 ) {
 		fn_CMDControl_updateScrollbarProperties(true, true);
 	}
 
@@ -170,18 +170,18 @@ function fn_CMDControl_commitInput(p_commitInput) {
 function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHeight) {
 		
 	if( p_updatePositionX ) {
-		__cmdScrollBarTapPositionX = __xx + __width - __cmdScrollBarTapWidth;
+		_cmdScrollBarTapPositionX = _xx + _width - _cmdScrollBarTapWidth;
 	}
 	
 	if( p_updateHeight ) {
-		var l_heightLogOffset = __heightLog - 2,
-			l_heightRelativeScrollbar = l_heightLogOffset / __cmdMsgWindowHeight;
+		var l_heightLogOffset = _heightLog - 2,
+			l_heightRelativeScrollbar = l_heightLogOffset / _cmdMsgWindowHeight;
 		
-		__cmdScrollBarTapHeight = clamp(l_heightRelativeScrollbar * l_heightLogOffset, __cmdScrollBarTapHeightMin, l_heightLogOffset);
-		__cmdScrollBarTapRelativeEmptySpace = l_heightLogOffset - __cmdScrollBarTapHeight;
+		_cmdScrollBarTapHeight = clamp(l_heightRelativeScrollbar * l_heightLogOffset, _cmdScrollBarTapHeightMin, l_heightLogOffset);
+		_cmdScrollBarTapRelativeEmptySpace = l_heightLogOffset - _cmdScrollBarTapHeight;
 	}
 
-	__cmdScrollBarTapPositionOffset = (__cmdScrollBarTapRelativeEmptySpace * __cmdWindowSurfaceYoffset ) / (-__cmdMsgTop);
+	_cmdScrollBarTapPositionOffset = (_cmdScrollBarTapRelativeEmptySpace * _cmdWindowSurfaceYoffset ) / (-_cmdMsgPositionTop);
 	
 }
 
@@ -190,22 +190,22 @@ function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHei
 ///@desc	Check the command type added and resolve the input
 function fn_CMDControl_parseCommand() {
 	
-	var l_mainCommand = string_lower(__cmdTextPartArray[0]),
+	var l_mainCommand = string_lower(_cmdTextPartArray[0]),
 		l_params = [];
-	array_copy(l_params, 0, __cmdTextPartArray, 1, array_length(__cmdTextPartArray) - 1);
+	array_copy(l_params, 0, _cmdTextPartArray, 1, array_length(_cmdTextPartArray) - 1);
 
-	for( var i = 0; i < __cmdArrayCommandsLength; i++ ) {
+	for( var i = 0; i < _cmdCommandsArrayLength; i++ ) {
 	
-		if( __cmdArrayCommands[i].__cmdTitle == l_mainCommand or ( __cmdArrayCommands[i].__cmdShort == l_mainCommand and __cmdArrayCommands[i].__cmdShort != "-" )) {
-			__currentCommandExecute = __cmdArrayCommands[i];
-			__cmdArrayCommands[i].__cmdFunc(l_params);
+		if( _cmdCommandsArray[i].__cmdTitle == l_mainCommand or ( _cmdCommandsArray[i].__cmdShort == l_mainCommand and _cmdCommandsArray[i].__cmdShort != "-" )) {
+			__currentCommandExecute = _cmdCommandsArray[i];
+			_cmdCommandsArray[i].__cmdFunc(l_params);
 			return -1;
 		}
 		
 		
 	}
 	
-	fn_CMDControl_MsgShowError("The '" + __cmdTextPartArray[0] + "' command isn't recognized");
+	fn_CMDControl_MsgShowError("The '" + _cmdTextPartArray[0] + "' command isn't recognized");
 		
 	
 	
@@ -269,8 +269,8 @@ function fn_CMDControl_clipboardPaste() {
 ///@return	void
 ///@desc	Clear the current console log (it also reset the command history)
 function fn_CMDControl_clearLog() {
-	__cmdLogArrayMsg = array_create(__cmdLogCountMax, "");
-	__cmdLogMsgCountCurrent = 0;
+	_cmdLogMsgArray = array_create(_cmdLogCountMax, "");
+	_cmdLogMsgCountCurrent = 0;
 }
 
 ///@func	fn_CMDControl_inputGetStringVersion()
@@ -285,7 +285,7 @@ function fn_CMDControl_inputGetStringVersion() {
 	> Version:   " + string(CMD_CURRENT_VERSION) + 
 	"\n==============================" ;
 	
-	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_versionText);
+	fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_versionText);
 }
 
 ///@func	fn_CMDControl_showHelp(args)
@@ -302,11 +302,11 @@ function fn_CMDControl_showHelp(p_args) {
 		// General commands
 		case 0: {
 		
-			for( var i = 0; i < __cmdArrayCommandsLength; i++ ) {
+			for( var i = 0; i < _cmdCommandsArrayLength; i++ ) {
 		
-				var l_cmdTitle = string_upper(__cmdArrayCommands[i].__cmdTitle),
-					l_cmdShortTitle = string_upper(__cmdArrayCommands[i].__cmdShort),
-					l_cmdDescription = __cmdArrayCommands[i].__cmdDesc;
+				var l_cmdTitle = string_upper(_cmdCommandsArray[i].__cmdTitle),
+					l_cmdShortTitle = string_upper(_cmdCommandsArray[i].__cmdShort),
+					l_cmdDescription = _cmdCommandsArray[i].__cmdDesc;
 			
 				l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 14) +
 								fn_stringAddPad(l_cmdShortTitle, 8) +
@@ -315,7 +315,7 @@ function fn_CMDControl_showHelp(p_args) {
 	
 			l_helpText += "\n===============";
 	
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_helpText); 
+			fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_helpText); 
 	
 	
 			break;
@@ -329,9 +329,9 @@ function fn_CMDControl_showHelp(p_args) {
 			
 				var l_cmdArgumentExists = false;
 			
-				for (var i = 0; i < __cmdArrayCommandsLength; i++) {
+				for (var i = 0; i < _cmdCommandsArrayLength; i++) {
 			   
-				   if (__cmdArrayCommands[i].__cmdTitle == p_args[0] or __cmdArrayCommands[i].__cmdShort == p_args[0]) {
+				   if (_cmdCommandsArray[i].__cmdTitle == p_args[0] or _cmdCommandsArray[i].__cmdShort == p_args[0]) {
 				       l_cmdArgumentExists = true;
 					   break;
 				   }
@@ -357,25 +357,25 @@ function fn_CMDControl_showHelp(p_args) {
 
 					
 				// Get the command information
-				for (var i = 0; i < __cmdArrayCommandsLength; i++) {
-					l_cmdName = __cmdArrayCommands[i].__cmdTitle;
-					l_cmdShort = __cmdArrayCommands[i].__cmdShort;
+				for (var i = 0; i < _cmdCommandsArrayLength; i++) {
+					l_cmdName = _cmdCommandsArray[i].__cmdTitle;
+					l_cmdShort = _cmdCommandsArray[i].__cmdShort;
 					
 					// Go to the next iteration if isn't the command to show info
 					if ( l_cmdName != p_args[0] and l_cmdShort != p_args[0] ) {
 						continue;    
 					}
 					
-					var l_cmdDesc = __cmdArrayCommands[i].__cmdDescClean,
-						l_cmdArgs = __cmdArrayCommands[i].__cmdArgs, // it could be undefined
-						l_cmdArgsDesc = __cmdArrayCommands[i].__cmdArgDesc; // it could be undefined
+					var l_cmdDesc = _cmdCommandsArray[i].__cmdDescClean,
+						l_cmdArgs = _cmdCommandsArray[i].__cmdArgs, // it could be undefined
+						l_cmdArgsDesc = _cmdCommandsArray[i].__cmdArgDesc; // it could be undefined
 
 					
 					// Name
-					fn_cmdArrayPushFIFO( __cmdLogArrayMsg, fn_stringAddPad(">>>",6) + l_cmdName);
+					fn_cmdArrayPushFIFO( _cmdLogMsgArray, fn_stringAddPad(">>>",6) + l_cmdName);
 					
 					// Description
-					fn_cmdArrayPushFIFO( __cmdLogArrayMsg, l_cmdDesc + "\n");
+					fn_cmdArrayPushFIFO( _cmdLogMsgArray, l_cmdDesc + "\n");
 					
 					// Arguments name and description
 					
@@ -383,8 +383,8 @@ function fn_CMDControl_showHelp(p_args) {
 		
 						
 						// Headers
-						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, fn_stringAddPad(__cmdArrayCommands[0].__cmdArgs[0], 10)
-							+ fn_stringAddPad("", 4) + __cmdArrayCommands[0].__cmdArgDesc[0]);
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, fn_stringAddPad(_cmdCommandsArray[0].__cmdArgs[0], 10)
+							+ fn_stringAddPad("", 4) + _cmdCommandsArray[0].__cmdArgDesc[0]);
 						
 						// Arguments name-desc
 						var l_cmdArgsLength = array_length(l_cmdArgs);
@@ -400,7 +400,7 @@ function fn_CMDControl_showHelp(p_args) {
 							
 						}
 						
-						fn_cmdArrayPushFIFO(__cmdLogArrayMsg, l_argumentDesc + "\n");
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_argumentDesc + "\n");
 						
 					}
 					
@@ -454,7 +454,7 @@ function fn_CMDControl_game(p_gameCMD) {
 			default: {
 
 				fn_CMDControl_MsgShowError( 
-					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
 				);
 				break;
 				
@@ -484,9 +484,9 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 				if ( window_get_fullscreen() ) {
 					
 					window_set_fullscreen(false);
-					fn_CMDTriggerResolutionChange(960, 540);
+					_mtCmdTriggerResolutionChange(960, 540);
 					
-					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "The programa now is windowed: 960 x 540");
+					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is windowed: 960 x 540");
 					
 				} else {
 					fn_CMDControl_MsgShowError("The screen is already windowed");
@@ -509,9 +509,9 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 						l_displayHeight = display_get_height();
 					
 					window_set_fullscreen(true)
-					fn_CMDTriggerResolutionChange(l_displayWidth, l_displayHeight);
+					_mtCmdTriggerResolutionChange(l_displayWidth, l_displayHeight);
 				
-					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "The programa now is fullscreen: " + string(l_displayWidth) + " x " + string(l_displayHeight) );
+					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is fullscreen: " + string(l_displayWidth) + " x " + string(l_displayHeight) );
 				
 				}
 				
@@ -521,7 +521,7 @@ function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 			
 			default: {
 				fn_CMDControl_MsgShowError(
-					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
 				);
 				break;
 			}
@@ -562,7 +562,7 @@ function fn_CMDControl_resolution(p_argsToUse) {
 					
 				ob_control_resolution.__resShowInfo = l_resShowInfo;
 				
-				fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "Resolution information is now " + l_resInfoStateString); 
+				fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Resolution information is now " + l_resInfoStateString); 
 				
 				
 				break;
@@ -577,7 +577,7 @@ function fn_CMDControl_resolution(p_argsToUse) {
 			
 			default: {
 				fn_CMDControl_MsgShowError(
-					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, __cmdTextPartArray[0] + " " + __cmdTextPartArray[1])
+					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
 				);
 				break;
 			}
@@ -608,14 +608,14 @@ function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 		
 				#region Check for array index
 			
-				var l_windowArrayBaseLength = array_length(__cmdWindowSizeArrayBase),
+				var l_windowArrayBaseLength = array_length(_cmdWindowSizeBaseArray),
 				
 				if( l_firstNumber >= 0 and l_firstNumber < l_windowArrayBaseLength) {
 				
-					var l_width = __cmdWindowSizeArrayBase[l_firstNumber][0],
-						l_height = __cmdWindowSizeArrayBase[l_firstNumber][1];
-					fn_CMDTriggerResolutionChange(l_width, l_height);
-					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "Window size and GUI resolution set to: " + string(l_width) + " x " + string(l_height)); 
+					var l_width = _cmdWindowSizeBaseArray[l_firstNumber][0],
+						l_height = _cmdWindowSizeBaseArray[l_firstNumber][1];
+					_mtCmdTriggerResolutionChange(l_width, l_height);
+					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(l_width) + " x " + string(l_height)); 
 				
 				} else {
 					
@@ -632,8 +632,8 @@ function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 			
 					var l_secondNumber = real(p_argsToUse[1]);
 					
-					fn_CMDTriggerResolutionChange(l_firstNumber, l_secondNumber);
-					fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "Window size and GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
+					_mtCmdTriggerResolutionChange(l_firstNumber, l_secondNumber);
+					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
 			
 				#endregion
 			
@@ -671,8 +671,8 @@ function fn_CMDControl_resolutionSetGUISize(p_argsToUse) {
 			var l_firstNumber = real(p_argsToUse[0]),
 				l_secondNumber = real(p_argsToUse[1]);
 					
-			fn_CMDTriggerResolutionChange(l_firstNumber, l_secondNumber, true);
-			fn_cmdArrayPushFIFO(__cmdLogArrayMsg, "GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
+			_mtCmdTriggerResolutionChange(l_firstNumber, l_secondNumber, true);
+			fn_cmdArrayPushFIFO(_cmdLogMsgArray, "GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
 		
 		} catch(l_error) {
 			

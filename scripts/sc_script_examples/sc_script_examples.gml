@@ -4,7 +4,7 @@
 ///return	void
 function fn_cmdSumNumber(n1, n2){
 
-	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, string(n1) + " + " + string(n2) + " = " + string(n1 + n2) );
+	fn_cmdArrayPushFIFO(_cmdLogMsgArray, string(n1) + " + " + string(n2) + " = " + string(n1 + n2) );
 }
 
 ///@func	fn_cmdTestSum
@@ -20,7 +20,7 @@ function fn_cmdTestSum(n1, n2){
 	
 		//	n1 = real(n1);
 		//	n2 = real(n2);
-		//	fn_cmdArrayPushFIFO(__cmdLogArrayMsg, string(n1) + " + " + string(n2) + " = " + string(n1 + n2) );
+		//	fn_cmdArrayPushFIFO(_cmdLogMsgArray, string(n1) + " + " + string(n2) + " = " + string(n1 + n2) );
 		
 		//} catch(error) {
 	

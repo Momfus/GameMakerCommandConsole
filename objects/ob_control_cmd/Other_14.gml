@@ -8,8 +8,8 @@ function fn_CMDControl_inputMouse() {
 	
 	#region Scrollbar move
 	
-		if( (__cmdMouseWheelDown or __cmdMouseWheelUp) and  __cmdMsgTop < 0) {
-			fn_CMDControl_scrollWindow( __cmdMouseWheelDown - __cmdMouseWheelUp );
+		if( (_isCmdMouseWheelDown or _isCmdMouseWheelUp) and  _cmdMsgPositionTop < 0) {
+			fn_CMDControl_scrollWindow( _isCmdMouseWheelDown - _isCmdMouseWheelUp );
 		}
 	
 	#endregion
@@ -22,8 +22,8 @@ function fn_CMDControl_inputMouse() {
 ///@desc	Check and calculate the scroll up with mouse or keyboard input
 function fn_CMDControl_scrollWindow(p_scrollDirection) {
 
-	__cmdWindowSurfaceYoffset += __cmdScrollSpeed * p_scrollDirection ;
-	__cmdWindowSurfaceYoffset = clamp(__cmdWindowSurfaceYoffset,  __cmdMsgTop, 0)
+	_cmdWindowSurfaceYoffset += _cmdScrollSpeed * p_scrollDirection ;
+	_cmdWindowSurfaceYoffset = clamp(_cmdWindowSurfaceYoffset,  _cmdMsgPositionTop, 0)
 	
 	fn_CMDWindow_updateSurface(false); 
 	fn_CMDControl_updateScrollbarProperties(false, false);
@@ -35,7 +35,7 @@ function fn_CMDControl_scrollWindow(p_scrollDirection) {
 ///@desc	Check for mouse inputs when the CMD is open
 function fn_CMDControl_checkMouseEvent() {
 	
-	__cmdMouseWheelDown = mouse_wheel_down();
-	__cmdMouseWheelUp = mouse_wheel_up();
+	_isCmdMouseWheelDown = mouse_wheel_down();
+	_isCmdMouseWheelUp = mouse_wheel_up();
 	
 }

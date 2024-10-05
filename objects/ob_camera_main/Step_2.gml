@@ -1,9 +1,9 @@
 ///@desc Follow Target
 
-if( objectTarget != undefined and instance_exists(objectTarget) ) {
+if( _objectTarget != undefined and instance_exists(_objectTarget) ) {
 	
-	var l_x = clamp(objectTarget.x - cameraViewWidth * 0.5, 0, room_width - cameraViewWidth), 
-		l_y = clamp(objectTarget.y - cameraViewHeight * 0.5, 0, room_height - cameraViewHeight); 
+	var l_x = clamp(_objectTarget.x - _cameraViewWidth * 0.5, 0, room_width - _cameraViewWidth), 
+		l_y = clamp(_objectTarget.y - _cameraViewHeight * 0.5, 0, room_height - _cameraViewHeight); 
 		
 	//camera_set_view_pos(MAIN_VIEW, l_x, l_y); // Follow object directly		
 		

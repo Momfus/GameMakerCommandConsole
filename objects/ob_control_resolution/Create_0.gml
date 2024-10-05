@@ -150,8 +150,8 @@ function fn_controlResolutionResizeGUI(p_newGUIWidth, p_newGUIHeight) {
 ///@desc	It used to resize all the objets that depend on the resolution size (like camera and gui elements) 
 function fn_resizeResolutionToObjects() {
 
-	ob_camera_main.fn_ResizeWindow();
-	ob_control_cmd.fn_ResizeWindow(__resGUIAspectOffset);
+	ob_camera_main._mtResizeWindow();
+	ob_control_cmd._mtResizeWindow(__resGUIAspectOffset);
 	
 }
 

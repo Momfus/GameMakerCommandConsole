@@ -6,18 +6,18 @@ draw_set_valign(fa_top);
 
 if( ob_control_resolution.__isNewWindowSizeSetted ) {
 	
-	if ( __currentState == enum_cmdState.opened ) {
+	if ( _stateCurrent == e_stateCmd.opened ) {
 	
 		#region Background
 	
 			// Log background
 			draw_set_color(c_black);
-			draw_set_alpha(__alphaLog);
-			draw_rectangle(__xx, __yy, __width, __heightLog, false)
+			draw_set_alpha(_alphaLog);
+			draw_rectangle(_xx, _yy, _width, _heightLog, false)
 	
 			// CMD Input background
-			draw_set_alpha(__alphaCmdInput)
-			draw_rectangle(__xx, __posCmdInputY1, __width, __posCmdInputY2, false);
+			draw_set_alpha(_alphaCmdInput)
+			draw_rectangle(_xx, _posCmdInputY1, _width, _posCmdInputY2, false);
 	
 			draw_set_alpha(1);		
 	
@@ -26,7 +26,7 @@ if( ob_control_resolution.__isNewWindowSizeSetted ) {
 		fn_CMDWindow_updateSurface(false);
 	
 		
-		draw_surface(__surfCmdWindow, __xx, __yy);
+		draw_surface(_surfCmdWindow, _xx, _yy);
 		fn_CMDWindow_drawCommandInput();
 		fn_CMDWindow_drawScrollbar();
 
