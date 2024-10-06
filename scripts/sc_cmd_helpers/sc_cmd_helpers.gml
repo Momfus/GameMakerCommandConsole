@@ -269,3 +269,10 @@ function fn_isSingleton() {
 	
 }
 
+
+
+///@func    fn_getCurrentFps
+///@return  {real}  Returns the current FPS value of the game.
+function fn_getCurrentFps() {
+    return game_get_speed(gamespeed_fps);
+}

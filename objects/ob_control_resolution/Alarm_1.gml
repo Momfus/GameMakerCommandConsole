@@ -1,12 +1,12 @@
 ///@desc Rescale others objets
 
-if( __newResSizeWidth == window_get_width() and __newResSizeHeight == window_get_height() ) {
+if( _newResSizeWidth == window_get_width() and _newResSizeHeight == window_get_height() ) {
 	
-	__isNewWindowSizeSetted = true;
-	fn_resizeResolutionToObjects();
+	_isNewWindowSizeSetted = true;
+	_mtResizeResolutionToObjects();
 	
 } else {
 
-	alarm[1] = room_speed * 0.1;	
+	alarm[1] = fn_getCurrentFps() * 0.1;	
 	
 }

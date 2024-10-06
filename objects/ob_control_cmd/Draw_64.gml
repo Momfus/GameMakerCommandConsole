@@ -4,7 +4,7 @@ draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-if( ob_control_resolution.__isNewWindowSizeSetted ) {
+if( ob_control_resolution._isNewWindowSizeSetted ) {
 	
 	if ( _stateCurrent == e_stateCmd.opened ) {
 	

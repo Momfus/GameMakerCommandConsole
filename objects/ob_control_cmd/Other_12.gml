@@ -557,10 +557,10 @@ function fn_CMDControl_resolution(p_argsToUse) {
 			case "info":
 			case "i": {
 				
-				var l_resShowInfo = not(ob_control_resolution.__resShowInfo),
+				var l_resShowInfo = not(ob_control_resolution._isResInfoShow),
 					l_resInfoStateString = (l_resShowInfo)? "displayed" : "hidden";
 					
-				ob_control_resolution.__resShowInfo = l_resShowInfo;
+				ob_control_resolution._isResInfoShow = l_resShowInfo;
 				
 				fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Resolution information is now " + l_resInfoStateString); 
 				

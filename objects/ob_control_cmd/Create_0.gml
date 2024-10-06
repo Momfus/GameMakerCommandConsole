@@ -10,6 +10,57 @@
 
 fn_isSingleton(); 
 
+
+
+#region Declare methods
+
+	#region In event user
+	
+		// Is separate in events to be more organized
+		event_user(0); // Begin Step States
+		event_user(1); // Declare keyboard cmd functions
+		event_user(2); // Commit cmd functions
+		event_user(3); // GUI and Surface functions
+		event_user(4); // Declare mouse and scrollbar functions
+		
+	#endregion
+
+	///@func	_mtResizeWindow()
+	///@param	{real}	p_guiOffsetMultiplier
+	///@return	void
+	///@desc	Change the necesary attributes when the resolution is different.
+	function _mtResizeWindow(p_guiOffsetMultiplier) {
+	
+		// Visual
+		_width	*= p_guiOffsetMultiplier;
+		if( _width > window_get_width() ) {
+			_width = window_get_width();
+		}
+	
+		// Mouse collision
+		image_xscale *= p_guiOffsetMultiplier;
+		fn_CMDControl_updateScrollbarProperties(true, true);
+	
+	}
+
+	///@func _mtCmdTriggerResolutionChange()
+	///@param {real}	p_windowWidth
+	///@param {real}	p_windowHeight
+	///@param {bool}	[p_isOnlyResizeGUI]
+	///@return void
+	///@desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
+	function _mtCmdTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
+
+		if ( p_isOnlyResizeGUI ) {
+			ob_control_resolution._mtControlResolutionResizeGUI(p_windowWidth, p_windowHeight)
+		} else {
+			ob_control_resolution._mtControlResolutionResizeAll(false, p_windowWidth, p_windowHeight);
+		}
+
+	}
+
+#endregion
+
 #region States
 
 	enum e_stateCmd {
@@ -61,15 +112,10 @@ fn_isSingleton();
 	
 #endregion 
 
-// Keys - Inputs Arrays (here you can add or remove keys to show and hide cmd)
-
-_cmdInputOpenCloseKeyArray = [220, 112, 27] // Windows LATAM: [º, F1, Esc] 
-_cmdInputOpenCloseArrayLength = array_length(_cmdInputOpenCloseKeyArray);
-
 
 #region Visual Settings
 
-	_surfCmdWindow = noone;
+	_surfCmdWindow = undefined;
 	
 	// Visual
 	_alphaLog = 0.5;
@@ -130,6 +176,10 @@ _cmdInputOpenCloseArrayLength = array_length(_cmdInputOpenCloseKeyArray);
 #endregion
 
 
+// Keys - Inputs Arrays (here you can add or remove keys to show and hide cmd)
+_cmdInputOpenCloseKeyArray = [220, 112, 27] // Windows LATAM: [º, F1, Esc] 
+_cmdInputOpenCloseArrayLength = array_length(_cmdInputOpenCloseKeyArray);
+
 // Others
 
 _cmdWindowSizeBaseArray = [ // used to test windows size to use with the ob_control_resolution
@@ -141,55 +191,10 @@ _cmdWindowSizeBaseArray = [ // used to test windows size to use with the ob_cont
 ];
 
 
-#region Declare methods
-
-	event_user(0); // Begin Step States
-	event_user(1); // Declare keyboard cmd functions
-	event_user(2); // Commit cmd functions
-	event_user(3); // GUI and Surface functions
-	event_user(4); // Declare mouse and scrollbar functions
-
-#endregion
-
-// After methos declare sets
 _cmdCommandsArray = fn_CMDControl_commandListCreate(); // Use the CMD to call functions and parse them
 _cmdCommandsArrayLength = array_length(_cmdCommandsArray);
 
 _stateCurrentBeginStep = StateBeginStep_closed;
 
+
 show_debug_message("[GMCC] You are using GameMaker Command Console by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
-
-
-///@func	_mtResizeWindow(guiOffsetMultiplier)
-///@param	{real}	p_guiOffsetMultiplier
-///@return	void
-///@desc	Change the necesary attributes when the resolution is different.
-function _mtResizeWindow(p_guiOffsetMultiplier) {
-	
-	// Visual
-	_width	*= p_guiOffsetMultiplier;
-	if( _width > window_get_width() ) {
-		_width = window_get_width();
-	}
-	
-	// Mouse collision
-	image_xscale *= p_guiOffsetMultiplier;
-	fn_CMDControl_updateScrollbarProperties(true, true);
-	
-}
-
-///@func _mtCmdTriggerResolutionChange(windowWidth, windowHeight, isOnlyresizeGUI)
-///@param {real}	p_windowWidth
-///@param {real}	p_windowHeight
-///@param {bool}	[p_isOnlyResizeGUI]
-///@return void
-///@desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
-function _mtCmdTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
-
-	if ( p_isOnlyResizeGUI ) {
-		ob_control_resolution.fn_controlResolutionResizeGUI(p_windowWidth, p_windowHeight)
-	} else {
-		ob_control_resolution.fn_controlResolutionResizeAll(false, p_windowWidth, p_windowHeight);
-	}
-
-}
