@@ -1,27 +1,27 @@
 ///@desc Methods - Begin Step
 
-///@func	StateBeginStep_closed()
+///@func	_mtStateBeginStepCMDClosed()
 ///@desc	Set the begin state when the cmd is closed
-function StateBeginStep_closed() {
+function _mtStateBeginStepCMDClosed() {
 	  
 	fn_CMDControl_checkSpecilKeyInput();
-	if (__cmdKeyPressedShowHide) {
-		fn_CMDControl_windowOpen();
+	if (_cmdKeyPressedShowHide) {
+		_mtCMDWindowOpen();
 	}
 	
 }
 
-///@func	StateBeginStep_opened()
+///@func	_mtStateBeginStepCMDOpened()
 ///@desc	Set the begin state when the cmd is opened
-function StateBeginStep_opened() {
+function _mtStateBeginStepCMDOpened() {
 	
 	if ( _stateCurrent == e_stateCmd.opened ) {
   
 		// Check first if the user want to close the cmd panel
 		fn_CMDControl_checkSpecilKeyInput();
-		if (__cmdKeyPressedShowHide) {
+		if (_cmdKeyPressedShowHide) {
 	    
-			fn_CMDControl_windowClose();
+			_mtCMDWindowClose();
 			
 		} else 
 			
@@ -29,23 +29,22 @@ function StateBeginStep_opened() {
 			fn_CMDControl_inputKeyboardUser();
 			
 			// Mouse event control
-			fn_CMDControl_checkMouseEvent(); // Global mouse check (not necesarry when is hover the CMD
+			fn_CMDControl_checkMouseEvent(); // Global mouse check (not necesarry when is hover the CMD)
 
 			_isCmdMouseHover = fn_cmdGUICheckMouseIsHoverThisObject(_isCmdMouseHover);
 			if( _isCmdMouseHover ) {
 				fn_CMDControl_inputMouse();
 			}
 
-			
 		}
 			
 }
 
-///@func	fn_CMDControl_windowClose()
+///@func	_mtCMDWindowClose()
 ///@desc	Set the attributes necessary to close
-function fn_CMDControl_windowClose() {
+function _mtCMDWindowClose() {
 	_stateCurrent = e_stateCmd.closed;
-	_stateCurrentBeginStep = StateBeginStep_closed;
+	_stateCurrentBeginStep = _mtStateBeginStepCMDClosed;
 	global._gCmdOpen = false;
 	
 	if( surface_exists(_surfCmdWindow) ) {
@@ -53,10 +52,10 @@ function fn_CMDControl_windowClose() {
 	}
 }
 
-///@func	fn_CMDControl_windowOpen()
+///@func	_mtCMDWindowOpen()
 ///@desc	Set the attributes necessary to close
-function fn_CMDControl_windowOpen() {
+function _mtCMDWindowOpen() {
 	_stateCurrent = e_stateCmd.opened;
-	_stateCurrentBeginStep = StateBeginStep_opened;
+	_stateCurrentBeginStep = _mtStateBeginStepCMDOpened;
 	global._gCmdOpen = true;
 }

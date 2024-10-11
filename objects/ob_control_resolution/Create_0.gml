@@ -1,7 +1,7 @@
 ///@desc Attributes init
 
 /**************************************************************************************************************************
-	IMPORTANT:This object must be in the beggining of the game in a blank room with the same size as the base widthxheight
+	IMPORTANT: This object must be in the beggining of the game in a blank room with the same size as the base widthxheight
 /**************************************************************************************************************************/
 
 

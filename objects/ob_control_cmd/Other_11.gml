@@ -80,7 +80,7 @@ function fn_CMDControl_checkKeyboardKey() {
 ///@desc	Check for the special keys when the CMD is open (there many of keys that are not used when is close)
 function fn_CMDControl_checkSpecilKeyInput() {
 	
-	__cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( _cmdInputOpenCloseKeyArray, _cmdInputOpenCloseArrayLength );
+	_cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( _cmdInputOpenCloseKeyArray, _cmdInputOpenCloseArrayLength );
 	
 	__cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
 	

@@ -5,7 +5,8 @@ draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
 if( ob_control_resolution._isNewWindowSizeSetted ) {
-	
+
+	// Console command draw
 	if ( _stateCurrent == e_stateCmd.opened ) {
 	
 		#region Background
@@ -25,7 +26,6 @@ if( ob_control_resolution._isNewWindowSizeSetted ) {
 	
 		fn_CMDWindow_updateSurface(false);
 	
-		
 		draw_surface(_surfCmdWindow, _xx, _yy);
 		fn_CMDWindow_drawCommandInput();
 		fn_CMDWindow_drawScrollbar();

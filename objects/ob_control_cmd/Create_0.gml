@@ -194,7 +194,7 @@ _cmdWindowSizeBaseArray = [ // used to test windows size to use with the ob_cont
 _cmdCommandsArray = fn_CMDControl_commandListCreate(); // Use the CMD to call functions and parse them
 _cmdCommandsArrayLength = array_length(_cmdCommandsArray);
 
-_stateCurrentBeginStep = StateBeginStep_closed;
+_stateCurrentBeginStep = _mtStateBeginStepCMDClosed;
 
 
 show_debug_message("[GMCC] You are using GameMaker Command Console by @Momfus (Version: " + CMD_CURRENT_VERSION + ")");
