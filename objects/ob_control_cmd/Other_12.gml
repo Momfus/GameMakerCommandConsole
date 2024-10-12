@@ -1,102 +1,103 @@
 ///@desc Methods - Commit Input
 
+// Feather disable GM2016
 
 /// General variables for this functions
-__currentCommandExecute = undefined;
+_currentCommandExecute = undefined;
 
 
 ///@func	objCommand(title, shortTitle, description, useCleanDescription, function, arguments, argsDescription)
-///@param	{string}		title
-///@param	{string}		shortTitle
-///@param	{string}		description
-///@param	{bool}			[useCleanDescription]
-///@param	{id.func}		[function]
-///@param	{Array.string}	[arguments]
-///@param	{Array.string}	[argsDescription]
-///@return	{struct}		[newCommand]
+///@param	{string}			p_title
+///@param	{string}			p_shortTitle
+///@param	{string}			p_description
+///@param	{bool}				[p_useCleanDescription]
+///@param	{Any | Function}	[p_function]
+///@param	{Array.string}		[p_arguments]
+///@param	{Array.string}		[p_argsDescription]
+///@return	{struct}
 ///@desc	Create a command object
-function objCommand(p_title, p_shortTitle, p_description, p_useCleanDescription = false, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
-	__cmdTitle = p_title;
-	__cmdShort = p_shortTitle;
-	__cmdDesc = p_description;
-	__cmdDescClean = (p_useCleanDescription) ? fn_stringFormatClean(p_description, true, true ): p_description;
-	__cmdFunc = p_function;
-	__cmdArgs = p_arguments;
-	__cmdArgDesc = p_argsDescription;
+function _mtObjCommand(p_title, p_shortTitle, p_description, p_useCleanDescription = false, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
+	_cmdTitle = p_title;
+	_cmdShort = p_shortTitle;
+	_cmdDesc = p_description;
+	_cmdDescClean = (p_useCleanDescription) ? fn_stringFormatClean(p_description, true, true ): p_description;
+	_cmdFunc = p_function;
+	_cmdArgs = p_arguments;
+	_cmdArgDesc = p_argsDescription;
 }
 
-///@func	fn_CMDControl_commandListCreate()
-///@return	[struct]	commandList
-///@desc	This must be call in the begining
-function fn_CMDControl_commandListCreate() {
+///@func	_mtCMDCommandListCreate()
+///@return	{struct}
+///@desc	This must be call in the begining. It creates all the commands to use
+function _mtCMDCommandListCreate() {
 	
 	#region Command List
-	var l_commandList = [
+		var commandList = [
 	
-		// Header
-		new objCommand("TITLE", "SHORT", "DESCRIPTION", undefined, undefined, ["ARGUMENT"], ["DESCRIPTION"]),
+			// Header
+			new _mtObjCommand("TITLE", "SHORT", "DESCRIPTION", undefined, undefined, ["ARGUMENT"], ["DESCRIPTION"]),
 		
-		// Help
-		new objCommand("help", "h", 
-			"Show all the help about commands", undefined,
-			fn_CMDControl_showHelp,
-			["command"],
-			["It shows more details description about an specific command"]
-		),
+			// Help
+			new _mtObjCommand("help", "h", 
+				"Show all the help about commands", undefined,
+				_mtCMDShowHelp,
+				["command"],
+				["It shows more details description about an specific command"]
+			),
 		
-		// Version
-		new objCommand("version", "v", 
-			"Show the current gms2CMD version", undefined,
-			fn_CMDControl_inputGetStringVersion
-		),
+			// Version
+			new _mtObjCommand("version", "v", 
+				"Show the current gms2CMD version", undefined,
+				fn_CMDControl_inputGetStringVersion
+			),
 		
-		// Clear
-		new objCommand("clear", "-",
-			"Clear the current console log (it also reset the command history)", undefined,
-			fn_CMDControl_clearLog
-		),
+			// Clear
+			new _mtObjCommand("clear", "-",
+				"Clear the current console log (it also reset the command history)", undefined,
+				fn_CMDControl_clearLog
+			),
 
-		// Game
-		new objCommand("game", "g",
-			"Choose to restart or exit the game", undefined,
-			fn_CMDControl_game,
-			["status"],
-			[ "Can take the values 'exit' or 'restart'" ]
-		),
+			// Game
+			new _mtObjCommand("game", "g",
+				"Choose to restart or exit the game", undefined,
+				fn_CMDControl_game,
+				["status"],
+				[ "Can take the values 'exit' or 'restart'" ]
+			),
 			
-		// Fullscreen on-off
-		new objCommand("fullscreen", "fs",
-			"Change to fullscreen (on) or windowed mode (off)", undefined,
-			fn_CMDControl_fullscreenMode,
-			["activate"],
-			[ "Can take the values 'on'(1) or 'off'(0)" ]
-		),
+			// Fullscreen on-off
+			new _mtObjCommand("fullscreen", "fs",
+				"Change to fullscreen (on) or windowed mode (off)", undefined,
+				fn_CMDControl_fullscreenMode,
+				["activate"],
+				[ "Can take the values 'on'(1) or 'off'(0)" ]
+			),
 			
-		// Change resolution based on an array
-		new objCommand("resolution", "res",
-			"Change window size or resolution GUI or test resolution information", undefined,
-			fn_CMDControl_resolution,
-			["subcommand", "arg1", "arg2"],
-			[	"Could be... \n\\T[16]- window/w (change window size). \n\T[16]- info/i (to show or hide resolution information).\n\\T[16]- gui/g (change GUI surface resolution)", 
-				"width || boolean || index for the default resolution array", 
-				"height"
-			]
-		),
+			// Change resolution based on an array
+			new _mtObjCommand("resolution", "res",
+				"Change window size or resolution GUI or test resolution information", undefined,
+				fn_CMDControl_resolution,
+				["subcommand", "arg1", "arg2"],
+				[	"Could be... \n\\T[16]- window/w (change window size). \n\T[16]- info/i (to show or hide resolution information).\n\\T[16]- gui/g (change GUI surface resolution)", 
+					"width || boolean || index for the default resolution array", 
+					"height"
+				]
+			),
 		
-		// Execute scripts or object functions
-		new objCommand("function", "fn",
-			"Execute an object function or script", undefined,
-			fn_CMDControl_functionExecute,
-			["args..."],
-			[	"All the arguments needed to execute the script"
-			]
-		),
+			// Execute scripts or object functions
+			new _mtObjCommand("function", "fn",
+				"Execute an object function or script", undefined,
+				fn_CMDControl_functionExecute,
+				["args..."],
+				[	"All the arguments needed to execute the script"
+				]
+			),
 		
-	];
+		];
 	
 	#endregion
 	
-	return l_commandList;
+	return commandList;
 	
 }
 
@@ -113,11 +114,11 @@ function fn_CMDControl_updateInputText(l_textToInsert, l_positionCountToAdd = 1)
 					
 }
 
-///@func	fn_CMDControl_commitInput( commitInput )
-///@param	{string}	commitInput
+///@func	_mtCMDInputCommit( p_commitInput )
+///@param	{string}	p_commitInput
 ///@return	void
 ///@desc	Control the input to commit
-function fn_CMDControl_commitInput(p_commitInput) {
+function _mtCMDInputCommit(p_commitInput) {
 
 	if( p_commitInput == "" || p_commitInput == noone || p_commitInput == undefined ) {
 		exit;
@@ -196,9 +197,9 @@ function fn_CMDControl_parseCommand() {
 
 	for( var i = 0; i < _cmdCommandsArrayLength; i++ ) {
 	
-		if( _cmdCommandsArray[i].__cmdTitle == l_mainCommand or ( _cmdCommandsArray[i].__cmdShort == l_mainCommand and _cmdCommandsArray[i].__cmdShort != "-" )) {
-			__currentCommandExecute = _cmdCommandsArray[i];
-			_cmdCommandsArray[i].__cmdFunc(l_params);
+		if( _cmdCommandsArray[i]._cmdTitle == l_mainCommand or ( _cmdCommandsArray[i]._cmdShort == l_mainCommand and _cmdCommandsArray[i]._cmdShort != "-" )) {
+			_currentCommandExecute = _cmdCommandsArray[i];
+			_cmdCommandsArray[i]._cmdFunc(l_params);
 			return -1;
 		}
 		
@@ -229,12 +230,12 @@ function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_arg
 		
 		if( p_argsLength < p_argMin ) {
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_less_min, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
+				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_less_min, _currentCommandExecute._cmdTitle, p_argsLength, p_argMin, p_argMax)
 			);
 		} else {
 			
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_more_max, __currentCommandExecute.__cmdTitle, p_argsLength, p_argMin, p_argMax)
+				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_more_max, _currentCommandExecute._cmdTitle, p_argsLength, p_argMin, p_argMax)
 			);
 			
 		}
@@ -288,11 +289,11 @@ function fn_CMDControl_inputGetStringVersion() {
 	fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_versionText);
 }
 
-///@func	fn_CMDControl_showHelp(args)
+///@func	_mtCMDShowHelp(args)
 ///@param	{Array.any}	args
 ///@return	void
 ///@desc	Show the help information of the given command
-function fn_CMDControl_showHelp(p_args) {
+function _mtCMDShowHelp(p_args) {
 	
 	var p_argsLength = array_length(p_args),
 		l_helpText = "==== HELP ====",
@@ -304,9 +305,9 @@ function fn_CMDControl_showHelp(p_args) {
 		
 			for( var i = 0; i < _cmdCommandsArrayLength; i++ ) {
 		
-				var l_cmdTitle = string_upper(_cmdCommandsArray[i].__cmdTitle),
-					l_cmdShortTitle = string_upper(_cmdCommandsArray[i].__cmdShort),
-					l_cmdDescription = _cmdCommandsArray[i].__cmdDesc;
+				var l_cmdTitle = string_upper(_cmdCommandsArray[i]._cmdTitle),
+					l_cmdShortTitle = string_upper(_cmdCommandsArray[i]._cmdShort),
+					l_cmdDescription = _cmdCommandsArray[i]._cmdDesc;
 			
 				l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 14) +
 								fn_stringAddPad(l_cmdShortTitle, 8) +
@@ -331,7 +332,7 @@ function fn_CMDControl_showHelp(p_args) {
 			
 				for (var i = 0; i < _cmdCommandsArrayLength; i++) {
 			   
-				   if (_cmdCommandsArray[i].__cmdTitle == p_args[0] or _cmdCommandsArray[i].__cmdShort == p_args[0]) {
+				   if (_cmdCommandsArray[i]._cmdTitle == p_args[0] or _cmdCommandsArray[i]._cmdShort == p_args[0]) {
 				       l_cmdArgumentExists = true;
 					   break;
 				   }
@@ -358,17 +359,17 @@ function fn_CMDControl_showHelp(p_args) {
 					
 				// Get the command information
 				for (var i = 0; i < _cmdCommandsArrayLength; i++) {
-					l_cmdName = _cmdCommandsArray[i].__cmdTitle;
-					l_cmdShort = _cmdCommandsArray[i].__cmdShort;
+					l_cmdName = _cmdCommandsArray[i]._cmdTitle;
+					l_cmdShort = _cmdCommandsArray[i]._cmdShort;
 					
 					// Go to the next iteration if isn't the command to show info
 					if ( l_cmdName != p_args[0] and l_cmdShort != p_args[0] ) {
 						continue;    
 					}
 					
-					var l_cmdDesc = _cmdCommandsArray[i].__cmdDescClean,
+					var l_cmdDesc = _cmdCommandsArray[i]._cmdDescClean,
 						l_cmdArgs = _cmdCommandsArray[i].__cmdArgs, // it could be undefined
-						l_cmdArgsDesc = _cmdCommandsArray[i].__cmdArgDesc; // it could be undefined
+						l_cmdArgsDesc = _cmdCommandsArray[i]._cmdArgDesc; // it could be undefined
 
 					
 					// Name
@@ -384,7 +385,7 @@ function fn_CMDControl_showHelp(p_args) {
 						
 						// Headers
 						fn_cmdArrayPushFIFO(_cmdLogMsgArray, fn_stringAddPad(_cmdCommandsArray[0].__cmdArgs[0], 10)
-							+ fn_stringAddPad("", 4) + _cmdCommandsArray[0].__cmdArgDesc[0]);
+							+ fn_stringAddPad("", 4) + _cmdCommandsArray[0]._cmdArgDesc[0]);
 						
 						// Arguments name-desc
 						var l_cmdArgsLength = array_length(l_cmdArgs);

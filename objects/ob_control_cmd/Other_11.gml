@@ -1,46 +1,50 @@
 ///@desc Methods - Keyboard
 
-///@func	fn_CMDControl_inputKeyboardUser()
+// Feather disable GM2016
+// Feather disable GM1009
+///@func	_mtCMDInputKeyboardUser()
 ///@desc	Check all the inputs from keyboard that user is writing in the CMD
-function fn_CMDControl_inputKeyboardUser() {
+function _mtCMDInputKeyboardUser() {
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
 
 		// Check special keyboard commands before
-		if ( __cmdKeyPressedCommitInput ) {
+		if ( _cmdKeyPressedCommitInput ) { // Commit
 			
-			fn_CMDControl_commitInput( _cmdTextArray[e_cmdTextInput.leftSide] + _cmdTextArray[e_cmdTextInput.rightSide] );
+			_mtCMDInputCommit( _cmdTextArray[e_cmdTextInput.leftSide] + _cmdTextArray[e_cmdTextInput.rightSide] );
 			
-		} else if(__cmdKeyMoveArrowKeyLeft) {
+		} else if(_cmdKeyMoveArrowKeyLeft) { // Move
 			
-			fn_CMDControl_cursorMoveLeft(false);
+			_mtCMDCursorMoveLeft(false);
 			
-		} else if(__cmdKeyMoveArrowKeyRight) {
+		} else if(_cmdKeyMoveArrowKeyRight) { // Move
 			
-			fn_CMDControl_cursorMoveRigth(false);
+			_mtCMDCursorMoveRigth(false);
 			
-		} else if( __cmdKeyMoveArrowKeyUp ) {
+		} else if( _cmdKeyMoveArrowKeyUp ) { // Log history
 			
-			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
+			_mtCMDCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown);
 			
-		} else if( __cmdKeyMoveArrowKeyDown ) {
+		} else if( _cmdKeyMoveArrowKeyDown ) { // Log history
 			
-			fn_CMDControl_cursorMoveInputLog(__cmdKeyMoveArrowKeyUp - __cmdKeyMoveArrowKeyDown);
+			_mtCMDCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown);
 			
-		} else if(__cmdKeyBackspace) {
+		} else if(_cmdKeyBackspace) { // Move
 			
-			fn_CMDControl_cursorMoveLeft(true);
+			_mtCMDCursorMoveLeft(true);
 			
-		} else if( __cmdKeyDelete ){
+		} else if( _cmdKeyDelete ){ // Delete
 			
-			fn_CMDControl_cursorMoveRigth(true);
+			_mtCMDCursorMoveRigth(true);
 			
-		} else if( __cmdKeyPaste ) {
+		} else if( _cmdKeyPaste ) { // Paste
+			
 			fn_CMDControl_clipboardPaste();
+			
 		} else {
 			#region Normal Keyboard inputs
 			
-				if ( fn_CMDControl_checkKeyboardKey() ) {
+				if ( fn_checkNormalKeyboardKey() ) {
 					
 					fn_CMDControl_updateInputText(keyboard_lastchar);
 					
@@ -63,67 +67,56 @@ function fn_CMDControl_inputKeyboardUser() {
 
 //-------------------------------------------------
 
-///@func	fn_CMDControl_checkKeyboardKey()
-///@desc	Check for the normal keyboard inputs
-function fn_CMDControl_checkKeyboardKey() {
-	
-	return (
-		(keyboard_key >= 48 && keyboard_key <= 90 ) ||
-		(keyboard_key >= 96 && keyboard_key <= 111) ||
-		keyboard_key >= 186 ||
-		keyboard_key == 32
-	)
-	
-}
 
-///@func	fn_CMDControl_checkSpecilKeyInput()
+///@func	_mtCMDInputCheckSpecialKey()
 ///@desc	Check for the special keys when the CMD is open (there many of keys that are not used when is close)
-function fn_CMDControl_checkSpecilKeyInput() {
+function _mtCMDInputCheckSpecialKey() {
 	
+
 	_cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( _cmdInputOpenCloseKeyArray, _cmdInputOpenCloseArrayLength );
 	
-	__cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
+	_cmdKeyPressedCommitInput = keyboard_check_pressed(vk_enter);
 	
-	__cmdKeyMoveArrowKeyLeft = keyboard_check(vk_left);
-	__cmdKeyMoveArrowKeyRight = keyboard_check(vk_right);
-	__cmdKeyMoveArrowKeyUp = keyboard_check(vk_up);
-	__cmdKeyMoveArrowKeyDown = keyboard_check(vk_down);
+	_cmdKeyMoveArrowKeyLeft = keyboard_check(vk_left);
+	_cmdKeyMoveArrowKeyRight = keyboard_check(vk_right);
+	_cmdKeyMoveArrowKeyUp = keyboard_check(vk_up);
+	_cmdKeyMoveArrowKeyDown = keyboard_check(vk_down);
 	
-	__cmdKeyBackspace = keyboard_check(vk_backspace);
-	__cmdKeyDelete = keyboard_check(vk_delete);
-	__cmdKeyPaste = keyboard_check(vk_lcontrol) and keyboard_check_pressed(ord("V"));
+	_cmdKeyBackspace = keyboard_check(vk_backspace);
+	_cmdKeyDelete = keyboard_check(vk_delete);
+	_cmdKeyPaste = keyboard_check(vk_lcontrol) and keyboard_check_pressed(ord("V"));
 	
 }
 
-///@func	fn_CMDControl_cursorMoveLeft( deleteChar )
-///@param	{bool}	deleteChar
+///@func	_mtCMDCursorMoveLeft( deleteChar )
+///@arg		{Bool}	p_deleteChar
 ///@desc	Move the cursor to the left in the input string
-function fn_CMDControl_cursorMoveLeft(p_deleteChar) {
+function _mtCMDCursorMoveLeft(p_deleteChar) {
 	
 	if (_cmdCursorPosition == 0) { exit; }
 				
-	var l_auxText = _cmdTextArray[e_cmdTextInput.leftSide],
-		l_charToMove = p_deleteChar ? "" : string_char_at(l_auxText, _cmdCursorPosition);
+	var auxText = _cmdTextArray[e_cmdTextInput.leftSide],
+		charToMove = p_deleteChar ? "" : string_char_at(auxText, _cmdCursorPosition);
 				
-	_cmdTextArray[e_cmdTextInput.leftSide] = string_delete(l_auxText, _cmdCursorPosition, 1)
-	_cmdTextArray[e_cmdTextInput.rightSide] = l_charToMove + _cmdTextArray[e_cmdTextInput.rightSide]
+	_cmdTextArray[e_cmdTextInput.leftSide] = string_delete(auxText, _cmdCursorPosition, 1)
+	_cmdTextArray[e_cmdTextInput.rightSide] = charToMove + _cmdTextArray[e_cmdTextInput.rightSide]
 				
 	_cmdCursorPosition--;
 	
 }
 
-///@func	fn_CMDControl_cursorMoveRigth( deleteChar )
-///@param	{bool}	deleteChar
+///@func	_mtCMDCursorMoveRigth( deleteChar )
+///@param	{Bool}	p_deleteChar
 ///@desc	Move the cursor to the right in the input string
-function fn_CMDControl_cursorMoveRigth(p_deleteChar) {
+function _mtCMDCursorMoveRigth(p_deleteChar) {
 	
 	if ( _cmdTextArray[e_cmdTextInput.rightSide] == "") { exit; }
 				
-	var l_auxText = _cmdTextArray[e_cmdTextInput.rightSide],
-		l_charToMove = p_deleteChar ? "" : string_char_at(l_auxText, 0);
+	var auxText = _cmdTextArray[e_cmdTextInput.rightSide],
+		charToMove = p_deleteChar ? "" : string_char_at(auxText, 0);
 				
-	_cmdTextArray[e_cmdTextInput.leftSide] = _cmdTextArray[e_cmdTextInput.leftSide] + l_charToMove;
-	_cmdTextArray[e_cmdTextInput.rightSide] = string_delete(l_auxText, 1, 1)
+	_cmdTextArray[e_cmdTextInput.leftSide] = _cmdTextArray[e_cmdTextInput.leftSide] + charToMove;
+	_cmdTextArray[e_cmdTextInput.rightSide] = string_delete(auxText, 1, 1)
 				
 	if( !p_deleteChar ) {
 		_cmdCursorPosition++
@@ -131,22 +124,22 @@ function fn_CMDControl_cursorMoveRigth(p_deleteChar) {
 				
 }
 
-///@func	fn_CMDControl_cursorMovInputLog( historyDirection )
-///@param	{real}	historyDirection - Previo: +1; Posterior: -1
+///@func	_mtCMDCursorMoveInputLog( historyDirection )
+///@param	{Real}	p_historyDirection	Previo: +1; Posterior: -1
 ///@desc	Move the cursor to a more older input log
-function fn_CMDControl_cursorMoveInputLog( p_historyDirection ) {
+function _mtCMDCursorMoveInputLog( p_historyDirection ) {
 	
 	// Check for the current input text
 	if (_cmdLogHistoryPosition == -1 ) {
 	    _cmdLogLastText = _cmdTextArray[e_cmdTextInput.leftSide] + _cmdTextArray[e_cmdTextInput.rightSide];
 	}
 	
-	var l_logPositionNewValue = _cmdLogHistoryPosition,
-		l_inputArrayNoEmptySize = fn_cmdGetArrayStringSizeNoEmpty(_cmdLogInputArray);
+	var logPositionNewValue = _cmdLogHistoryPosition,
+		inputArrayNoEmptySize = fn_cmdGetArrayStringSizeNoEmpty(_cmdLogInputArray);
 	
-	l_logPositionNewValue = fn_wrapValue(l_logPositionNewValue + p_historyDirection, -1, l_inputArrayNoEmptySize - 1);
+	logPositionNewValue = fn_wrapValue(logPositionNewValue + p_historyDirection, -1, inputArrayNoEmptySize - 1);
 	
-	if( l_logPositionNewValue == -1 ) {
+	if( logPositionNewValue == -1 ) {
 		
 		#region Current input / Input that the user was typing
 			
@@ -160,22 +153,20 @@ function fn_CMDControl_cursorMoveInputLog( p_historyDirection ) {
 	
 		#region Check for input text history
 		
-			var l_inputTextHistory = _cmdLogInputArray[l_logPositionNewValue];
+			var inputTextHistory = _cmdLogInputArray[logPositionNewValue];
 		
-			if( l_inputTextHistory == undefined || l_inputTextHistory == "" || l_inputTextHistory == noone ) {
+			if( inputTextHistory == undefined || inputTextHistory == "" ) {
 				exit;
 			} else {
-				_cmdTextArray[e_cmdTextInput.leftSide] = l_inputTextHistory;
+				_cmdTextArray[e_cmdTextInput.leftSide] = inputTextHistory;
 				_cmdTextArray[e_cmdTextInput.rightSide] = "";
-				_cmdCursorPosition = string_length(l_inputTextHistory);
+				_cmdCursorPosition = string_length(inputTextHistory);
 			}
 		
 		#endregion
 		
 	}
 
-	_cmdLogHistoryPosition = l_logPositionNewValue;
-	
-	
+	_cmdLogHistoryPosition = logPositionNewValue;
 	
 }

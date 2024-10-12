@@ -11,7 +11,6 @@
 fn_isSingleton(); 
 
 
-
 #region Declare methods
 
 	#region In event user
@@ -191,7 +190,7 @@ _cmdWindowSizeBaseArray = [ // used to test windows size to use with the ob_cont
 ];
 
 
-_cmdCommandsArray = fn_CMDControl_commandListCreate(); // Use the CMD to call functions and parse them
+_cmdCommandsArray = _mtCMDCommandListCreate(); // Use the CMD to call functions and parse them
 _cmdCommandsArrayLength = array_length(_cmdCommandsArray);
 
 _stateCurrentBeginStep = _mtStateBeginStepCMDClosed;

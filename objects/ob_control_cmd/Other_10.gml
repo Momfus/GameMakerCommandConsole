@@ -1,10 +1,12 @@
 ///@desc Methods - Begin Step
 
+// Feather disable GM2016
+
 ///@func	_mtStateBeginStepCMDClosed()
 ///@desc	Set the begin state when the cmd is closed
 function _mtStateBeginStepCMDClosed() {
 	  
-	fn_CMDControl_checkSpecilKeyInput();
+	_mtCMDInputCheckSpecialKey();
 	if (_cmdKeyPressedShowHide) {
 		_mtCMDWindowOpen();
 	}
@@ -18,7 +20,7 @@ function _mtStateBeginStepCMDOpened() {
 	if ( _stateCurrent == e_stateCmd.opened ) {
   
 		// Check first if the user want to close the cmd panel
-		fn_CMDControl_checkSpecilKeyInput();
+		_mtCMDInputCheckSpecialKey();
 		if (_cmdKeyPressedShowHide) {
 	    
 			_mtCMDWindowClose();
@@ -26,7 +28,7 @@ function _mtStateBeginStepCMDOpened() {
 		} else 
 			
 			// Input CMD
-			fn_CMDControl_inputKeyboardUser();
+			_mtCMDInputKeyboardUser();
 			
 			// Mouse event control
 			fn_CMDControl_checkMouseEvent(); // Global mouse check (not necesarry when is hover the CMD)

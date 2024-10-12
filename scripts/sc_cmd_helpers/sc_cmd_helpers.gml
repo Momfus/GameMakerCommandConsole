@@ -56,7 +56,7 @@ function fn_cmdGetArrayStringSizeNoEmpty(p_array){
 
 ///@func	fn_cmdInputArrayCheckPressed( arrayToCheck, arrayLength )
 ///@param	{Array.real}	arrayToCheck	-	It use the key codes from the GM key list
-///@param	{Array.real}	arrayLength
+///@param	{Real}	arrayLength
 ///@return	{bool}			isAnyKeyReleased
 ///@desc	Check if any key in the array given was just pressed.
 function fn_cmdInputArrayCheckPressed(p_arrayToCheck, p_arrayLength){
@@ -270,9 +270,25 @@ function fn_isSingleton() {
 }
 
 
-
 ///@func    fn_getCurrentFps
 ///@return  {real}  Returns the current FPS value of the game.
 function fn_getCurrentFps() {
     return game_get_speed(gamespeed_fps);
+}
+
+
+///@func	fn_checkNormalKeyboardKey()
+///@desc	Check for the normal keyboard inputs
+///@return	{Bool}
+function fn_checkNormalKeyboardKey() {
+	
+	// Feather ignore GM1044
+	return (
+        (keyboard_key >= 48 && keyboard_key <= 90) ||  // ASCII 0-9, A-Z
+        (keyboard_key >= 96 && keyboard_key <= 111) || // Numpad 0-9
+        keyboard_key >= 186 ||                         // Symbols (; = [ ] \ , - . / `)
+        keyboard_key == 32                             // Space key
+	)
+	// Feather restore GM1044
+
 }
