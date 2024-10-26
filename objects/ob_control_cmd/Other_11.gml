@@ -1,52 +1,54 @@
 ///@desc Methods - Keyboard
 
 // Feather disable GM2016
-// Feather disable GM1009
+
 ///@func	_mtCMDInputKeyboardUser()
 ///@desc	Check all the inputs from keyboard that user is writing in the CMD
-function _mtCMDInputKeyboardUser() {
+function _mtCMDInputKeyboardUser() 
+{
 			
 	if ( keyboard_check_pressed(vk_anykey)  ) {
 
 		// Check special keyboard commands before
 		if ( _cmdKeyPressedCommitInput ) { // Commit
 			
-			_mtCMDInputCommit( _cmdTextArray[e_cmdTextInput.leftSide] + _cmdTextArray[e_cmdTextInput.rightSide] );
+			_mtInputCommit( _cmdTextArray[e_cmdTextInput.leftSide] + _cmdTextArray[e_cmdTextInput.rightSide] );
 			
 		} else if(_cmdKeyMoveArrowKeyLeft) { // Move
 			
-			_mtCMDCursorMoveLeft(false);
+			_mtConsoleCursorMoveLeft(false);
 			
 		} else if(_cmdKeyMoveArrowKeyRight) { // Move
 			
-			_mtCMDCursorMoveRigth(false);
+			_mtConsoleCursorMoveRigth(false);
 			
 		} else if( _cmdKeyMoveArrowKeyUp ) { // Log history
 			
-			_mtCMDCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown);
+			// Feather disable once GM1009  // This is for the below boolean operation
+			_mtConsoleCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown); //@TODO: Verificar si sigue el error de feather
 			
 		} else if( _cmdKeyMoveArrowKeyDown ) { // Log history
-			
-			_mtCMDCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown);
+			// Feather disable once GM1009 // This is for the below boolean operation
+			_mtConsoleCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown); //@TODO: Verificar si sigue el error de feather
 			
 		} else if(_cmdKeyBackspace) { // Move
 			
-			_mtCMDCursorMoveLeft(true);
+			_mtConsoleCursorMoveLeft(true);
 			
 		} else if( _cmdKeyDelete ){ // Delete
 			
-			_mtCMDCursorMoveRigth(true);
+			_mtConsoleCursorMoveRigth(true);
 			
 		} else if( _cmdKeyPaste ) { // Paste
 			
-			fn_CMDControl_clipboardPaste();
+			_mtClipboardPaste();
 			
 		} else {
 			#region Normal Keyboard inputs
 			
 				if ( fn_checkNormalKeyboardKey() ) {
 					
-					fn_CMDControl_updateInputText(keyboard_lastchar);
+					_mtUpdateInputText(keyboard_lastchar);
 					
 					// Reset log input history
 					if( _cmdLogHistoryPosition != -1 ) {
@@ -68,9 +70,9 @@ function _mtCMDInputKeyboardUser() {
 //-------------------------------------------------
 
 
-///@func	_mtCMDInputCheckSpecialKey()
+///@func	_mtInputCheckSpecialKey()
 ///@desc	Check for the special keys when the CMD is open (there many of keys that are not used when is close)
-function _mtCMDInputCheckSpecialKey() {
+function _mtInputCheckSpecialKey() {
 	
 
 	_cmdKeyPressedShowHide = fn_cmdInputArrayCheckPressed( _cmdInputOpenCloseKeyArray, _cmdInputOpenCloseArrayLength );
@@ -88,10 +90,10 @@ function _mtCMDInputCheckSpecialKey() {
 	
 }
 
-///@func	_mtCMDCursorMoveLeft( deleteChar )
-///@arg		{Bool}	p_deleteChar
+///@func	_mtConsoleCursorMoveLeft()
+///@param	{Bool}	p_deleteChar
 ///@desc	Move the cursor to the left in the input string
-function _mtCMDCursorMoveLeft(p_deleteChar) {
+function _mtConsoleCursorMoveLeft(p_deleteChar) {
 	
 	if (_cmdCursorPosition == 0) { exit; }
 				
@@ -105,10 +107,10 @@ function _mtCMDCursorMoveLeft(p_deleteChar) {
 	
 }
 
-///@func	_mtCMDCursorMoveRigth( deleteChar )
+///@func	_mtConsoleCursorMoveRigth( deleteChar )
 ///@param	{Bool}	p_deleteChar
 ///@desc	Move the cursor to the right in the input string
-function _mtCMDCursorMoveRigth(p_deleteChar) {
+function _mtConsoleCursorMoveRigth(p_deleteChar) {
 	
 	if ( _cmdTextArray[e_cmdTextInput.rightSide] == "") { exit; }
 				
@@ -124,10 +126,10 @@ function _mtCMDCursorMoveRigth(p_deleteChar) {
 				
 }
 
-///@func	_mtCMDCursorMoveInputLog( historyDirection )
+///@func	_mtConsoleCursorMoveInputLog( historyDirection )
 ///@param	{Real}	p_historyDirection	Previo: +1; Posterior: -1
 ///@desc	Move the cursor to a more older input log
-function _mtCMDCursorMoveInputLog( p_historyDirection ) {
+function _mtConsoleCursorMoveInputLog( p_historyDirection ) {
 	
 	// Check for the current input text
 	if (_cmdLogHistoryPosition == -1 ) {

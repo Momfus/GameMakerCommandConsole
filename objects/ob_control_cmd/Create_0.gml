@@ -24,11 +24,11 @@ fn_isSingleton();
 		
 	#endregion
 
-	///@func	_mtResizeWindow()
+	///@func	_mtConsoleResizeWindow()
 	///@param	{real}	p_guiOffsetMultiplier
 	///@return	void
 	///@desc	Change the necesary attributes when the resolution is different.
-	function _mtResizeWindow(p_guiOffsetMultiplier) {
+	function _mtConsoleResizeWindow(p_guiOffsetMultiplier) {
 	
 		// Visual
 		_width	*= p_guiOffsetMultiplier;
@@ -38,17 +38,17 @@ fn_isSingleton();
 	
 		// Mouse collision
 		image_xscale *= p_guiOffsetMultiplier;
-		fn_CMDControl_updateScrollbarProperties(true, true);
+		_mtConsoleUpdateScrollbarProperties(true, true);
 	
 	}
 
-	///@func _mtCmdTriggerResolutionChange()
+	///@func _mtConsoleTriggerResolutionChange()
 	///@param {real}	p_windowWidth
 	///@param {real}	p_windowHeight
 	///@param {bool}	[p_isOnlyResizeGUI]
 	///@return void
 	///@desc Use this function to trigget differents action when the user change the resolution by CMD (or fullscreen)
-	function _mtCmdTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
+	function _mtConsoleTriggerResolutionChange(p_windowWidth, p_windowHeight, p_isOnlyResizeGUI = false) {
 
 		if ( p_isOnlyResizeGUI ) {
 			ob_control_resolution._mtControlResolutionResizeGUI(p_windowWidth, p_windowHeight)
@@ -190,7 +190,7 @@ _cmdWindowSizeBaseArray = [ // used to test windows size to use with the ob_cont
 ];
 
 
-_cmdCommandsArray = _mtCMDCommandListCreate(); // Use the CMD to call functions and parse them
+_cmdCommandsArray = _mtCommandListCreate(); // Use the CMD to call functions and parse them
 _cmdCommandsArrayLength = array_length(_cmdCommandsArray);
 
 _stateCurrentBeginStep = _mtStateBeginStepCMDClosed;

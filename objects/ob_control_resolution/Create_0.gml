@@ -120,8 +120,8 @@
 	///@desc	It used to resize all the objets that depend on the resolution size (like camera and gui elements) 
 	function _mtResizeResolutionToObjects() {
 
-		ob_camera_main._mtResizeWindow();
-		ob_control_cmd._mtResizeWindow(_resGUIAspectOffset);
+		ob_camera_main._mtConsoleResizeWindow();
+		ob_control_cmd._mtConsoleResizeWindow(_resGUIAspectOffset);
 	
 	}
 

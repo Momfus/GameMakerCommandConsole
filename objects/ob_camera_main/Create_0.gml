@@ -2,10 +2,10 @@
 
 #region Methods
 
-	///@func	_mtResizeWindow()
+	///@func	_mtConsoleResizeWindow()
 	///@return	void
 	///@desc	Change the necesary attributes when the resolution is different.
-	function _mtResizeWindow() {
+	function _mtConsoleResizeWindow() {
 	
 		_cameraViewWidth = ob_control_resolution._resIdealWidth;
 		_cameraViewHeight = ob_control_resolution._resIdealHeight;
@@ -25,5 +25,5 @@ _objectTarget = ob_player_example;
 _cameraViewWidth = 0;
 _cameraViewHeight = 0;
 
-_mtResizeWindow();
+_mtConsoleResizeWindow();
 

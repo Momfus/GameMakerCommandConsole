@@ -6,9 +6,9 @@
 ///@desc	Set the begin state when the cmd is closed
 function _mtStateBeginStepCMDClosed() {
 	  
-	_mtCMDInputCheckSpecialKey();
+	_mtInputCheckSpecialKey();
 	if (_cmdKeyPressedShowHide) {
-		_mtCMDWindowOpen();
+		_mtConsoleWindowOpen();
 	}
 	
 }
@@ -20,10 +20,10 @@ function _mtStateBeginStepCMDOpened() {
 	if ( _stateCurrent == e_stateCmd.opened ) {
   
 		// Check first if the user want to close the cmd panel
-		_mtCMDInputCheckSpecialKey();
+		_mtInputCheckSpecialKey();
 		if (_cmdKeyPressedShowHide) {
 	    
-			_mtCMDWindowClose();
+			_mtConsoleWindowClose();
 			
 		} else 
 			
@@ -42,9 +42,9 @@ function _mtStateBeginStepCMDOpened() {
 			
 }
 
-///@func	_mtCMDWindowClose()
+///@func	_mtConsoleWindowClose()
 ///@desc	Set the attributes necessary to close
-function _mtCMDWindowClose() {
+function _mtConsoleWindowClose() {
 	_stateCurrent = e_stateCmd.closed;
 	_stateCurrentBeginStep = _mtStateBeginStepCMDClosed;
 	global._gCmdOpen = false;
@@ -54,9 +54,9 @@ function _mtCMDWindowClose() {
 	}
 }
 
-///@func	_mtCMDWindowOpen()
+///@func	_mtConsoleWindowOpen()
 ///@desc	Set the attributes necessary to close
-function _mtCMDWindowOpen() {
+function _mtConsoleWindowOpen() {
 	_stateCurrent = e_stateCmd.opened;
 	_stateCurrentBeginStep = _mtStateBeginStepCMDOpened;
 	global._gCmdOpen = true;

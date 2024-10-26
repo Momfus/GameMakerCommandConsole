@@ -14,7 +14,7 @@ _currentCommandExecute = undefined;
 ///@param	{Any | Function}	[p_function]
 ///@param	{Array.string}		[p_arguments]
 ///@param	{Array.string}		[p_argsDescription]
-///@return	{struct}
+///@return	{Struct}
 ///@desc	Create a command object
 function _mtObjCommand(p_title, p_shortTitle, p_description, p_useCleanDescription = false, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
 	_cmdTitle = p_title;
@@ -26,10 +26,10 @@ function _mtObjCommand(p_title, p_shortTitle, p_description, p_useCleanDescripti
 	_cmdArgDesc = p_argsDescription;
 }
 
-///@func	_mtCMDCommandListCreate()
-///@return	{struct}
+///@func	_mtCommandListCreate()
+///@return	{Array<Struct>}
 ///@desc	This must be call in the begining. It creates all the commands to use
-function _mtCMDCommandListCreate() {
+function _mtCommandListCreate() {
 	
 	#region Command List
 		var commandList = [
@@ -48,13 +48,13 @@ function _mtCMDCommandListCreate() {
 			// Version
 			new _mtObjCommand("version", "v", 
 				"Show the current gms2CMD version", undefined,
-				fn_CMDControl_inputGetStringVersion
+				_mtCMDInputGetStringVersion
 			),
 		
 			// Clear
 			new _mtObjCommand("clear", "-",
 				"Clear the current console log (it also reset the command history)", undefined,
-				fn_CMDControl_clearLog
+				_mtCMDClearLog
 			),
 
 			// Game
@@ -101,26 +101,24 @@ function _mtCMDCommandListCreate() {
 	
 }
 
-///@func	fn_CMDControl_updateInputText(textToInsert, positionCountToAdd)
-///@param	{string}	textToInsert
-///@param	{real}		[positionCountToAdd]
+///@func	_mtUpdateInputText()
+///@param	{string}	p_textToInsert
+///@param	{real}		[p_positionCountToAdd]
 ///@return	void
 ///@desc	Update the text that the user is writing in the console, it will insert the text after the cursor position
-function fn_CMDControl_updateInputText(l_textToInsert, l_positionCountToAdd = 1) {
+function _mtUpdateInputText(p_textToInsert, p_positionCountToAdd = 1) {
 
-	_cmdTextArray[e_cmdTextInput.leftSide] = string_insert(l_textToInsert, _cmdTextArray[e_cmdTextInput.leftSide], _cmdCursorPosition + 1);
-	_cmdCursorPosition += l_positionCountToAdd;
-
+	_cmdTextArray[e_cmdTextInput.leftSide] = string_insert(p_textToInsert, _cmdTextArray[e_cmdTextInput.leftSide], _cmdCursorPosition + 1);
+	_cmdCursorPosition += p_positionCountToAdd;
 					
 }
 
-///@func	_mtCMDInputCommit( p_commitInput )
+///@func	_mtInputCommit( p_commitInput )
 ///@param	{string}	p_commitInput
-///@return	void
 ///@desc	Control the input to commit
-function _mtCMDInputCommit(p_commitInput) {
+function _mtInputCommit(p_commitInput) {
 
-	if( p_commitInput == "" || p_commitInput == noone || p_commitInput == undefined ) {
+	if( p_commitInput == "" || p_commitInput == undefined ) {
 		exit;
 	}
 	
@@ -135,7 +133,7 @@ function _mtCMDInputCommit(p_commitInput) {
 	} else {
 	
 		fn_cmdArrayPushFIFO(_cmdLogInputArray, p_commitInput);
-		fn_CMDControl_parseCommand();
+		_mtParseCommand();
 	
 	}
 	
@@ -157,85 +155,81 @@ function _mtCMDInputCommit(p_commitInput) {
 	fn_CMDWindow_updateSurface(true);
 	
 	if( _cmdMsgPositionTop < 0 ) {
-		fn_CMDControl_updateScrollbarProperties(true, true);
+		_mtConsoleUpdateScrollbarProperties(true, true); //@todo: ver si sigue el error del feather
 	}
 
 }
 
-
-///@func	fn_CMDControl_updateScrollbarProperties(updatePositionX, updateHeight)
-///@param	{bool}	updatePositionX
-///@param	{bool}	updateHeight
+///@func	_mtConsoleUpdateScrollbarProperties()
+///@param	{bool}	p_updatePositionX
+///@param	{bool}	p_updateHeight
 ///@return	void
 ///@desc	Update the visual properties to show the scrollbar (sometimes there is no need to update the X position or the height)
-function fn_CMDControl_updateScrollbarProperties (p_updatePositionX, p_updateHeight) {
+function _mtConsoleUpdateScrollbarProperties(p_updatePositionX, p_updateHeight) {
 		
 	if( p_updatePositionX ) {
 		_cmdScrollBarTapPositionX = _xx + _width - _cmdScrollBarTapWidth;
 	}
 	
 	if( p_updateHeight ) {
-		var l_heightLogOffset = _heightLog - 2,
-			l_heightRelativeScrollbar = l_heightLogOffset / _cmdMsgWindowHeight;
+		var heightLogOffset = _heightLog - 2,
+			heightRelativeScrollbar = heightLogOffset / _cmdMsgWindowHeight;
 		
-		_cmdScrollBarTapHeight = clamp(l_heightRelativeScrollbar * l_heightLogOffset, _cmdScrollBarTapHeightMin, l_heightLogOffset);
-		_cmdScrollBarTapRelativeEmptySpace = l_heightLogOffset - _cmdScrollBarTapHeight;
+		_cmdScrollBarTapHeight = clamp(heightRelativeScrollbar * heightLogOffset, _cmdScrollBarTapHeightMin, heightLogOffset);
+		_cmdScrollBarTapRelativeEmptySpace = heightLogOffset - _cmdScrollBarTapHeight;
 	}
 
 	_cmdScrollBarTapPositionOffset = (_cmdScrollBarTapRelativeEmptySpace * _cmdWindowSurfaceYoffset ) / (-_cmdMsgPositionTop);
 	
 }
 
-///@func	fn_CMDControl_parseCommand()
+///@func	_mtParseCommand()
 ///@return	void
 ///@desc	Check the command type added and resolve the input
-function fn_CMDControl_parseCommand() {
+function _mtParseCommand() {
 	
-	var l_mainCommand = string_lower(_cmdTextPartArray[0]),
-		l_params = [];
-	array_copy(l_params, 0, _cmdTextPartArray, 1, array_length(_cmdTextPartArray) - 1);
+	var mainCommand = string_lower(_cmdTextPartArray[0]),
+		paramsArray = [];
+	array_copy(paramsArray, 0, _cmdTextPartArray, 1, array_length(_cmdTextPartArray) - 1);
 
 	for( var i = 0; i < _cmdCommandsArrayLength; i++ ) {
 	
-		if( _cmdCommandsArray[i]._cmdTitle == l_mainCommand or ( _cmdCommandsArray[i]._cmdShort == l_mainCommand and _cmdCommandsArray[i]._cmdShort != "-" )) {
+		if( _cmdCommandsArray[i]._cmdTitle == mainCommand or ( _cmdCommandsArray[i]._cmdShort == mainCommand and _cmdCommandsArray[i]._cmdShort != "-" )) {
 			_currentCommandExecute = _cmdCommandsArray[i];
-			_cmdCommandsArray[i]._cmdFunc(l_params);
+			_cmdCommandsArray[i]._cmdFunc(paramsArray);
 			return -1;
 		}
-		
 		
 	}
 	
 	fn_CMDControl_MsgShowError("The '" + _cmdTextPartArray[0] + "' command isn't recognized");
-		
-	
 	
 }
 
-///@func	fn_CMDControl_generalCommand_argumentControl(gameCMD, argMin, argMax)
-///@param	{Array.string}	gameCMD
-///@param	{real}			argMin
-///@param	{real}			argMax
+///@func	_mtConsoleArgumentNumberControl(gameCMD, argMin, argMax)
+///@param	{Array.string}	p_gameCMD
+///@param	{real}			p_argMin
+///@param	{real}			p_argMax
 ///@return	void
 ///@desc	Used for commands that have the general error with the given parameters, and minimum and maximum argument number to check
-function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_argMax = noone) {
+function _mtConsoleArgumentNumberControl(p_gameCMD, p_argMin, p_argMax = undefined) {
 	
-	var p_argsLength = array_length(p_gameCMD);
+	var argsLength = array_length(p_gameCMD);
 
-	if( p_argsLength >= p_argMin and (p_argsLength <= p_argMax or p_argMax == noone ) ) {
+	if( argsLength >= p_argMin and (argsLength <= p_argMax or p_argMax == undefined ) ) {
 		
-		__myMethod(p_gameCMD); // Important: the function tha use this one, need to declare a __myCommand function.
+		__myMethod(p_gameCMD); // Important: the function that use this one, need to declare a __myCommand function.
 		
 	} else {
 		
-		if( p_argsLength < p_argMin ) {
+		if( argsLength < p_argMin ) {
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_less_min, _currentCommandExecute._cmdTitle, p_argsLength, p_argMin, p_argMax)
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.paramsLessMin, _currentCommandExecute._cmdTitle, argsLength, p_argMin, p_argMax)
 			);
 		} else {
-			
+
 			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_more_max, _currentCommandExecute._cmdTitle, p_argsLength, p_argMin, p_argMax)
+				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.paramsMoreMax, _currentCommandExecute._cmdTitle, argsLength, p_argMin, p_argMax)
 			);
 			
 		}
@@ -244,16 +238,16 @@ function fn_CMDControl_generalCommand_argumentControl(p_gameCMD, p_argMin, p_arg
 	
 }
 
-///@func	fn_CMDControl_clipboardPaste()
+///@func	_mtClipboardPaste()
 ///@return	void
 ///@desc	Check if there is text in the clipboard and paste it in the cmd line (this must use when the console is open)
-function fn_CMDControl_clipboardPaste() {
+function _mtClipboardPaste() {
 	
 	if( clipboard_has_text() ) {
-		var l_textToPaste = clipboard_get_text();
+		var textToPaste = clipboard_get_text();
 		
-		l_textToPaste = string_replace_all(l_textToPaste, chr(9), "   ") // Replace the "tab spaces" for thre normal spaces.
-		fn_CMDControl_updateInputText(l_textToPaste, string_length(l_textToPaste));
+		textToPaste = string_replace_all(textToPaste, chr(9), "   ") // Replace the "tab spaces" for thre normal spaces.
+		_mtUpdateInputText(textToPaste, string_length(textToPaste));
 		
 	}
 	
@@ -266,507 +260,506 @@ function fn_CMDControl_clipboardPaste() {
 
 #region Commands action list
 
-///@func	fn_CMDControl_clearLog()
-///@return	void
-///@desc	Clear the current console log (it also reset the command history)
-function fn_CMDControl_clearLog() {
-	_cmdLogMsgArray = array_create(_cmdLogCountMax, "");
-	_cmdLogMsgCountCurrent = 0;
-}
-
-///@func	fn_CMDControl_inputGetStringVersion()
-///@return	void
-///@desc	Show in the console the current version
-function fn_CMDControl_inputGetStringVersion() {
-	var l_versionText = 
-	@"==============================
-	===  GMS2 Console Command  ===
-	======  by Crios Devs  =======
-	==============================
-	> Version:   " + string(CMD_CURRENT_VERSION) + 
-	"\n==============================" ;
-	
-	fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_versionText);
-}
-
-///@func	_mtCMDShowHelp(args)
-///@param	{Array.any}	args
-///@return	void
-///@desc	Show the help information of the given command
-function _mtCMDShowHelp(p_args) {
-	
-	var p_argsLength = array_length(p_args),
-		l_helpText = "==== HELP ====",
-		
-	switch( p_argsLength ) {
-	
-		// General commands
-		case 0: {
-		
-			for( var i = 0; i < _cmdCommandsArrayLength; i++ ) {
-		
-				var l_cmdTitle = string_upper(_cmdCommandsArray[i]._cmdTitle),
-					l_cmdShortTitle = string_upper(_cmdCommandsArray[i]._cmdShort),
-					l_cmdDescription = _cmdCommandsArray[i]._cmdDesc;
-			
-				l_helpText += "\n" + fn_stringAddPad(l_cmdTitle, 14) +
-								fn_stringAddPad(l_cmdShortTitle, 8) +
-								l_cmdDescription;
-			}
-	
-			l_helpText += "\n===============";
-	
-			fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_helpText); 
-	
-	
-			break;
-			
-		}
-		
-		// First level argument information
-		case 1: {
-			
-			#region Check if the first level commandexists
-			
-				var l_cmdArgumentExists = false;
-			
-				for (var i = 0; i < _cmdCommandsArrayLength; i++) {
-			   
-				   if (_cmdCommandsArray[i]._cmdTitle == p_args[0] or _cmdCommandsArray[i]._cmdShort == p_args[0]) {
-				       l_cmdArgumentExists = true;
-					   break;
-				   }
-			   
-				}
-			
-				// If the command doesnt exists
-				if !( l_cmdArgumentExists ) {
-			    
-					var l_errorMsgCommandNoExists = fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, p_args[0]);
-					fn_CMDControl_MsgShowError(l_errorMsgCommandNoExists);
-				
-					return -1; // exit the function
-				}
-			
-			#endregion 
-			
-			#region Show the command information
-			
-				var l_cmdName,
-					l_cmdShort;
-				
-
-					
-				// Get the command information
-				for (var i = 0; i < _cmdCommandsArrayLength; i++) {
-					l_cmdName = _cmdCommandsArray[i]._cmdTitle;
-					l_cmdShort = _cmdCommandsArray[i]._cmdShort;
-					
-					// Go to the next iteration if isn't the command to show info
-					if ( l_cmdName != p_args[0] and l_cmdShort != p_args[0] ) {
-						continue;    
-					}
-					
-					var l_cmdDesc = _cmdCommandsArray[i]._cmdDescClean,
-						l_cmdArgs = _cmdCommandsArray[i].__cmdArgs, // it could be undefined
-						l_cmdArgsDesc = _cmdCommandsArray[i]._cmdArgDesc; // it could be undefined
-
-					
-					// Name
-					fn_cmdArrayPushFIFO( _cmdLogMsgArray, fn_stringAddPad(">>>",6) + l_cmdName);
-					
-					// Description
-					fn_cmdArrayPushFIFO( _cmdLogMsgArray, l_cmdDesc + "\n");
-					
-					// Arguments name and description
-					
-					if( is_array(l_cmdArgs) ) {
-		
-						
-						// Headers
-						fn_cmdArrayPushFIFO(_cmdLogMsgArray, fn_stringAddPad(_cmdCommandsArray[0].__cmdArgs[0], 10)
-							+ fn_stringAddPad("", 4) + _cmdCommandsArray[0]._cmdArgDesc[0]);
-						
-						// Arguments name-desc
-						var l_cmdArgsLength = array_length(l_cmdArgs);
-
-						
-						var l_argumentDesc = "";
-						for( var j = 0; j < l_cmdArgsLength; j++ ) {
-							
-							var l_formattedString  = fn_stringFormatTab(l_cmdArgsDesc[j]);
-							// CHeck tab
-							
-							l_argumentDesc += fn_stringAddPad(l_cmdArgs[j], 10) + fn_stringAddPad(" :", 4) + l_formattedString + "\n";
-							
-						}
-						
-						fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_argumentDesc + "\n");
-						
-					}
-					
-					
-					return -1; // Exit the function
-				}
-				
-			#endregion
-			
-			
-			break;
-			
-		}
-		
-		// Too much arguments
-		default: {
-		
-			fn_CMDControl_MsgShowError(fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.params_more_max, "help", p_argsLength, 0, 1) );
-			return -1;
-			
-			break;
-			
-		}
-	
+	///@func	_mtCMDClearLog()
+	///@return	void
+	///@desc	Clear the current console log (it also reset the command history)
+	function _mtCMDClearLog() {
+		_cmdLogMsgArray = array_create(_cmdLogCountMax, "");
+		_cmdLogMsgCountCurrent = 0;
 	}
 
+	///@func	_mtCMDInputGetStringVersion()
+	///@return	void
+	///@desc	Show in the console the current version
+	function _mtCMDInputGetStringVersion() {
+		var versionText = 
+		@"==============================
+		===  GMS2 Console Command  ===
+		======  by Crios Devs  =======
+		==============================
+		> Version:   " + string(CMD_CURRENT_VERSION) + 
+		"\n==============================" ;
 	
-}
-
-	
-///@func	fn_CMDControl_game(status)
-///@param	{Array.string}	gameCMD
-///@return	void
-///@desc	Select the function to execute a game command
-function fn_CMDControl_game(p_gameCMD) {
-
-	__myMethod = function(p_gameCMD) {
-	
-		switch(p_gameCMD[0]) {		
-			case "restart":{
-				
-				game_restart();
-				break;
-			}
-			
-			case "exit":{
-				game_end();
-				break;
-			}
-			
-			default: {
-
-				fn_CMDControl_MsgShowError( 
-					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
-				);
-				break;
-				
-			}
-		}
+		fn_cmdArrayPushFIFO(_cmdLogMsgArray, versionText);
 	}
 
-				
-	fn_CMDControl_generalCommand_argumentControl(p_gameCMD, 1, 1);
+	///@func	_mtCMDShowHelp(args)
+	///@param	{Array.any}	p_argsArray
+	///@return	void
+	///@desc	Show the help information of the given command
+	function _mtCMDShowHelp(p_argsArray) {
 	
-}
-
-///@func	fn_CMDControl_fullscreenMode(activate)
-///@param	{Array.string}	activate - the string inside is a boolean or ON/OFF value or 1/0.
-///@return	void
-///@desc	Select the function to execute a game command
-function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
-
-	__myMethod = function(p_fullscreenCMD) {
+		var argsLength = array_length(p_argsArray),
+			helpText = "==== HELP ====";
 		
-		switch(p_fullscreenCMD[0]) {
-			
-			case "off":
-			case "false":
+		switch( argsLength ) {
+	
+			// General commands
 			case 0: {
-				
-				if ( window_get_fullscreen() ) {
-					
-					window_set_fullscreen(false);
-					_mtCmdTriggerResolutionChange(960, 540);
-					
-					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is windowed: 960 x 540");
-					
-				} else {
-					fn_CMDControl_MsgShowError("The screen is already windowed");
-				}
-				
-				break;
-			}
+		
+				for( var i = 0; i < _cmdCommandsArrayLength; i++ ) {
+		
+					var cmdTitle = string_upper(_cmdCommandsArray[i]._cmdTitle),
+						cmdShortTitle = string_upper(_cmdCommandsArray[i]._cmdShort),
+						cmdDescription = string(_cmdCommandsArray[i]._cmdDesc); //Note: _cmdDesc is always an string, but feather sometimes take it as a "any" type
 			
-			case "on":
-			case "true":
+					helpText += "\n" + fn_stringAddPad(cmdTitle, 14) +
+									fn_stringAddPad(cmdShortTitle, 8) +
+									cmdDescription;
+				}
+	
+				helpText += "\n===============";
+	
+				fn_cmdArrayPushFIFO(_cmdLogMsgArray, helpText); 
+	
+				break;
+			
+			}
+		
+			// First level argument information
 			case 1: {
+			
+				#region Check if the first level commandexists
+			
+					var l_cmdArgumentExists = false;
+			
+					for (var i = 0; i < _cmdCommandsArrayLength; i++) {
+			   
+					   if (_cmdCommandsArray[i]._cmdTitle == p_args[0] or _cmdCommandsArray[i]._cmdShort == p_args[0]) {
+					       l_cmdArgumentExists = true;
+						   break;
+					   }
+			   
+					}
+			
+					// If the command doesnt exists
+					if !( l_cmdArgumentExists ) {
+			    
+						var l_errorMsgCommandNoExists = fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, p_args[0]);
+						fn_CMDControl_MsgShowError(l_errorMsgCommandNoExists);
 				
-				if( window_get_fullscreen() ) {
-					
-					fn_CMDControl_MsgShowError("The screen is already fullscreen");
-					
-				} else {
-					
-					var l_displayWidth = display_get_width(),
-						l_displayHeight = display_get_height();
-					
-					window_set_fullscreen(true)
-					_mtCmdTriggerResolutionChange(l_displayWidth, l_displayHeight);
+						return -1; // exit the function
+					}
+			
+				#endregion 
+			
+				#region Show the command information
+			
+					var l_cmdName,
+						l_cmdShort;
 				
-					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is fullscreen: " + string(l_displayWidth) + " x " + string(l_displayHeight) );
+
+					
+					// Get the command information
+					for (var i = 0; i < _cmdCommandsArrayLength; i++) {
+						l_cmdName = _cmdCommandsArray[i]._cmdTitle;
+						l_cmdShort = _cmdCommandsArray[i]._cmdShort;
+					
+						// Go to the next iteration if isn't the command to show info
+						if ( l_cmdName != p_args[0] and l_cmdShort != p_args[0] ) {
+							continue;    
+						}
+					
+						var l_cmdDesc = _cmdCommandsArray[i]._cmdDescClean,
+							l_cmdArgs = _cmdCommandsArray[i].__cmdArgs, // it could be undefined
+							l_cmdArgsDesc = _cmdCommandsArray[i]._cmdArgDesc; // it could be undefined
+
+					
+						// Name
+						fn_cmdArrayPushFIFO( _cmdLogMsgArray, fn_stringAddPad(">>>",6) + l_cmdName);
+					
+						// Description
+						fn_cmdArrayPushFIFO( _cmdLogMsgArray, l_cmdDesc + "\n");
+					
+						// Arguments name and description
+					
+						if( is_array(l_cmdArgs) ) {
+		
+						
+							// Headers
+							fn_cmdArrayPushFIFO(_cmdLogMsgArray, fn_stringAddPad(_cmdCommandsArray[0].__cmdArgs[0], 10)
+								+ fn_stringAddPad("", 4) + _cmdCommandsArray[0]._cmdArgDesc[0]);
+						
+							// Arguments name-desc
+							var l_cmdArgsLength = array_length(l_cmdArgs);
+
+						
+							var l_argumentDesc = "";
+							for( var j = 0; j < l_cmdArgsLength; j++ ) {
+							
+								var l_formattedString  = fn_stringFormatTab(l_cmdArgsDesc[j]);
+								// CHeck tab
+							
+								l_argumentDesc += fn_stringAddPad(l_cmdArgs[j], 10) + fn_stringAddPad(" :", 4) + l_formattedString + "\n";
+							
+							}
+						
+							fn_cmdArrayPushFIFO(_cmdLogMsgArray, l_argumentDesc + "\n");
+						
+						}
+					
+					
+						return -1; // Exit the function
+					}
+				
+				#endregion
+			
+			
+				break;
+			
+			}
+		
+			// Too much arguments
+			default: {
+		
+				fn_CMDControl_MsgShowError(fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.paramsMoreMax, "help", argsLength, 0, 1) );
+				return -1;
+			
+				break;
+			
+			}
+	
+		}
+
+	
+	}
+
+	
+	///@func	fn_CMDControl_game(status)
+	///@param	{Array.string}	gameCMD
+	///@return	void
+	///@desc	Select the function to execute a game command
+	function fn_CMDControl_game(p_gameCMD) {
+
+		__myMethod = function(p_gameCMD) {
+	
+			switch(p_gameCMD[0]) {		
+				case "restart":{
+				
+					game_restart();
+					break;
+				}
+			
+				case "exit":{
+					game_end();
+					break;
+				}
+			
+				default: {
+
+					fn_CMDControl_MsgShowError( 
+						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
+					);
+					break;
 				
 				}
-				
-				break;
-				
-			}
-			
-			default: {
-				fn_CMDControl_MsgShowError(
-					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
-				);
-				break;
 			}
 		}
+
 				
+		_mtConsoleArgumentNumberControl(p_gameCMD, 1, 1);
+	
 	}
 
-	fn_CMDControl_generalCommand_argumentControl(p_fullscreenCMD, 1, 1);
-	
-}	
+	///@func	fn_CMDControl_fullscreenMode(activate)
+	///@param	{Array.string}	activate - the string inside is a boolean or ON/OFF value or 1/0.
+	///@return	void
+	///@desc	Select the function to execute a game command
+	function fn_CMDControl_fullscreenMode(p_fullscreenCMD) {
 
-
-///@func	fn_CMDControl_resolution(argToUse)
-///@param	{Array.string}	argToUse
-///@return	void
-///@desc	Select the function to execute a game command
-function fn_CMDControl_resolution(p_argsToUse) {
-
-	
-	__myMethod = function(p_argsToUse) { 
+		__myMethod = function(p_fullscreenCMD) {
 		
-		var l_firstArg = string_lower(p_argsToUse[0])
-		switch(l_firstArg) {
-		
-			case "window":
-			case "w": {
-				array_delete(p_argsToUse, 0, 1);
-				fn_CMDControl_resolutionSetWindowSize( p_argsToUse );
-				
-				break;
-			}
+			switch(p_fullscreenCMD[0]) {
 			
-			case "info":
-			case "i": {
+				case "off":
+				case "false":
+				case 0: {
 				
-				var l_resShowInfo = not(ob_control_resolution._isResInfoShow),
-					l_resInfoStateString = (l_resShowInfo)? "displayed" : "hidden";
+					if ( window_get_fullscreen() ) {
 					
-				ob_control_resolution._isResInfoShow = l_resShowInfo;
+						window_set_fullscreen(false);
+						_mtConsoleTriggerResolutionChange(960, 540);
+					
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is windowed: 960 x 540");
+					
+					} else {
+						fn_CMDControl_MsgShowError("The screen is already windowed");
+					}
 				
-				fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Resolution information is now " + l_resInfoStateString); 
-				
-				
-				break;
-			}
+					break;
+				}
 			
-			case "gui":
-			case "g": {
-				array_delete(p_argsToUse, 0, 1);
-				fn_CMDControl_resolutionSetGUISize( p_argsToUse );
-				break;
-			}
+				case "on":
+				case "true":
+				case 1: {
+				
+					if( window_get_fullscreen() ) {
+					
+						fn_CMDControl_MsgShowError("The screen is already fullscreen");
+					
+					} else {
+					
+						var l_displayWidth = display_get_width(),
+							l_displayHeight = display_get_height();
+					
+						window_set_fullscreen(true)
+						_mtConsoleTriggerResolutionChange(l_displayWidth, l_displayHeight);
+				
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is fullscreen: " + string(l_displayWidth) + " x " + string(l_displayHeight) );
+				
+					}
+				
+					break;
+				
+				}
 			
-			default: {
-				fn_CMDControl_MsgShowError(
-					fn_CMDControl_MsgGetGenericMessage(enum_cmdTypeMessage.command_not_exists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
-				);
-				break;
+				default: {
+					fn_CMDControl_MsgShowError(
+						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
+					);
+					break;
+				}
 			}
+				
 		}
+
+		_mtConsoleArgumentNumberControl(p_fullscreenCMD, 1, 1);
+	
+	}	
+
+
+	///@func	fn_CMDControl_resolution(argToUse)
+	///@param	{Array.string}	argToUse
+	///@return	void
+	///@desc	Select the function to execute a game command
+	function fn_CMDControl_resolution(p_argsToUse) {
+
+	
+		__myMethod = function(p_argsToUse) { 
 		
+			var l_firstArg = string_lower(p_argsToUse[0])
+			switch(l_firstArg) {
+		
+				case "window":
+				case "w": {
+					array_delete(p_argsToUse, 0, 1);
+					fn_CMDControl_resolutionSetWindowSize( p_argsToUse );
+				
+					break;
+				}
+			
+				case "info":
+				case "i": {
+				
+					var l_resShowInfo = not(ob_control_resolution._isResInfoShow),
+						l_resInfoStateString = (l_resShowInfo)? "displayed" : "hidden";
+					
+					ob_control_resolution._isResInfoShow = l_resShowInfo;
+				
+					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Resolution information is now " + l_resInfoStateString); 
+				
+				
+					break;
+				}
+			
+				case "gui":
+				case "g": {
+					array_delete(p_argsToUse, 0, 1);
+					fn_CMDControl_resolutionSetGUISize( p_argsToUse );
+					break;
+				}
+			
+				default: {
+					fn_CMDControl_MsgShowError(
+						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
+					);
+					break;
+				}
+			}
+		
+		}
+	
+		_mtConsoleArgumentNumberControl(p_argsToUse, 1, 3);
+
+
 	}
-	
-	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 1, 3);
 
-
-}
-
-///@func	fn_CMDControl_resolutionSetWindowSize(argToUse)
-///@param	{Array.string}	argToUse - the string inside is integer(real)
-///@return	void
-///@desc	Set the windows size with a width and heigth, or use an index input with the array base to test.
-function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
+	///@func	fn_CMDControl_resolutionSetWindowSize(argToUse)
+	///@param	{Array.string}	argToUse - the string inside is integer(real)
+	///@return	void
+	///@desc	Set the windows size with a width and heigth, or use an index input with the array base to test.
+	function fn_CMDControl_resolutionSetWindowSize(p_argsToUse) {
 	
-	__myMethod = function(p_argsToUse) { 
+		__myMethod = function(p_argsToUse) { 
 	
-		var l_arrayLength = array_length(p_argsToUse);
+			var l_arrayLength = array_length(p_argsToUse);
 		
-		try{
+			try{
 			
-			var l_firstNumber = real(p_argsToUse[0]);	
+				var l_firstNumber = real(p_argsToUse[0]);	
 		
-			if( l_arrayLength == 1 ) {
+				if( l_arrayLength == 1 ) {
 		
-				#region Check for array index
+					#region Check for array index
 			
-				var l_windowArrayBaseLength = array_length(_cmdWindowSizeBaseArray),
+					var l_windowArrayBaseLength = array_length(_cmdWindowSizeBaseArray),
 				
-				if( l_firstNumber >= 0 and l_firstNumber < l_windowArrayBaseLength) {
+					if( l_firstNumber >= 0 and l_firstNumber < l_windowArrayBaseLength) {
 				
-					var l_width = _cmdWindowSizeBaseArray[l_firstNumber][0],
-						l_height = _cmdWindowSizeBaseArray[l_firstNumber][1];
-					_mtCmdTriggerResolutionChange(l_width, l_height);
-					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(l_width) + " x " + string(l_height)); 
+						var l_width = _cmdWindowSizeBaseArray[l_firstNumber][0],
+							l_height = _cmdWindowSizeBaseArray[l_firstNumber][1];
+						_mtConsoleTriggerResolutionChange(l_width, l_height);
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(l_width) + " x " + string(l_height)); 
 				
+					} else {
+					
+						// Out of rang
+						fn_CMDControl_MsgShowError("The index " + string(l_firstNumber) + " is out of range.");
+					
+					}
+			
+					#endregion
+		
 				} else {
+			
+					#region Set window width and heigth
+			
+						var l_secondNumber = real(p_argsToUse[1]);
 					
-					// Out of rang
-					fn_CMDControl_MsgShowError("The index " + string(l_firstNumber) + " is out of range.");
+						_mtConsoleTriggerResolutionChange(l_firstNumber, l_secondNumber);
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
+			
+					#endregion
+			
+				}
+		
+			} catch(l_error) {
+			
+				show_debug_message(l_error.message);
+				show_debug_message(l_error.longMessage);
+				show_debug_message(l_error.script);
+				show_debug_message(l_error.stacktrace);
+			
+				fn_CMDControl_MsgShowError(l_error.message);
+			}
+		
+
+	
+		}
+	
+	
+		_mtConsoleArgumentNumberControl(p_argsToUse, 1, 2);
+	
+	}
+
+	///@func	fn_CMDControl_resolutionSetGUISize(argToUse)
+	///@param	{Array.string} argToUse - the string inside is integer(real).
+	///@return	void
+	///@desc	Set the GUI size with a width and heigth.
+	function fn_CMDControl_resolutionSetGUISize(p_argsToUse) {
+	
+		__myMethod = function(p_argsToUse) { 
+	
+			try{
+			
+				var l_firstNumber = real(p_argsToUse[0]),
+					l_secondNumber = real(p_argsToUse[1]);
 					
+				_mtConsoleTriggerResolutionChange(l_firstNumber, l_secondNumber, true);
+				fn_cmdArrayPushFIFO(_cmdLogMsgArray, "GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
+		
+			} catch(l_error) {
+			
+				show_debug_message(l_error.message);
+				show_debug_message(l_error.longMessage);
+				show_debug_message(l_error.script);
+				show_debug_message(l_error.stacktrace);
+			
+				fn_CMDControl_MsgShowError(l_error.message);
+			}
+		
+
+	
+		}
+	
+	
+		_mtConsoleArgumentNumberControl(p_argsToUse, 2, 2);
+	
+	}
+
+	///@func	fn_CMDControl_functionExecute(argToUse)
+	///@param	{Array.string}	gameCMD
+	///@return	void
+	///@desc	Execute an object function or script with the arguments needed. At least one object need to exists to execute the function.
+	function fn_CMDControl_functionExecute(p_gameCMD) {
+
+		__myMethod = function(p_gameCMD) {
+
+		
+			// End test
+
+			var l_1stArg = fn_stringSplit(p_gameCMD[0], ".", false),
+				l_1stArgLength = array_length(l_1stArg);
+		
+			var l_objectRef = undefined,
+				l_toExecute = undefined;
+			
+			// Check if is an object's function
+			if( l_1stArgLength > 1 ) {
+			
+				#region Excute object function
+			
+				// Check for just one dot operator
+				if( l_1stArgLength > 2 ) {
+					fn_CMDControl_MsgShowError("Only one dot operator is allowed");
+					return;
+				}
+			
+				// Check if object exists
+				l_objectRef = asset_get_index(l_1stArg[0]);
+			
+				if not( object_exists(l_objectRef) ) {
+			
+					fn_CMDControl_MsgShowError("The object '" + l_1stArg[0] + "' doesnt exists.");
+					return;
+			
+				}
+			
+			
+				l_toExecute =   method_get_index( variable_instance_get(l_objectRef, l_1stArg[1]) );
+		
+			
+				// Check if the function to execute exists
+				if ( l_toExecute == undefined ) {
+					fn_CMDControl_MsgShowError("The script/function '" + l_1stArg[1] + "' doesnt exists in the object '" + l_1stArg[0] + "'");
+					return;
 				}
 			
 				#endregion
-		
+			
+			
 			} else {
+				l_toExecute = asset_get_index(l_1stArg[0]);
 			
-				#region Set window width and heigth
-			
-					var l_secondNumber = real(p_argsToUse[1]);
-					
-					_mtCmdTriggerResolutionChange(l_firstNumber, l_secondNumber);
-					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
-			
-				#endregion
+				// Check if the function to execute exists
+				if not( script_exists(l_toExecute) ) {
+					fn_CMDControl_MsgShowError("The script/function '" + l_1stArg[0] + "' doesnt exists.");
+					return;
+				}
 			
 			}
 		
-		} catch(l_error) {
-			
-			show_debug_message(l_error.message);
-			show_debug_message(l_error.longMessage);
-			show_debug_message(l_error.script);
-			show_debug_message(l_error.stacktrace);
-			
-			fn_CMDControl_MsgShowError(l_error.message);
-		}
-		
+			script_execute_ext(l_toExecute, p_gameCMD, 1);
 
+		
+		}
+
+		// Parent execute first
+		_mtConsoleArgumentNumberControl(p_gameCMD, 1);
 	
 	}
-	
-	
-	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 1, 2);
-	
-}
-
-///@func	fn_CMDControl_resolutionSetGUISize(argToUse)
-///@param	{Array.string} argToUse - the string inside is integer(real).
-///@return	void
-///@desc	Set the GUI size with a width and heigth.
-function fn_CMDControl_resolutionSetGUISize(p_argsToUse) {
-	
-	__myMethod = function(p_argsToUse) { 
-	
-		try{
-			
-			var l_firstNumber = real(p_argsToUse[0]),
-				l_secondNumber = real(p_argsToUse[1]);
-					
-			_mtCmdTriggerResolutionChange(l_firstNumber, l_secondNumber, true);
-			fn_cmdArrayPushFIFO(_cmdLogMsgArray, "GUI resolution set to: " + string(l_firstNumber) + " x " + string(l_secondNumber)); 
-		
-		} catch(l_error) {
-			
-			show_debug_message(l_error.message);
-			show_debug_message(l_error.longMessage);
-			show_debug_message(l_error.script);
-			show_debug_message(l_error.stacktrace);
-			
-			fn_CMDControl_MsgShowError(l_error.message);
-		}
-		
-
-	
-	}
-	
-	
-	fn_CMDControl_generalCommand_argumentControl(p_argsToUse, 2, 2);
-	
-}
-
-///@func	fn_CMDControl_functionExecute(argToUse)
-///@param	{Array.string}	gameCMD
-///@return	void
-///@desc	Execute an object function or script with the arguments needed. At least one object need to exists to execute the function.
-function fn_CMDControl_functionExecute(p_gameCMD) {
-
-	__myMethod = function(p_gameCMD) {
-
-		
-		// End test
-
-		var l_1stArg = fn_stringSplit(p_gameCMD[0], ".", false),
-			l_1stArgLength = array_length(l_1stArg);
-		
-		var l_objectRef = undefined,
-			l_toExecute = undefined;
-			
-		// Check if is an object's function
-		if( l_1stArgLength > 1 ) {
-			
-			#region Excute object function
-			
-			// Check for just one dot operator
-			if( l_1stArgLength > 2 ) {
-				fn_CMDControl_MsgShowError("Only one dot operator is allowed");
-				return;
-			}
-			
-			// Check if object exists
-			l_objectRef = asset_get_index(l_1stArg[0]);
-			
-			if not( object_exists(l_objectRef) ) {
-			
-				fn_CMDControl_MsgShowError("The object '" + l_1stArg[0] + "' doesnt exists.");
-				return;
-			
-			}
-			
-			
-			l_toExecute =   method_get_index( variable_instance_get(l_objectRef, l_1stArg[1]) );
-		
-			
-			// Check if the function to execute exists
-			if ( l_toExecute == undefined ) {
-				fn_CMDControl_MsgShowError("The script/function '" + l_1stArg[1] + "' doesnt exists in the object '" + l_1stArg[0] + "'");
-				return;
-			}
-			
-			#endregion
-			
-			
-		} else {
-			l_toExecute = asset_get_index(l_1stArg[0]);
-			
-			// Check if the function to execute exists
-			if not( script_exists(l_toExecute) ) {
-				fn_CMDControl_MsgShowError("The script/function '" + l_1stArg[0] + "' doesnt exists.");
-				return;
-			}
-			
-		}
-		
-		script_execute_ext(l_toExecute, p_gameCMD, 1);
-
-		
-	}
-
-	// Parent execute first
-	fn_CMDControl_generalCommand_argumentControl(p_gameCMD, 1);
-	
-}
 
 
-
+#endregion
 
 		

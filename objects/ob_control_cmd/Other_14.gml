@@ -26,7 +26,7 @@ function fn_CMDControl_scrollWindow(p_scrollDirection) {
 	_cmdWindowSurfaceYoffset = clamp(_cmdWindowSurfaceYoffset,  _cmdMsgPositionTop, 0)
 	
 	fn_CMDWindow_updateSurface(false); 
-	fn_CMDControl_updateScrollbarProperties(false, false);
+	_mtConsoleUpdateScrollbarProperties(false, false);
 	
 }
 
