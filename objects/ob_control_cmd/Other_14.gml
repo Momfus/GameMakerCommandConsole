@@ -8,7 +8,8 @@ function _mtCMDInputMouseControl() {
 	#region Scrollbar move
 	
 		if( (_isCmdMouseWheelDown or _isCmdMouseWheelUp) and  _cmdMsgPositionTop < 0) {
-			// Feather disable once GM1009 GM2016
+			// Feather disable once GM1009
+			// Feather disable once GM2016
 			_mtCMDScrollWindowControl( _isCmdMouseWheelDown - _isCmdMouseWheelUp );
 		}
 	

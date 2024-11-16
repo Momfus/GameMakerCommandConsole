@@ -112,7 +112,6 @@ fn_isSingleton();
 	
 #endregion 
 
-
 #region Visual Settings
 
 	_surfCmdWindow = undefined;
@@ -175,6 +174,20 @@ fn_isSingleton();
 
 #endregion
 
+#region Keyboard inputs init
+	_cmdKeyPressedShowHide = false;
+	
+	_cmdKeyPressedCommitInput = false;
+	
+	_cmdKeyMoveArrowKeyLeft =false;
+	_cmdKeyMoveArrowKeyRight = false;
+	_cmdKeyMoveArrowKeyUp = false;
+	_cmdKeyMoveArrowKeyDown = false;
+	
+	_cmdKeyBackspace = false;
+	_cmdKeyDelete = false;
+	_cmdKeyPaste = false;
+#endregion
 
 // Keys - Inputs Arrays (here you can add or remove keys to show and hide cmd)
 _cmdInputOpenCloseKeyArray = [220, 112, 27] // Windows LATAM: [º, F1, Esc] 

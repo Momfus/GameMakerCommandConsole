@@ -168,7 +168,7 @@ function _mtInputCommit(p_commitInput) {
 function _mtConsoleUpdateScrollbarProperties(p_updatePositionX, p_updateHeight) {
 		
 	if( p_updatePositionX ) {
-		_cmdScrollBarTapPositionX = _xx + _width - _cmdScrollBarTapWidth;
+		_cmdScrollBarTapPositionX = _xx + _widthCmd - _cmdScrollBarTapWidth;
 	}
 	
 	if( p_updateHeight ) {

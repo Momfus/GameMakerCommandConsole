@@ -7,7 +7,7 @@
 function _mtCMDWindowUpdateSurface(p_updateMsgeTop){
 		
 	if !( surface_exists(_surfCmdWindow) ) {
-		_surfCmdWindow = surface_create( _width, _heightLog);
+		_surfCmdWindow = surface_create( _widthCmd, _heightLog);
 	}
 	
 	// Draw text on surface
@@ -34,9 +34,9 @@ function _mtCMDWindowUpdateSurface(p_updateMsgeTop){
 			
 				
 			draw_text_ext(	_posTextStartX, _heightLog - (i * _cmdMsgSep) - yyMsgPositionAux - _cmdWindowSurfaceYoffset, 
-							_cmdLogMsgArray[i], -1, _width);
+							_cmdLogMsgArray[i], -1, _widthCmd);
 							
-			yyMsgPositionAux +=  string_height_ext(_cmdLogMsgArray[i], -1, _width);	
+			yyMsgPositionAux +=  string_height_ext(_cmdLogMsgArray[i], -1, _widthCmd);	
 
 			
 		};

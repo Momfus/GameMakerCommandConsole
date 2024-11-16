@@ -14,11 +14,11 @@ if( ob_control_resolution._isNewWindowSizeSetted ) {
 			// Log background
 			draw_set_color(c_black);
 			draw_set_alpha(_alphaLog);
-			draw_rectangle(_xx, _yy, _width, _heightLog, false)
+			draw_rectangle(_xx, _yy, _widthCmd, _heightLog, false)
 	
 			// CMD Input background
 			draw_set_alpha(_alphaCmdInput)
-			draw_rectangle(_xx, _posCmdInputY1, _width, _posCmdInputY2, false);
+			draw_rectangle(_xx, _posCmdInputY1, _widthCmd, _posCmdInputY2, false);
 	
 			draw_set_alpha(1);		
 	
