@@ -27,8 +27,8 @@ if( ob_control_resolution._isNewWindowSizeSetted ) {
 		_mtCMDWindowUpdateSurface(false);
 	
 		draw_surface(_surfCmdWindow, _xx, _yy);
-		fn_CMDWindow_drawCommandInput();
-		fn_CMDWindow_drawScrollbar();
+		_mtCMDWindowDrawCommandInput();
+		_mtCMDWindowDrawScrollbar();
 
 		// Reset
 		draw_set_valign(fa_top);

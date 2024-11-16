@@ -58,10 +58,9 @@ function _mtCMDWindowUpdateSurface(p_updateMsgeTop){
 
 }
 
-///@func	fn_CMDWindow_drawCommandInput()
-///@return	void
+///@func	_mtCMDWindowDrawCommandInput()
 ///@desc	Draw the line command input for the user
-function fn_CMDWindow_drawCommandInput() {
+function _mtCMDWindowDrawCommandInput() {
 		
 	draw_set_color(c_orange);
 	draw_set_valign(fa_middle);
@@ -71,7 +70,7 @@ function fn_CMDWindow_drawCommandInput() {
 		
 	#region Input Text
 		
-		var l_textLeftCursorWidth = string_width( _cmdTextArray[e_cmdTextInput.leftSide]);
+		var textLeftCursorWidth = string_width( _cmdTextArray[e_cmdTextInput.leftSide]);
 		
 		// Text Left
 		draw_set_color(c_white);
@@ -80,31 +79,27 @@ function fn_CMDWindow_drawCommandInput() {
 		// Cursor
 		draw_set_color(c_orange);
 		if( _isCmdCursorVisible ) {
-			draw_text( _posTextStartX + l_textLeftCursorWidth - 4 , _posTextY, "|");	
+			draw_text( _posTextStartX + textLeftCursorWidth - 4 , _posTextY, "|");	
 		}
 			
 		// Test Right
 		draw_set_color(c_white);
-		draw_text(_posTextStartX + l_textLeftCursorWidth + string_length("|"), _posTextY, _cmdTextArray[e_cmdTextInput.rightSide]);
+		draw_text(_posTextStartX + textLeftCursorWidth + string_length("|"), _posTextY, _cmdTextArray[e_cmdTextInput.rightSide]);
 			
 
 	#endregion
-		
-	
 	
 }
 
-///@func	fn_CMDWindow_drawScrollbar()
+///@func	_mtCMDWindowDrawScrollbar()
 ///@return	void
 ///@desc	Draw the scrollbar for the cmd window
-function fn_CMDWindow_drawScrollbar() {
+function _mtCMDWindowDrawScrollbar() {
 
 	if ( _cmdMsgPositionTop < 0 ) {
 		
 		draw_set_color(c_white);
 		draw_set_alpha(1);
-		
-
 				
 		draw_rectangle( _cmdScrollBarTapPositionX,
 						_cmdScrollBarTapRelativeEmptySpace + _cmdScrollBarTapPositionOffset,
