@@ -40,8 +40,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sp_control_cmd_mask",
-    "path":"sprites/sp_control_cmd_mask/sp_control_cmd_mask.yy",
+    "name":"sp_hidden_control_cmd",
+    "path":"sprites/sp_hidden_control_cmd/sp_hidden_control_cmd.yy",
   },
   "spriteMaskId":null,
   "visible":true,

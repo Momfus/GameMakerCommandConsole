@@ -1,13 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"ob_playerExample",
+  "%Name":"ob_player_example",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":1,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"ob_playerExample",
+  "name":"ob_player_example",
   "overriddenProperties":[],
   "parent":{
     "name":"Extra",
@@ -32,12 +32,12 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sp_playerExample",
-    "path":"sprites/sp_playerExample/sp_playerExample.yy",
+    "name":"sp_player_example",
+    "path":"sprites/sp_player_example/sp_player_example.yy",
   },
   "spriteMaskId":{
-    "name":"sp_playerExample",
-    "path":"sprites/sp_playerExample/sp_playerExample.yy",
+    "name":"sp_player_example",
+    "path":"sprites/sp_player_example/sp_player_example.yy",
   },
   "visible":true,
 }

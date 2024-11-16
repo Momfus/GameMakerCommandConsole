@@ -1,41 +1,43 @@
 ///@description Methods - Mouse and scroll
 
 
-///@func	fn_CMDControl_inputMouse()
-///@return	void
+///@func	_mtCMDInputMouseControl()
 ///@desc	Check all the inputs from the mouse
-function fn_CMDControl_inputMouse() {
+function _mtCMDInputMouseControl() {
 	
 	#region Scrollbar move
 	
-		if( (__cmdMouseWheelDown or __cmdMouseWheelUp) and  __cmdMsgTop < 0) {
-			fn_CMDControl_scrollWindow( __cmdMouseWheelDown - __cmdMouseWheelUp );
+		if( (_isCmdMouseWheelDown or _isCmdMouseWheelUp) and  _cmdMsgPositionTop < 0) {
+			// Feather disable once GM1009
+			// Feather disable once GM2016
+			_mtCMDScrollWindowControl( _isCmdMouseWheelDown - _isCmdMouseWheelUp );
 		}
 	
 	#endregion
 	
 }
 
-///@func	fn_CMDControl_scrollWindow(scrollDirection)
-///@param	{real}	scrollDirection
-///@return	void
+///@func	_mtCMDScrollWindowControl(scrollDirection)
+///@param	{real}	p_scrollDirection
 ///@desc	Check and calculate the scroll up with mouse or keyboard input
-function fn_CMDControl_scrollWindow(p_scrollDirection) {
+function _mtCMDScrollWindowControl(p_scrollDirection) {
 
-	__cmdWindowSurfaceYoffset += __cmdScrollSpeed * p_scrollDirection ;
-	__cmdWindowSurfaceYoffset = clamp(__cmdWindowSurfaceYoffset,  __cmdMsgTop, 0)
+	_cmdWindowSurfaceYoffset += _cmdScrollSpeed * p_scrollDirection ;
+	_cmdWindowSurfaceYoffset = clamp(_cmdWindowSurfaceYoffset,  _cmdMsgPositionTop, 0)
 	
-	fn_CMDWindow_updateSurface(false); 
-	fn_CMDControl_updateScrollbarProperties(false, false);
+	// Feather disable GM2016
+	_mtCMDWindowUpdateSurface(false); 
+	_mtConsoleUpdateScrollbarProperties(false, false);
+	// Feather restore GM2016
 	
 }
 
-///@func	fn_CMDControl_checkMouseEvent(scrollDirection)
+///@func	_mtCMDCheckMouseEventControl(scrollDirection)
 ///@return	void
 ///@desc	Check for mouse inputs when the CMD is open
-function fn_CMDControl_checkMouseEvent() {
+function _mtCMDCheckMouseEventControl() {
 	
-	__cmdMouseWheelDown = mouse_wheel_down();
-	__cmdMouseWheelUp = mouse_wheel_up();
+	_isCmdMouseWheelDown = mouse_wheel_down();
+	_isCmdMouseWheelUp = mouse_wheel_up();
 	
 }

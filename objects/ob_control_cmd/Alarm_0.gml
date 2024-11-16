@@ -1,4 +1,4 @@
 ///@desc Cursor animation flash
 
-__cmdCursorVisible = !__cmdCursorVisible;
-alarm[0] = __cmdCursorFlashTime;
+_isCmdCursorVisible = !_isCmdCursorVisible;
+alarm[0] = _timeCmdCursorFlash;

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"sc_cmdHelpers",
+  "%Name":"sc_cmd_helpers",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sc_cmdHelpers",
+  "name":"sc_cmd_helpers",
   "parent":{
     "name":"Scripts",
     "path":"folders/gmcc/Scripts.yy",

@@ -1,7 +1,7 @@
 ///@desc Free Memory
 
 // Free surface from memory
-if( variable_instance_exists(self, "__surfCmdWindow") ) {
-	surface_free(__surfCmdWindow);
+if( variable_instance_exists(self, "_surfCmdWindow") and surface_exists(self._surfCmdWindow) ) {
+	surface_free(self._surfCmdWindow);
 }
 

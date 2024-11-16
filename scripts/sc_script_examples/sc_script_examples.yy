@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"sc_cmdMsgLog",
+  "%Name":"sc_script_examples",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sc_cmdMsgLog",
+  "name":"sc_script_examples",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/gmcc/Scripts.yy",
+    "name":"Extra",
+    "path":"folders/gmcc/Scripts/Extra.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
