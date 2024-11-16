@@ -12,8 +12,8 @@ _currentCommandExecute = undefined;
 ///@param	{String}			p_description
 ///@param	{bool}				[p_useCleanDescription]
 ///@param	{Any | Function}	[p_function]
-///@param	{Array.string}		[p_arguments]
-///@param	{Array.string}		[p_argsDescription]
+///@param	{Array<String>}		[p_arguments]
+///@param	{Array<String>}		[p_argsDescription]
 ///@return	{Struct}
 ///@desc	Create a command object
 function _mtObjCommand(p_title, p_shortTitle, p_description, p_useCleanDescription = false, p_function = undefined, p_arguments = undefined, p_argsDescription = undefined ) constructor {
@@ -128,7 +128,7 @@ function _mtInputCommit(p_commitInput) {
 	
 	if( array_length(_cmdTextPartArray) == undefined ) { 
 		
-		fn_CMDControl_MsgShowError("Empty command sent");
+		fn_cmdMsgShowError("Empty command sent");
 		
 	} else {
 	
@@ -202,12 +202,12 @@ function _mtParseCommand() {
 		
 	}
 	
-	fn_CMDControl_MsgShowError("The '" + _cmdTextPartArray[0] + "' command isn't recognized");
+	fn_cmdMsgShowError("The '" + _cmdTextPartArray[0] + "' command isn't recognized");
 	
 }
 
 ///@func	_mtConsoleArgumentNumberControl(gameCMD, argMin, argMax)
-///@param	{Array.string}	p_gameCMD
+///@param	{Array<String>}	p_gameCMD
 ///@param	{real}			p_argMin
 ///@param	{real}			p_argMax
 ///@return	void
@@ -223,13 +223,13 @@ function _mtConsoleArgumentNumberControl(p_gameCMD, p_argMin, p_argMax = undefin
 	} else {
 		
 		if( argsLength < p_argMin ) {
-			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.paramsLessMin, _currentCommandExecute._cmdTitle, argsLength, p_argMin, p_argMax)
+			fn_cmdMsgShowError(
+				fn_cmdMsgGetGenericMessage(e_cmdTypeMessage.paramsLessMin, _currentCommandExecute._cmdTitle, argsLength, p_argMin, p_argMax)
 			);
 		} else {
 
-			fn_CMDControl_MsgShowError(
-				fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.paramsMoreMax, _currentCommandExecute._cmdTitle, argsLength, p_argMin, p_argMax)
+			fn_cmdMsgShowError(
+				fn_cmdMsgGetGenericMessage(e_cmdTypeMessage.paramsMoreMax, _currentCommandExecute._cmdTitle, argsLength, p_argMin, p_argMax)
 			);
 			
 		}
@@ -284,7 +284,7 @@ function _mtClipboardPaste() {
 	}
 
 	///@func	_mtCMDShowHelp(args)
-	///@param	{Array.any}	p_argsArray
+	///@param	{Array<Any>}	p_argsArray
 	///@desc	Show the help information of the given command
 	function _mtCMDShowHelp(p_argsArray) {
 	
@@ -334,8 +334,8 @@ function _mtClipboardPaste() {
 					// If the command doesnt exists
 					if !( cmdArgumentExists ) {
 			    
-						var errorMsgCommandNoExists = fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, p_argsArray[0]);
-						fn_CMDControl_MsgShowError(errorMsgCommandNoExists);
+						var errorMsgCommandNoExists = fn_cmdMsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, p_argsArray[0]);
+						fn_cmdMsgShowError(errorMsgCommandNoExists);
 				
 						return -1; // exit the function
 					}
@@ -410,7 +410,7 @@ function _mtClipboardPaste() {
 			// Too much arguments
 			default: {
 		
-				fn_CMDControl_MsgShowError(fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.paramsMoreMax, "help", argsLength, 0, 1) );
+				fn_cmdMsgShowError(fn_cmdMsgGetGenericMessage(e_cmdTypeMessage.paramsMoreMax, "help", argsLength, 0, 1) );
 				return -1;
 			
 			}
@@ -422,7 +422,7 @@ function _mtClipboardPaste() {
 
 	
 	///@func	_mtCMDGameControl(status)
-	///@param	{Array.String}	p_gameCMD
+	///@param	{Array<String>}	p_gameCMD
 	///@desc	Select the function to execute a game command
 	function _mtCMDGameControl(p_gameCMD) {
 
@@ -442,8 +442,8 @@ function _mtClipboardPaste() {
 			
 				default: {
 
-					fn_CMDControl_MsgShowError( 
-						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
+					fn_cmdMsgShowError( 
+						fn_cmdMsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
 					);
 					break;
 				
@@ -457,7 +457,7 @@ function _mtClipboardPaste() {
 	}
 
 	///@func	_mtCMDFullscreenMode(activate)
-	///@param	{Array.string}	p_isfullscreenCMD	The string inside is a boolean or ON/OFF value or 1/0.
+	///@param	{Array<String>}	p_isfullscreenCMD	The string inside is a boolean or ON/OFF value or 1/0.
 	///@desc	Select the function to execute a game command
 	function _mtCMDFullscreenMode(p_isfullscreenCMD) {
 
@@ -477,7 +477,7 @@ function _mtClipboardPaste() {
 						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is windowed: 960 x 540");
 					
 					} else {
-						fn_CMDControl_MsgShowError("The screen is already windowed");
+						fn_cmdMsgShowError("The screen is already windowed");
 					}
 				
 					break;
@@ -489,7 +489,7 @@ function _mtClipboardPaste() {
 				
 					if( window_get_fullscreen() ) {
 					
-						fn_CMDControl_MsgShowError("The screen is already fullscreen");
+						fn_cmdMsgShowError("The screen is already fullscreen");
 					
 					} else {
 					
@@ -508,8 +508,8 @@ function _mtClipboardPaste() {
 				}
 			
 				default: {
-					fn_CMDControl_MsgShowError(
-						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
+					fn_cmdMsgShowError(
+						fn_cmdMsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
 					);
 					break;
 				}
@@ -523,7 +523,7 @@ function _mtClipboardPaste() {
 
 
 	///@func	_mtCMDResolution(argToUse)
-	///@param	{Array.string}	p_argsToUse
+	///@param	{Array<String>}	p_argsToUse
 	///@return	void
 	///@desc	Select the function to execute a game command
 	function _mtCMDResolution(p_argsToUse) {
@@ -544,12 +544,12 @@ function _mtClipboardPaste() {
 				case "info":
 				case "i": {
 				
-					var l_resShowInfo = not(ob_control_resolution._isResInfoShow),
-						l_resInfoStateString = (l_resShowInfo)? "displayed" : "hidden";
+					var resShowInfo = not(ob_control_resolution._isResInfoShow),
+						resInfoStateString = (resShowInfo)? "displayed" : "hidden";
 					
-					ob_control_resolution._isResInfoShow = l_resShowInfo;
+					ob_control_resolution._isResInfoShow = resShowInfo;
 				
-					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Resolution information is now " + l_resInfoStateString); 
+					fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Resolution information is now " + resInfoStateString); 
 				
 				
 					break;
@@ -563,8 +563,8 @@ function _mtClipboardPaste() {
 				}
 			
 				default: {
-					fn_CMDControl_MsgShowError(
-						fn_CMDControl_MsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
+					fn_cmdMsgShowError(
+						fn_cmdMsgGetGenericMessage(e_cmdTypeMessage.commandNotExists, _cmdTextPartArray[0] + " " + _cmdTextPartArray[1])
 					);
 					break;
 				}
@@ -578,7 +578,7 @@ function _mtClipboardPaste() {
 	}
 
 	///@func	_mtCMDResolutionSetWindowSize(argToUse)
-	///@param	{Array.string}	p_argsToUse		The string inside must be an integer (Real)
+	///@param	{Array<String>}	p_argsToUse		The string inside must be an integer (Real)
 	///@desc	Set the windows size with a width and heigth, or use an index input with the array base to test.
 	function _mtCMDResolutionSetWindowSize(p_argsToUse) {
 	
@@ -594,19 +594,19 @@ function _mtClipboardPaste() {
 		
 					#region Check for array index
 			
-					var l_windowArrayBaseLength = array_length(_cmdWindowSizeBaseArray);
+					var windowArrayBaseLength = array_length(_cmdWindowSizeBaseArray);
 				
-					if( firstNumber >= 0 and firstNumber < l_windowArrayBaseLength) {
+					if( firstNumber >= 0 and firstNumber < windowArrayBaseLength) {
 				
-						var l_width = _cmdWindowSizeBaseArray[firstNumber][0],
-							l_height = _cmdWindowSizeBaseArray[firstNumber][1];
-						_mtConsoleTriggerResolutionChange(l_width, l_height);
-						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(l_width) + " x " + string(l_height)); 
+						var windowWidth = _cmdWindowSizeBaseArray[firstNumber][0],
+							windowsHeight = _cmdWindowSizeBaseArray[firstNumber][1];
+						_mtConsoleTriggerResolutionChange(windowWidth, windowsHeight);
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "Window size and GUI resolution set to: " + string(windowWidth) + " x " + string(windowsHeight)); 
 				
 					} else {
 					
 						// Out of rang
-						fn_CMDControl_MsgShowError("The index " + string(firstNumber) + " is out of range.");
+						fn_cmdMsgShowError("The index " + string(firstNumber) + " is out of range.");
 					
 					}
 			
@@ -627,12 +627,14 @@ function _mtClipboardPaste() {
 		
 			} catch(error) {
 			
+				// Feather disable GM2017
 				show_debug_message(error.message);
 				show_debug_message(error.longMessage);
 				show_debug_message(error.script);
 				show_debug_message(error.stacktrace);
 			
-				fn_CMDControl_MsgShowError(error.message);
+				fn_cmdMsgShowError(error.message);
+				// Feather enable GM2017
 			}
 		
 
@@ -645,7 +647,7 @@ function _mtClipboardPaste() {
 	}
 
 	///@func	_mtCMDResolutionSetGUISize(argToUse)
-	///@param	{Array.string} p_argsToUse		The string inside is integer(real).
+	///@param	{Array<String>} p_argsToUse		The string inside is integer(real).
 	///@desc	Set the GUI size with a width and heigth.
 	function _mtCMDResolutionSetGUISize(p_argsToUse) {
 	
@@ -666,7 +668,7 @@ function _mtClipboardPaste() {
 				show_debug_message(error.longMessage);
 				show_debug_message(error.script);
 				show_debug_message(error.stacktrace);
-				fn_CMDControl_MsgShowError(error.message);
+				fn_cmdMsgShowError(error.message);
 				// Feather restore GM2017
 				
 			}
@@ -681,7 +683,7 @@ function _mtClipboardPaste() {
 	}
 
 	///@func	_mtCMDFunctionExecuteControl(argToUse)
-	///@param	{Array.string}	p_gameCMD
+	///@param	{Array<String>}	p_gameCMD
 	///@desc	Execute an object function or script with the arguments needed. At least one object need to exists to execute the function.
 	function _mtCMDFunctionExecuteControl(p_gameCMD) {
 
@@ -703,7 +705,7 @@ function _mtClipboardPaste() {
 			
 				// Check for just one dot operator
 				if( firstArgArrayLength > 2 ) {
-					fn_CMDControl_MsgShowError("Only one dot operator is allowed");
+					fn_cmdMsgShowError("Only one dot operator is allowed");
 					return;
 				}
 			
@@ -712,7 +714,7 @@ function _mtClipboardPaste() {
 			
 				if not( object_exists(objectRef) ) {
 			
-					fn_CMDControl_MsgShowError("The object '" + firstArgArray[0] + "' doesnt exists.");
+					fn_cmdMsgShowError("The object '" + firstArgArray[0] + "' doesnt exists.");
 					return;
 			
 				}
@@ -723,7 +725,7 @@ function _mtClipboardPaste() {
 			
 				// Check if the function to execute exists
 				if ( coodeToExecute == undefined ) {
-					fn_CMDControl_MsgShowError("The script/function '" + firstArgArray[1] + "' doesnt exists in the object '" + firstArgArray[0] + "'");
+					fn_cmdMsgShowError("The script/function '" + firstArgArray[1] + "' doesnt exists in the object '" + firstArgArray[0] + "'");
 					return;
 				}
 			
@@ -735,7 +737,7 @@ function _mtClipboardPaste() {
 			
 				// Check if the function to execute exists
 				if not( script_exists(coodeToExecute) ) {
-					fn_CMDControl_MsgShowError("The script/function '" + firstArgArray[0] + "' doesnt exists.");
+					fn_cmdMsgShowError("The script/function '" + firstArgArray[0] + "' doesnt exists.");
 					return;
 				}
 			

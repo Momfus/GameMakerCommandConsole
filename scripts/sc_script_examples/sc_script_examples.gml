@@ -26,8 +26,8 @@ function fn_cmdTestSum(n1, n2){
 	
 		//	show_debug_message(error)
 		
-		//	fn_CMDControl_MsgShowError(error.message);
-		//	fn_CMDControl_MsgShowError("The function only use numbers as argument");
+		//	fn_cmdMsgShowError(error.message);
+		//	fn_cmdMsgShowError("The function only use numbers as argument");
 	
 		//}
 
@@ -45,8 +45,8 @@ function fn_cmdTestSum(n1, n2){
 	
 		show_debug_message(error)
 		
-		fn_CMDControl_MsgShowError(error.message);
-		fn_CMDControl_MsgShowError("The function only use numbers as argument");
+		fn_cmdMsgShowError(error.message);
+		fn_cmdMsgShowError("The function only use numbers as argument");
 	}
 	
 	#endregion

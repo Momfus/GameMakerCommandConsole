@@ -31,11 +31,11 @@ function _mtStateBeginStepCMDOpened() {
 			_mtCMDInputKeyboardUser();
 			
 			// Mouse event control
-			fn_CMDControl_checkMouseEvent(); // Global mouse check (not necesarry when is hover the CMD)
+			_mtCMDCheckMouseEventControl(); // Global mouse check (not necesarry when is hover the CMD)
 
 			_isCmdMouseHover = fn_cmdGUICheckMouseIsHoverThisObject(_isCmdMouseHover);
 			if( _isCmdMouseHover ) {
-				fn_CMDControl_inputMouse();
+				_mtCMDInputMouseControl();
 			}
 
 		}

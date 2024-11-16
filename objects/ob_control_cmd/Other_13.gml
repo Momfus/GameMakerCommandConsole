@@ -92,7 +92,6 @@ function _mtCMDWindowDrawCommandInput() {
 }
 
 ///@func	_mtCMDWindowDrawScrollbar()
-///@return	void
 ///@desc	Draw the scrollbar for the cmd window
 function _mtCMDWindowDrawScrollbar() {
 
