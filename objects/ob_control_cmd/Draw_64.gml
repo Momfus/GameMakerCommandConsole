@@ -24,7 +24,7 @@ if( ob_control_resolution._isNewWindowSizeSetted ) {
 	
 		#endregion
 	
-		fn_CMDWindow_updateSurface(false);
+		_mtCMDWindowUpdateSurface(false);
 	
 		draw_surface(_surfCmdWindow, _xx, _yy);
 		fn_CMDWindow_drawCommandInput();

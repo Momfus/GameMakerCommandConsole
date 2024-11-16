@@ -1,11 +1,10 @@
 ///@description Methods - GUI & Surface
 
 
-///@func	fn_CMDWindow_updateSurface( updateMsgTop )
-///@param	{bool}	updateMsgTop
-///@return	void
+///@func	_mtCMDWindowUpdateSurface( updateMsgTop )
+///@param	{bool}	p_updateMsgeTop
 ///@desc	Draw all the elements needed in the surface for the CMD Window
-function fn_CMDWindow_updateSurface(p_updateMsgeTop){
+function _mtCMDWindowUpdateSurface(p_updateMsgeTop){
 		
 	if !( surface_exists(_surfCmdWindow) ) {
 		_surfCmdWindow = surface_create( _width, _heightLog);
@@ -24,20 +23,20 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 		draw_set_color(c_white);
 		draw_set_valign(fa_bottom);
 		
-		var l_yyMsgPositionAux = 0;
+		var yyMsgPositionAux = 0;
 		
 		for( var i = 0; i < _cmdLogCountMax; i++ ) 
 		{
-			var l_elementArrayTemp = _cmdLogMsgArray[i];
-			if(l_elementArrayTemp == "") {
+			var elementArrayTemp = _cmdLogMsgArray[i];
+			if(elementArrayTemp == "") {
 				continue;
 			}
 			
 				
-			draw_text_ext(	_posTextStartX, _heightLog - (i * _cmdMsgSep) - l_yyMsgPositionAux - _cmdWindowSurfaceYoffset, 
+			draw_text_ext(	_posTextStartX, _heightLog - (i * _cmdMsgSep) - yyMsgPositionAux - _cmdWindowSurfaceYoffset, 
 							_cmdLogMsgArray[i], -1, _width);
 							
-			l_yyMsgPositionAux +=  string_height_ext(_cmdLogMsgArray[i], -1, _width);	
+			yyMsgPositionAux +=  string_height_ext(_cmdLogMsgArray[i], -1, _width);	
 
 			
 		};
@@ -49,7 +48,7 @@ function fn_CMDWindow_updateSurface(p_updateMsgeTop){
 	surface_reset_target();
 	
 	// Update cdm window propieties
-	_cmdMsgWindowHeight = l_yyMsgPositionAux;
+	_cmdMsgWindowHeight = yyMsgPositionAux;
 		
 	if (p_updateMsgeTop) {
 		_cmdMsgPositionTop =  _heightLog - ( _cmdMsgWindowHeight + (_cmdLogMsgCountCurrent * _cmdMsgSep) );

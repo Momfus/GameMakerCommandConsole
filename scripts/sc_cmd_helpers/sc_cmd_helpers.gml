@@ -40,12 +40,12 @@ function fn_cmdGUICheckMouseIsHoverThisObject(p_stateMouseHover) {
 function fn_cmdGetArrayStringSizeNoEmpty(p_array){
 	
 	var l_arrayRealSize = array_length(p_array),
-		l_elementArrayTemp = undefined;
+		elementArrayTemp = undefined;
 		
 	for( var i = 0; i < l_arrayRealSize; i++ ) {
 		
-		l_elementArrayTemp = p_array[i];
-		if(l_elementArrayTemp == "" || l_elementArrayTemp == undefined || l_elementArrayTemp == noone ) {
+		elementArrayTemp = p_array[i];
+		if(elementArrayTemp == "" || elementArrayTemp == undefined || elementArrayTemp == noone ) {
 			break;
 		}
 	

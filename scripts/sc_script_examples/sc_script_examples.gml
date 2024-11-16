@@ -24,9 +24,9 @@ function fn_cmdTestSum(n1, n2){
 		
 		//} catch(error) {
 	
-		//	show_debug_message(l_error)
+		//	show_debug_message(error)
 		
-		//	fn_CMDControl_MsgShowError(l_error.message);
+		//	fn_CMDControl_MsgShowError(error.message);
 		//	fn_CMDControl_MsgShowError("The function only use numbers as argument");
 	
 		//}
@@ -41,11 +41,11 @@ function fn_cmdTestSum(n1, n2){
 		n2 = real(n2);
 		fn_cmdSumNumber(n1, n2);
 		
-	} catch(l_error) {
+	} catch(error) {
 	
-		show_debug_message(l_error)
+		show_debug_message(error)
 		
-		fn_CMDControl_MsgShowError(l_error.message);
+		fn_CMDControl_MsgShowError(error.message);
 		fn_CMDControl_MsgShowError("The function only use numbers as argument");
 	}
 	

@@ -25,11 +25,11 @@ function _mtCMDInputKeyboardUser()
 		} else if( _cmdKeyMoveArrowKeyUp ) { // Log history
 			
 			// Feather disable once GM1009  // This is for the below boolean operation
-			_mtConsoleCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown); //@TODO: Verificar si sigue el error de feather
+			_mtConsoleCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown);
 			
 		} else if( _cmdKeyMoveArrowKeyDown ) { // Log history
 			// Feather disable once GM1009 // This is for the below boolean operation
-			_mtConsoleCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown); //@TODO: Verificar si sigue el error de feather
+			_mtConsoleCursorMoveInputLog(_cmdKeyMoveArrowKeyUp - _cmdKeyMoveArrowKeyDown);
 			
 		} else if(_cmdKeyBackspace) { // Move
 			
