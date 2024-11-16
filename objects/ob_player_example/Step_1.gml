@@ -2,10 +2,12 @@
 
 if( global._gCmdOpen ) { return;	} // Skip the next lines if cmd is open
 
-__moveLeft = keyboard_check( ord("A") )		or keyboard_check(vk_left);
-__moveRigth = keyboard_check( ord("D") )	or keyboard_check(vk_right);
-__moveDown = keyboard_check( ord("S") )		or keyboard_check(vk_down);
-__moveUp = keyboard_check( ord("W") )		or keyboard_check(vk_up);
+_moveLeft = keyboard_check( ord("A") )		or keyboard_check(vk_left);
+_moveRigth = keyboard_check( ord("D") )	or keyboard_check(vk_right);
+_moveDown = keyboard_check( ord("S") )		or keyboard_check(vk_down);
+_moveUp = keyboard_check( ord("W") )		or keyboard_check(vk_up);
 
-__movH = __moveRigth - __moveLeft;
-__movV = __moveDown - __moveUp;
+// Feather ignore GM1009 GM1043
+_movH = _moveRigth - _moveLeft;
+_movV = _moveDown - _moveUp;
+// Feather restore GM1009 GM1043

@@ -1,6 +1,7 @@
 ///@desc Attributes
 
 
+
 #macro CMD_CURRENT_VERSION "0.7.3"
 
 // This was intended to be used only on PC, so I'm aiming for a single mouse/touch device
@@ -31,9 +32,9 @@ fn_isSingleton();
 	function _mtConsoleResizeWindow(p_guiOffsetMultiplier) {
 	
 		// Visual
-		_width	*= p_guiOffsetMultiplier;
-		if( _width > window_get_width() ) {
-			_width = window_get_width();
+		_widthCmd	*= p_guiOffsetMultiplier;
+		if( _widthCmd > window_get_width() ) {
+			_widthCmd = window_get_width();
 		}
 	
 		// Mouse collision
@@ -128,7 +129,7 @@ fn_isSingleton();
 	_paddingInner = 10;
 	
 	// Height and Width
-	_width = display_get_gui_width();
+	_widthCmd = display_get_gui_width();
 	_heightLog = 200;
 	_heightCmdInput = 40;
 	
@@ -152,7 +153,7 @@ fn_isSingleton();
 #region Mouse variables
 
 	// Set collision mask that trigger witht mouse events 
-	image_xscale = _width;
+	image_xscale = _widthCmd;
 	image_yscale = _posCmdInputY1;
 
 	_isCmdMouseHover = false;

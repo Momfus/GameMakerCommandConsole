@@ -720,6 +720,7 @@ function _mtClipboardPaste() {
 				}
 			
 			
+				//Feather ignore once GM1044
 				coodeToExecute =   method_get_index( variable_instance_get(objectRef, firstArgArray[1]) );
 		
 			

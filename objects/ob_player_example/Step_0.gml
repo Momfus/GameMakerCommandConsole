@@ -1,7 +1,7 @@
 ///@desc
 
-x += __movH * __speed;
-y += __movV * __speed;
+x += _movH * _speed;
+y += _movV * _speed;
 
-x = clamp(x, __limitMovLeft, __limitMovRigth);
-y = clamp(y, __limitMovUp, __limitMovDown);
+x = clamp(x, _limitMovLeft, _limitMovRigth);
+y = clamp(y, _limitMovUp, _limitMovDown);

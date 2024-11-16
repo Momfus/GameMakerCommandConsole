@@ -8,22 +8,20 @@
 #region Methods
 
 	///@func	_mtControlResolutionResizeAll()
+	///@desc	Change the necesary attributes when the resolution is different.
 	///@param	{bool}	[p_isFirstTimeStart]
 	///@param	{real}	[p_newWindowWidth]
 	///@param	{real}	[p_newWindowHeight]
-	///@param	{bool}	[p_isPortrait]
-	///@return	void
-	///@desc	Change the necesary attributes when the resolution is different.
+	///@param	{bool}	[p_isPortrait]	
 	function _mtControlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = _resBaseWidth, p_newWindowHeight = _resIdealHeight,  p_isPortrait = false) {
 	
 		_isNewWindowSizeSetted = false;
 	
-		var l_isWindowFS = window_get_fullscreen(),
-			l_displayReferenceWidth = l_isWindowFS ? _resDisplayWidth : p_newWindowWidth,
-			l_displayReferenceHeight = l_isWindowFS ? _resDisplayHeight : p_newWindowHeight;
+		var isWindowFS = window_get_fullscreen(),
+			displayReferenceWidth = isWindowFS ? _resDisplayWidth : p_newWindowWidth,
+			displayReferenceHeight = isWindowFS ? _resDisplayHeight : p_newWindowHeight;
 
-	
-		_resAspectRatio = l_displayReferenceWidth / l_displayReferenceHeight;
+		_resAspectRatio = displayReferenceWidth / displayReferenceHeight;
 	
 		if not( p_isPortrait ) {
 			_resIdealWidth = round( _resBaseHeight * _resAspectRatio ); // This is for widescreen aspect ratio (aspectRadio > 1);	
@@ -38,18 +36,18 @@
 			// For test purposes, is important to adjust not only the width but the height also, it works for differents ratios fixing the camera width and height then 
 		
 			// Widescreen
-			if ( ( not(p_isPortrait) and (l_displayReferenceWidth mod _resIdealWidth ) != 0 ) or not(l_isWindowFS) ) { // Stretch to resolution to maintain dimensions
+			if ( ( not(p_isPortrait) and (displayReferenceWidth mod _resIdealWidth ) != 0 ) or not(isWindowFS) ) { // Stretch to resolution to maintain dimensions
     
-				var l_display = round( l_displayReferenceWidth / _resIdealWidth );
-				_resIdealWidth = round(l_displayReferenceWidth / l_display);
+				var display = round( displayReferenceWidth / _resIdealWidth );
+				_resIdealWidth = round(displayReferenceWidth / display);
 			
 	
 			}
 	
 			// Portrait (uncomment to enable and comment the other)
-			if ( ( p_isPortrait and ( l_displayReferenceHeight  mod _resIdealHeight ) != 0 ) or not(l_isWindowFS) ) { // Stretch to resolution to maintain dimensions
-				var l_display = round(l_displayReferenceHeight / _resIdealHeight );
-				_resIdealHeight =l_displayReferenceHeight / l_display;  
+			if ( ( p_isPortrait and ( displayReferenceHeight  mod _resIdealHeight ) != 0 ) or not(isWindowFS) ) { // Stretch to resolution to maintain dimensions
+				var display = round(displayReferenceHeight / _resIdealHeight );
+				_resIdealHeight =displayReferenceHeight / display;  
 	
 			}
 	
@@ -115,8 +113,7 @@
 		
 	}
 
-	///@func	mtResizeResolutionToObjects()
-	///@return	void
+	///@func	_mtResizeResolutionToObjects()
 	///@desc	It used to resize all the objets that depend on the resolution size (like camera and gui elements) 
 	function _mtResizeResolutionToObjects() {
 
@@ -141,7 +138,6 @@ _resIdealHeight = _resBaseHeight;
 
 _resMaxWidth = 1920;
 _resMaxHeight = 1080;
-
 
 // Check helpers (for GUI resize)
 _newResSizeWidth = 0;

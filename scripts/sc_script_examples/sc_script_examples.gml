@@ -1,26 +1,26 @@
 ///@func	fn_cmdSumNumber()
-///@param	{real}	n1
-///@param	{real}	n2
+///@param	{real}	p_n1
+///@param	{real}	p_n2
 ///return	void
-function fn_cmdSumNumber(n1, n2){
+function fn_cmdSumNumber(p_n1, p_n2){
 
-	fn_cmdArrayPushFIFO(_cmdLogMsgArray, string(n1) + " + " + string(n2) + " = " + string(n1 + n2) );
+	fn_cmdArrayPushFIFO(_cmdLogMsgArray, string(p_n1) + " + " + string(p_n2) + " = " + string(p_n1 + p_n2) );
 }
 
 ///@func	fn_cmdTestSum
-///@param	{any}	n1
-///@param	{any}	n2
+///@param	{any}	p_n1
+///@param	{any}	p_n2
 ///@return	void
 ///@desc	Add two numbers and show the result. This function was created to show how to use in a real project
-function fn_cmdTestSum(n1, n2){
+function fn_cmdTestSum(p_n1, p_n2){
 
 	// One solution is just make all the parameter control inside the direct function
 	#region Direct Solution
 		//try {
 	
-		//	n1 = real(n1);
-		//	n2 = real(n2);
-		//	fn_cmdArrayPushFIFO(_cmdLogMsgArray, string(n1) + " + " + string(n2) + " = " + string(n1 + n2) );
+		//	p_n1 = real(p_n1);
+		//	p_n2 = real(p_n2);
+		//	fn_cmdArrayPushFIFO(_cmdLogMsgArray, string(p_n1) + " + " + string(p_n2) + " = " + string(p_n1 + p_n2) );
 		
 		//} catch(error) {
 	
@@ -37,14 +37,15 @@ function fn_cmdTestSum(n1, n2){
 	#region Use indirect function
 	try {
 	
-		n1 = real(n1);
-		n2 = real(n2);
-		fn_cmdSumNumber(n1, n2);
+		p_n1 = real(p_n1);
+		p_n2 = real(p_n2);
+		fn_cmdSumNumber(p_n1, p_n2);
 		
 	} catch(error) {
 	
 		show_debug_message(error)
 		
+		// Feather ignore once GM2017
 		fn_cmdMsgShowError(error.message);
 		fn_cmdMsgShowError("The function only use numbers as argument");
 	}
