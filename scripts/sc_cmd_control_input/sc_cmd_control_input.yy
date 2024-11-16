@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"sc_cmdInputControl",
+  "%Name":"sc_cmd_control_input",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sc_cmdInputControl",
+  "name":"sc_cmd_control_input",
   "parent":{
     "name":"Scripts",
     "path":"folders/gmcc/Scripts.yy",

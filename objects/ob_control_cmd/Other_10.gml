@@ -1,62 +1,63 @@
 ///@desc Methods - Begin Step
 
-///@func	StateBeginStep_closed()
+// Feather disable GM2016
+
+///@func	_mtStateBeginStepCMDClosed()
 ///@desc	Set the begin state when the cmd is closed
-function StateBeginStep_closed() {
+function _mtStateBeginStepCMDClosed() {
 	  
-	fn_CMDControl_checkSpecilKeyInput();
-	if (__cmdKeyPressedShowHide) {
-		fn_CMDControl_windowOpen();
+	_mtInputCheckSpecialKey();
+	if (_cmdKeyPressedShowHide) {
+		_mtConsoleWindowOpen();
 	}
 	
 }
 
-///@func	StateBeginStep_opened()
+///@func	_mtStateBeginStepCMDOpened()
 ///@desc	Set the begin state when the cmd is opened
-function StateBeginStep_opened() {
+function _mtStateBeginStepCMDOpened() {
 	
-	if ( __currentState == enum_cmdState.opened ) {
+	if ( _stateCurrent == e_stateCmd.opened ) {
   
 		// Check first if the user want to close the cmd panel
-		fn_CMDControl_checkSpecilKeyInput();
-		if (__cmdKeyPressedShowHide) {
+		_mtInputCheckSpecialKey();
+		if (_cmdKeyPressedShowHide) {
 	    
-			fn_CMDControl_windowClose();
+			_mtConsoleWindowClose();
 			
 		} else 
 			
 			// Input CMD
-			fn_CMDControl_inputKeyboardUser();
+			_mtCMDInputKeyboardUser();
 			
 			// Mouse event control
-			fn_CMDControl_checkMouseEvent(); // Global mouse check (not necesarry when is hover the CMD
+			_mtCMDCheckMouseEventControl(); // Global mouse check (not necesarry when is hover the CMD)
 
-			__cmdMouseHover = fn_cmdGUICheckMouseIsHoverThisObject(__cmdMouseHover);
-			if( __cmdMouseHover ) {
-				fn_CMDControl_inputMouse();
+			_isCmdMouseHover = fn_cmdGUICheckMouseIsHoverThisObject(_isCmdMouseHover);
+			if( _isCmdMouseHover ) {
+				_mtCMDInputMouseControl();
 			}
 
-			
 		}
 			
 }
 
-///@func	fn_CMDControl_windowClose()
+///@func	_mtConsoleWindowClose()
 ///@desc	Set the attributes necessary to close
-function fn_CMDControl_windowClose() {
-	__currentState = enum_cmdState.closed;
-	__currentState_beginStep = StateBeginStep_closed;
-	global.gCMDOpen = false;
+function _mtConsoleWindowClose() {
+	_stateCurrent = e_stateCmd.closed;
+	_stateCurrentBeginStep = _mtStateBeginStepCMDClosed;
+	global._gCmdOpen = false;
 	
-	if( surface_exists(__surfCmdWindow) ) {
-		surface_free(__surfCmdWindow);	
+	if( surface_exists(_surfCmdWindow) ) {
+		surface_free(_surfCmdWindow);	
 	}
 }
 
-///@func	fn_CMDControl_windowOpen()
+///@func	_mtConsoleWindowOpen()
 ///@desc	Set the attributes necessary to close
-function fn_CMDControl_windowOpen() {
-	__currentState = enum_cmdState.opened;
-	__currentState_beginStep = StateBeginStep_opened;
-	global.gCMDOpen = true;
+function _mtConsoleWindowOpen() {
+	_stateCurrent = e_stateCmd.opened;
+	_stateCurrentBeginStep = _mtStateBeginStepCMDOpened;
+	global._gCmdOpen = true;
 }

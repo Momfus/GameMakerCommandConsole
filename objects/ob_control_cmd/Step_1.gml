@@ -1,4 +1,5 @@
 ///@desc Get keys status
 
 
-__currentState_beginStep();
+// Feather disable once GM2016
+_stateCurrentBeginStep();
