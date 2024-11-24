@@ -33,7 +33,7 @@ function _mtCommandListCreate() {
 	
 	#region Command List
 		var commandList = [
-	
+			// Feather disable GM1013
 			// Header
 			new _mtObjCommand("TITLE", "SHORT", "DESCRIPTION", undefined, undefined, ["ARGUMENT"], ["DESCRIPTION"]),
 		
@@ -78,7 +78,7 @@ function _mtCommandListCreate() {
 				"Change window size or resolution GUI or test resolution information", undefined,
 				_mtCMDResolution,
 				["subcommand", "arg1", "arg2"],
-				[	"Could be... \n\\T[16]- window/w (change window size). \n\T[16]- info/i (to show or hide resolution information).\n\\T[16]- gui/g (change GUI surface resolution)", 
+				[	"Could be... \n\\T[16]- window/w (change window size). \n\\T[16]- info/i (to show or hide resolution information).\n\\T[16]- gui/g (change GUI surface resolution)", 
 					"width || boolean || index for the default resolution array", 
 					"height"
 				]
@@ -92,7 +92,7 @@ function _mtCommandListCreate() {
 				[	"All the arguments needed to execute the script"
 				]
 			),
-		
+			// Feather restore GM1013
 		];
 	
 	#endregion
@@ -525,7 +525,7 @@ function _mtClipboardPaste() {
 	///@func	_mtCMDResolution(argToUse)
 	///@param	{Array<String>}	p_argsToUse
 	///@return	void
-	///@desc	Select the function to execute a game command
+	///@desc	Handles commands to manage screen resolution, toggle resolution info display, or adjust GUI size.
 	function _mtCMDResolution(p_argsToUse) {
 	
 		_myMethod = function(p_argsToUse) { 
