@@ -54,7 +54,7 @@ fn_isSingleton();
 		if ( p_isOnlyResizeGUI ) {
 			ob_control_resolution._mtControlResolutionResizeGUI(p_windowWidth, p_windowHeight)
 		} else {
-			ob_control_resolution._mtControlResolutionResizeAll(false, p_windowWidth, p_windowHeight);
+			ob_control_resolution._mtControlResolutionWindowResizeAll(false, p_windowWidth, p_windowHeight);
 		}
 
 	}

@@ -1,19 +1,19 @@
 ///@desc Attributes init
 
-/**************************************************************************************************************************
-	IMPORTANT: This object must be in the beggining of the game in a blank room with the same size as the base widthxheight
-/**************************************************************************************************************************/
+/****************************************************************************************************************************
+	IMPORTANT: This object must be in the beggining of the game in a blank room with the same size as the base width x height
+/****************************************************************************************************************************/
 
 
 #region Methods
 
-	///@func	_mtControlResolutionResizeAll()
-	///@desc	Change the necesary attributes when the resolution is different.
+	///@func	_mtControlResolutionWindowResizeAll()
+	///@desc	Change the necessary attributes when the resolution differs based on the window size (or the display size in fullscreen).
 	///@param	{bool}	[p_isFirstTimeStart]
 	///@param	{real}	[p_newWindowWidth]
 	///@param	{real}	[p_newWindowHeight]
 	///@param	{bool}	[p_isPortrait]	
-	function _mtControlResolutionResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = _resBaseWidth, p_newWindowHeight = _resIdealHeight,  p_isPortrait = false) {
+	function _mtControlResolutionWindowResizeAll(p_isFirstTimeStart = false, p_newWindowWidth = _resBaseWidth, p_newWindowHeight = _resIdealHeight,  p_isPortrait = false) {
 	
 		_isNewWindowSizeSetted = false;
 	
@@ -37,18 +37,14 @@
 		
 			// Widescreen
 			if ( ( not(p_isPortrait) and (displayReferenceWidth mod _resIdealWidth ) != 0 ) or not(isWindowFS) ) { // Stretch to resolution to maintain dimensions
-    
 				var display = round( displayReferenceWidth / _resIdealWidth );
 				_resIdealWidth = round(displayReferenceWidth / display);
-			
-	
 			}
 	
 			// Portrait (uncomment to enable and comment the other)
 			if ( ( p_isPortrait and ( displayReferenceHeight  mod _resIdealHeight ) != 0 ) or not(isWindowFS) ) { // Stretch to resolution to maintain dimensions
 				var display = round(displayReferenceHeight / _resIdealHeight );
-				_resIdealHeight =displayReferenceHeight / display;  
-	
+				_resIdealHeight = displayReferenceHeight / display;  
 			}
 	
 	
@@ -65,14 +61,15 @@
 		#endregion
 
 		/// Set surface and center
-	
-		window_set_size(p_newWindowWidth, p_newWindowHeight);
+		if not( isWindowFS ) {
+			window_set_size(p_newWindowWidth, p_newWindowHeight);
+		}
 	
 		surface_resize(application_surface,_resIdealWidth,_resIdealHeight);
 	
 		_mtControlResolutionResizeGUI(p_newWindowWidth, p_newWindowHeight);
 
-		alarm[0] = 1; // it need at lest one step to center the window
+		if not (isWindowFS) { alarm[0] = 1; } // it need at lest one step to center the window
 	
 		// Checkers for news resize
 		if( window_get_fullscreen() ) {
@@ -117,8 +114,14 @@
 	///@desc	It used to resize all the objets that depend on the resolution size (like camera and gui elements) 
 	function _mtResizeResolutionToObjects() {
 
-		ob_camera_main._mtConsoleResizeWindow();
-		ob_control_cmd._mtConsoleResizeWindow(_resGUIAspectOffset);
+		// Note: its using "with" and other intead dot access just to prevent feather warnings
+		with(ob_camera_main) {
+			other._mtConsoleResizeWindow()
+		}
+		
+		with(ob_control_cmd) {
+			other._mtConsoleResizeWindow(_resGUIAspectOffset)
+		}
 	
 	}
 
@@ -158,5 +161,5 @@ window_set_size(_resBaseWidth, _resBaseHeight);
 
 
 
-_mtControlResolutionResizeAll(true); // Is important to call this in the beggining
+_mtControlResolutionWindowResizeAll(true); // Is important to call this in the beggining
 

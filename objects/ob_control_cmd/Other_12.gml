@@ -474,7 +474,7 @@ function _mtClipboardPaste() {
 						window_set_fullscreen(false);
 						_mtConsoleTriggerResolutionChange(960, 540);
 					
-						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is windowed: 960 x 540");
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The program now is windowed: 960 x 540");
 					
 					} else {
 						fn_cmdMsgShowError("The screen is already windowed");
@@ -499,7 +499,7 @@ function _mtClipboardPaste() {
 						window_set_fullscreen(true)
 						_mtConsoleTriggerResolutionChange(displayWidth, displayHeight);
 				
-						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The programa now is fullscreen: " + string(displayWidth) + " x " + string(displayHeight) );
+						fn_cmdArrayPushFIFO(_cmdLogMsgArray, "The program now is fullscreen: " + string(displayWidth) + " x " + string(displayHeight) );
 				
 					}
 				
